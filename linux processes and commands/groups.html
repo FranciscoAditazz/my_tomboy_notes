@@ -1,0 +1,25 @@
+<html xmlns:tomboy="http://beatniksoftware.com/tomboy" xmlns:link="http://beatniksoftware.com/tomboy/link" xmlns:size="http://beatniksoftware.com/tomboy/size"><head><META http-equiv="Content-Type" content="text/html; charset=utf-8"><title>groups</title><style type="text/css">
+        
+	body {  }
+	h1 { font-size: xx-large;
+     	     font-weight: bold;
+     	     border-bottom: 1px solid black; }
+	div.note {
+		   position: relative;
+		   display: block;
+		   padding: 5pt;
+		   margin: 5pt; 
+		   white-space: -moz-pre-wrap; /* Mozilla */
+ 	      	   white-space: -pre-wrap;     /* Opera 4 - 6 */
+ 	      	   white-space: -o-pre-wrap;   /* Opera 7 */
+ 	      	   white-space: pre-wrap;      /* CSS3 */
+ 	      	   word-wrap: break-word;      /* IE 5.5+ */ }
+	</style></head><body><div class="note" id="groups"><a name="groups"></a><h1>groups</h1>
+1) Add new group
+	<span style="font-size:small"><a style="color:#204A87" href="Sudo.html">sudo</a></span><span style="font-size:small"><span style="font-family:monospace"> groupadd ncoadmin</span></span>
+
+2) Include user (netcool) into a the new group (ncoadmin)
+	<span style="font-size:small"><a style="color:#204A87" href="Sudo.html">sudo</a></span><span style="font-size:small"><span style="font-family:monospace"> usermod -G ncoadmin netcool</span></span>
+
+3) Validate that the new group is added
+	<span style="font-size:small"><span style="font-family:monospace">groups netcool</span></span></div></body></html>

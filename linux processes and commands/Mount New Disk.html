@@ -1,0 +1,95 @@
+<html xmlns:tomboy="http://beatniksoftware.com/tomboy" xmlns:link="http://beatniksoftware.com/tomboy/link" xmlns:size="http://beatniksoftware.com/tomboy/size"><head><META http-equiv="Content-Type" content="text/html; charset=utf-8"><title>Mount New Disk</title><style type="text/css">
+        
+	body {  }
+	h1 { font-size: xx-large;
+     	     font-weight: bold;
+     	     border-bottom: 1px solid black; }
+	div.note {
+		   position: relative;
+		   display: block;
+		   padding: 5pt;
+		   margin: 5pt; 
+		   white-space: -moz-pre-wrap; /* Mozilla */
+ 	      	   white-space: -pre-wrap;     /* Opera 4 - 6 */
+ 	      	   white-space: -o-pre-wrap;   /* Opera 7 */
+ 	      	   white-space: pre-wrap;      /* CSS3 */
+ 	      	   word-wrap: break-word;      /* IE 5.5+ */ }
+	</style></head><body><div class="note" id="Mount New Disk"><a name="mount new disk"></a><h1>Mount New Disk </h1>
+When a new disk is created on VirtualBox, it is needed to make the OS to recognize it:
+
+The steps for mounting the new disk are
+a)   First add a new hard disk. Go to the virtual media manager and add a disk to the Virtual Machine
+
+b)   Now after booting your guest you need to do some linux magic for the OS to recognize the hard disk
+
+c) The 1st step is to determine the device name of the newly created disk. Run the command <b><span style="font-size:small"><span style="font-family:monospace">fdisk –l</span></span></b> as the root and you should get an output that looks something like this:
+
+<span style="font-size:small"><span style="font-family:monospace">intfjrg@intfjrg-Satellite-L955 ~ $ ssh -X <a style="color:#3465A4" href="netcool@10.10.3.147netcool@10.10.3.147's">netcool@10.10.3.147netcool@10.10.3.147's</a></span></span><span style="font-size:small"><span style="font-family:monospace"> password: 
+Last login: Mon Apr 20 10:58:33 2015 from 10.10.3.39
+-bash: <a style="color:#3465A4" href="/home/db2inst1/sqllib/db2profile:">/home/db2inst1/sqllib/db2profile:</a></span></span><span style="font-size:small"><span style="font-family:monospace"> No such file or directory
+[netcool@tnottxm ~]$ <a style="color:#204A87" href="Sudo.html">sudo</a></span></span><span style="font-size:small"><span style="font-family:monospace"> fdisk -l
+[<a style="color:#204A87" href="Sudo.html">sudo</a></span></span><span style="font-size:small"><span style="font-family:monospace">] password for netcool: 
+
+Disk <a style="color:#3465A4" href="/dev/sda:">/dev/sda:</a></span></span><span style="font-size:small"><span style="font-family:monospace"> 32.2 GB, 32212254720 bytes
+255 heads, 63 sectors/track, 3916 cylinders
+Units = cylinders of 16065 * 512 = 8225280 bytes
+Sector size (logical/physical): 512 bytes / 512 bytes
+I/O size (minimum/optimal): 512 bytes / 512 bytes
+Disk identifier: 0x00098e5f
+
+   Device Boot      Start         End      Blocks   Id  System
+<a style="color:#3465A4" href="/dev/sda1">/dev/sda1</a></span></span><span style="font-size:small"><span style="font-family:monospace">   *           1          64      512000   83  Linux
+Partition 1 does not end on cylinder boundary.
+<a style="color:#3465A4" href="/dev/sda2">/dev/sda2</a></span></span><span style="font-size:small"><span style="font-family:monospace">              64        3917    30944256   8e  Linux LVM
+
+Disk <a style="color:#3465A4" href="/dev/sdb:">/dev/sdb:</a></span></span><span style="font-size:small"><span style="font-family:monospace"> 21.5 GB, 21474836480 bytes
+255 heads, 63 sectors/track, 2610 cylinders
+Units = cylinders of 16065 * 512 = 8225280 bytes
+Sector size (logical/physical): 512 bytes / 512 bytes
+I/O size (minimum/optimal): 512 bytes / 512 bytes
+Disk identifier: 0x00000000
+
+Disk <a style="color:#3465A4" href="/dev/sdb">/dev/sdb</a></span></span><span style="font-size:small"><span style="font-family:monospace"> doesn't contain a valid partition table
+
+Disk <a style="color:#3465A4" href="/dev/mapper/vg_tnottxm-lv_root:">/dev/mapper/vg_tnottxm-lv_root:</a></span></span><span style="font-size:small"><span style="font-family:monospace"> 23.3 GB, 23261609984 bytes
+255 heads, 63 sectors/track, 2828 cylinders
+Units = cylinders of 16065 * 512 = 8225280 bytes
+Sector size (logical/physical): 512 bytes / 512 bytes
+I/O size (minimum/optimal): 512 bytes / 512 bytes
+Disk identifier: 0x00000000
+
+Disk <a style="color:#3465A4" href="/dev/mapper/vg_tnottxm-lv_root">/dev/mapper/vg_tnottxm-lv_root</a></span></span><span style="font-size:small"><span style="font-family:monospace"> doesn't contain a valid partition table
+
+Disk <a style="color:#3465A4" href="/dev/mapper/vg_tnottxm-lv_swap:">/dev/mapper/vg_tnottxm-lv_swap:</a></span></span><span style="font-size:small"><span style="font-family:monospace"> 8422 MB, 8422162432 bytes
+255 heads, 63 sectors/track, 1023 cylinders
+Units = cylinders of 16065 * 512 = 8225280 bytes
+Sector size (logical/physical): 512 bytes / 512 bytes
+I/O size (minimum/optimal): 512 bytes / 512 bytes
+Disk identifier: 0x00000000
+
+Disk <a style="color:#3465A4" href="/dev/mapper/vg_tnottxm-lv_swap">/dev/mapper/vg_tnottxm-lv_swap</a></span></span><span style="font-size:small"><span style="font-family:monospace"> doesn't contain a valid partition table</span></span>
+
+
+d) <span style="font-size:small"><a style="color:#3465A4" href="/dev/sdb">/dev/sdb</a></span> is the newly added disk.  create 1 extended partition for the entire disk. Now format the disk using the mkfs command as shown below:
+	<span style="font-size:small"><span style="font-family:monospace">mkfs -t ext3 <a style="color:#3465A4" href="/dev/sdb">/dev/sdb</a></span></span>
+
+e)   This disk is now ready to be used. You have now to mount the new disk
+<span style="font-size:small"><span style="font-family:monospace">	mkdir <a style="color:#3465A4" href="/media/metro">/media/metro</a></span></span><span style="font-size:small"><span style="font-family:monospace">
+	mount -t ext3 <a style="color:#3465A4" href="/dev/sdb">/dev/sdb</a></span></span><span style="font-size:small"><span style="font-family:monospace"> <a style="color:#3465A4" href="/media/metro">/media/metro</a></span></span><span style="font-size:small"><span style="font-family:monospace">
+</span></span>
+f)   To make this change permanent, you have to update  <a style="color:#3465A4" href="/etc/fstab">/etc/fstab</a> file like this:
+<span style="font-size:small"><span style="font-family:monospace">	# <a style="color:#3465A4" href="/etc/fstab">/etc/fstab</a></span></span><span style="font-size:small"><span style="font-family:monospace">
+	# Created by anaconda on Fri Apr 10 09:34:25 2015
+	#
+	# Accessible filesystems, by reference, are maintained under '/dev/disk'
+	# See man pages fstab(5), findfs(8), mount(8) and/or blkid(8) for more info
+	#
+	<a style="color:#3465A4" href="/dev/mapper/vg_tnottxm-lv_root">/dev/mapper/vg_tnottxm-lv_root</a></span></span><span style="font-size:small"><span style="font-family:monospace"> /                       ext4    defaults        1 1
+	UUID=0e425eb1-6b77-499c-896a-13015e81f6ed /boot                   ext4    defaults        1 2
+	<a style="color:#3465A4" href="/dev/mapper/vg_tnottxm-lv_swap">/dev/mapper/vg_tnottxm-lv_swap</a></span></span><span style="font-size:small"><span style="font-family:monospace"> swap                    swap    defaults        0 0
+	tmpfs                   <a style="color:#3465A4" href="/dev/shm">/dev/shm</a></span></span><span style="font-size:small"><span style="font-family:monospace">                tmpfs   defaults        0 0
+	devpts                  <a style="color:#3465A4" href="/dev/pts">/dev/pts</a></span></span><span style="font-size:small"><span style="font-family:monospace">                devpts  gid=5,mode=620  0 0
+	sysfs                   /sys                    sysfs   defaults        0 0
+	proc                    /proc                   proc    defaults        0 0
+	<span style="background:yellow"><a style="color:#3465A4" href="/dev/sdb">/dev/sdb</a></span></span></span><span style="font-size:small"><span style="font-family:monospace"><span style="background:yellow">                <a style="color:#3465A4" href="/media/metro">/media/metro</a></span></span></span><span style="font-size:small"><span style="font-family:monospace"><span style="background:yellow">            ext3    defaults        0 0</span></span></span><span style="font-size:small"><span style="font-family:monospace">
+</span></span></div></body></html>

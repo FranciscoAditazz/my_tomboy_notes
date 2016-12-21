@@ -1,0 +1,39 @@
+<html xmlns:tomboy="http://beatniksoftware.com/tomboy" xmlns:link="http://beatniksoftware.com/tomboy/link" xmlns:size="http://beatniksoftware.com/tomboy/size"><head><META http-equiv="Content-Type" content="text/html; charset=utf-8"><title>Synced Folders</title><style type="text/css">
+        
+	body {  }
+	h1 { font-size: xx-large;
+     	     font-weight: bold;
+     	     border-bottom: 1px solid black; }
+	div.note {
+		   position: relative;
+		   display: block;
+		   padding: 5pt;
+		   margin: 5pt; 
+		   white-space: -moz-pre-wrap; /* Mozilla */
+ 	      	   white-space: -pre-wrap;     /* Opera 4 - 6 */
+ 	      	   white-space: -o-pre-wrap;   /* Opera 7 */
+ 	      	   white-space: pre-wrap;      /* CSS3 */
+ 	      	   word-wrap: break-word;      /* IE 5.5+ */ }
+	</style></head><body><div class="note" id="Synced Folders"><a name="synced folders"></a><h1>Synced Folders</h1>
+By using synced folders, Vagrant will automatically sync your files to and from the guest machine.
+
+By default, Vagrant shares your project directory (remember, that is the one with the <a style="color:#204A87" href="Vagrantfile.html">Vagrantfile</a>) to the /vagrant directory in your guest machine. Run <a style="color:#204A87" href="vagrant up.html">vagrant up</a> again and SSH into your machine to see:
+
+With synced folders, you can continue to use your own editor on your host machine and have the files sync into the guest machine.
+
+<span style="font-size:small"><span style="font-family:monospace">$ <a style="color:#204A87" href="vagrant up.html">vagrant up</a></span></span><span style="font-size:small"><span style="font-family:monospace">
+...
+$ <a style="color:#204A87" href="vagrant ssh.html">vagrant ssh</a></span></span><span style="font-size:small"><span style="font-family:monospace">
+...
+vagrant@precise32:~$ ls /vagrant
+<a style="color:#204A87" href="Vagrantfile.html">Vagrantfile</a></span></span><span style="font-size:small"><span style="font-family:monospace">
+
+</span></span>The <a style="color:#204A87" href="Vagrantfile.html">Vagrantfile</a> you see inside the virtual machine is actually the same <a style="color:#204A87" href="Vagrantfile.html">Vagrantfile</a> that is on your actual host machine. Go ahead and touch a file to prove it to yourself<span style="font-size:small"><span style="font-family:monospace">
+
+vagrant@precise32:~$ touch <a style="color:#3465A4" href="/vagrant/foo">/vagrant/foo</a></span></span><span style="font-size:small"><span style="font-family:monospace">
+vagrant@precise32:~$ exit
+$ ls
+foo <a style="color:#204A87" href="Vagrantfile.html">Vagrantfile</a></span></span>
+
+
+<a style="color:#3465A4" href="https://docs.vagrantup.com/v2/getting-started/synced_folders.html">https://docs.vagrantup.com/v2/getting-started/synced_folders.html</a></div></body></html>

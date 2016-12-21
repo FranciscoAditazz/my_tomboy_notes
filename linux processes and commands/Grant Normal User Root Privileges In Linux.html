@@ -1,0 +1,61 @@
+<html xmlns:tomboy="http://beatniksoftware.com/tomboy" xmlns:link="http://beatniksoftware.com/tomboy/link" xmlns:size="http://beatniksoftware.com/tomboy/size"><head><META http-equiv="Content-Type" content="text/html; charset=utf-8"><title>Grant Normal User Root Privileges In Linux</title><style type="text/css">
+        
+	body {  }
+	h1 { font-size: xx-large;
+     	     font-weight: bold;
+     	     border-bottom: 1px solid black; }
+	div.note {
+		   position: relative;
+		   display: block;
+		   padding: 5pt;
+		   margin: 5pt; 
+		   white-space: -moz-pre-wrap; /* Mozilla */
+ 	      	   white-space: -pre-wrap;     /* Opera 4 - 6 */
+ 	      	   white-space: -o-pre-wrap;   /* Opera 7 */
+ 	      	   white-space: pre-wrap;      /* CSS3 */
+ 	      	   word-wrap: break-word;      /* IE 5.5+ */ }
+	</style></head><body><div class="note" id="Grant Normal User Root Privileges In Linux"><a name="grant normal user root privileges in linux"></a><h1>Grant Normal User Root Privileges In Linux</h1>
+“root” super user is the king of the users in Linux/Unix. Having root access grant full and unlimited access to the Linux box. I will show how to allow root access to a user in a Linux system:
+
+<b>Method : 1 Using Usermod Command
+</b>
+I am going to add user1 to root group
+<span style="font-size:small">&gt; [root@mypc Desktop]# usermod -G root user1
+</span>
+Below command provide existing user the root privilege
+<span style="font-size:small"><span style="font-family:monospace">&gt; [root@mypc Desktop]# usermod -g 0 -o root_user
+</span></span>
+<b>Method 2 : Using Useradd Command
+</b>
+I have add new user user3 to root group using one single command
+<span style="font-size:small"><span style="font-family:monospace">&gt; [root@mypc /]# useradd -m -G root user3
+&gt; [root@mypc /]# <a style="color:#204A87" href="groups.html">groups</a></span></span><span style="font-size:small"><span style="font-family:monospace"> user3
+&gt; user3 : user3 root
+</span></span>
+<b>Method 3 : Editing <a style="color:#3465A4" href="/etc/passwd">/etc/passwd</a></b><b> file</b>
+
+Edit <a style="color:#3465A4" href="/etc/passwd">/etc/passwd</a> for the particular user. Change that user's UID and GID to 0 then the user will have the permissions of root.
+
+<span style="font-size:small">root:x:0:0:root:/root:/bin/bash
+temproot:x:128:128:temproot</span>
+
+Now temproot user should have root privilege
+
+<span style="font-size:small"><span style="font-family:monospace">root:x:0:0:root:/root:/bin/bash
+temproot:x:0:0:temproot</span></span>
+
+<b>Method 4 : Setting as <a style="color:#204A87" href="Sudo.html">Sudo</a></b><b> User
+</b>
+Full Access to Specific Users. Add below entry in the file
+
+<span style="font-size:small"><span style="font-family:monospace">bob, tom ALL=(ALL) ALL</span></span>
+
+This method is not a good idea because this allows bob and tom to use the su command to grant themselves permanent root privileges thereby skipping the command logging features of <a style="color:#204A87" href="Sudo.html">sudo</a>.
+
+Grant access to specific user to specific files
+
+This entry allows bob and all the members of the group operator to gain access to all the program files in the /sbin and <a style="color:#3465A4" href="/usr/sbin">/usr/sbin</a> directories, plus the privilege of running the command <a style="color:#3465A4" href="/usr/oracle/backup.pl.">/usr/oracle/backup.pl.</a>
+
+<span style="font-size:small"><span style="font-family:monospace">bob, %operator ALL= <a style="color:#3465A4" href="/sbin/,">/sbin/,</a></span></span><span style="font-size:small"><span style="font-family:monospace"> <a style="color:#3465A4" href="/usr/sbin,">/usr/sbin,</a></span></span><span style="font-size:small"><span style="font-family:monospace"> <a style="color:#3465A4" href="/usr/oracle/backup.pl">/usr/oracle/backup.pl</a></span></span>
+
+</div></body></html>

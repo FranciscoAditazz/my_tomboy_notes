@@ -1,0 +1,37 @@
+<html xmlns:tomboy="http://beatniksoftware.com/tomboy" xmlns:link="http://beatniksoftware.com/tomboy/link" xmlns:size="http://beatniksoftware.com/tomboy/size"><head><META http-equiv="Content-Type" content="text/html; charset=utf-8"><title>CASE Statement</title><style type="text/css">
+        
+	body {  }
+	h1 { font-size: xx-large;
+     	     font-weight: bold;
+     	     border-bottom: 1px solid black; }
+	div.note {
+		   position: relative;
+		   display: block;
+		   padding: 5pt;
+		   margin: 5pt; 
+		   white-space: -moz-pre-wrap; /* Mozilla */
+ 	      	   white-space: -pre-wrap;     /* Opera 4 - 6 */
+ 	      	   white-space: -o-pre-wrap;   /* Opera 7 */
+ 	      	   white-space: pre-wrap;      /* CSS3 */
+ 	      	   word-wrap: break-word;      /* IE 5.5+ */ }
+	</style></head><body><div class="note" id="CASE Statement"><a name="case statement"></a><h1>CASE Statement</h1>
+Like if statements, case statements choose one of several blocks of Puppet code to execute. Case statements take a control expression, a <a style="color:#204A87" href="../python/List.html">list</a> of cases, and a series of Puppet code blocks that correspond to those cases. Puppet will execute the first block of code whose case value matches the control expression.
+
+<ul><li dir="ltr">    Basic cases are compared with the == operator (which is case-insensitive).
+</li><li dir="ltr">    Regular expression cases are compared with the =~ operator (which is case-sensitive).
+</li><li dir="ltr">    The special default case matches anything. It should always be included at the end of a case statement to catch anything that did not match an explicit case.</li></ul>
+
+Example:
+<span style="font-size:small"><span style="font-family:monospace">case $::operatingsystem {
+  'CentOS': { $apache_pkg = 'httpd' }
+  'Redhat': { $apache_pkg = 'httpd' }
+  'Debian': { $apache_pkg = 'apache2' }
+  'Ubuntu': { $apache_pkg = 'apache2' }
+  default: { fail("Unrecognized operating system for webserver") }
+}
+
+file {'/root/case.txt':
+  ensure  =&gt; present,
+  content =&gt; "Apache package name: ${apache_pkg}\n"
+}</span></span>
+</div></body></html>

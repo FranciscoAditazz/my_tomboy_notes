@@ -1,0 +1,56 @@
+<html xmlns:tomboy="http://beatniksoftware.com/tomboy" xmlns:link="http://beatniksoftware.com/tomboy/link" xmlns:size="http://beatniksoftware.com/tomboy/size"><head><META http-equiv="Content-Type" content="text/html; charset=utf-8"><title>Docker Events</title><style type="text/css">
+        
+	body {  }
+	h1 { font-size: xx-large;
+     	     font-weight: bold;
+     	     border-bottom: 1px solid black; }
+	div.note {
+		   position: relative;
+		   display: block;
+		   padding: 5pt;
+		   margin: 5pt; 
+		   white-space: -moz-pre-wrap; /* Mozilla */
+ 	      	   white-space: -pre-wrap;     /* Opera 4 - 6 */
+ 	      	   white-space: -o-pre-wrap;   /* Opera 7 */
+ 	      	   white-space: pre-wrap;      /* CSS3 */
+ 	      	   word-wrap: break-word;      /* IE 5.5+ */ }
+	</style></head><body><div class="note" id="Docker Events"><a name="docker events"></a><h1>Docker Events</h1>
+Describe your new note here.
+
+<span style="font-size:small"><span style="font-family:monospace">xfrarod@Satellite-L955 ~ $ <a style="color:#204A87" href="docker ps.html">docker ps</a></span></span><span style="font-size:small"><span style="font-family:monospace">
+CONTAINER ID        IMAGE               COMMAND             CREATED             STATUS              PORTS               NAMES
+xfrarod@Satellite-L955 ~ $ <a style="color:#204A87" href="docker ps.html">docker ps</a></span></span><span style="font-size:small"><span style="font-family:monospace"> -a
+CONTAINER ID        IMAGE               COMMAND                  CREATED             STATUS                  PORTS                                     NAMES
+a3a8287b9886        ubuntu:xenial       "/bin/bash"              2 weeks ago         Exited (1) 8 days ago                                             mycontainerrenamedbyid
+e6d8f6816958        nginx:latest        "nginx -g 'daemon off"   2 weeks ago         Exited (1) 8 days ago   80/tcp, 443/tcp, 127.0.0.1:8082-&gt;80/udp   myrenamedcontainer
+xfrarod@Satellite-L955 ~ $ docker start a3a8287b9886
+a3a8287b9886
+xfrarod@Satellite-L955 ~ $ <a style="color:#204A87" href="docker ps.html">docker ps</a></span></span><span style="font-size:small"><span style="font-family:monospace">
+CONTAINER ID        IMAGE               COMMAND             CREATED             STATUS              PORTS               NAMES
+a3a8287b9886        ubuntu:xenial       "/bin/bash"         2 weeks ago         Up 3 seconds                            mycontainerrenamedbyid
+xfrarod@Satellite-L955 ~ $ <b>docker events</b></span></span><span style="font-size:small"><span style="font-family:monospace">
+^C
+
+xfrarod@Satellite-L955 ~ $ <b>docker events --since '1h'</b></span></span><span style="font-size:small"><span style="font-family:monospace">
+2016-12-21T00:46:55.661759492-06:00 network connect c550ab48367a9c11ea6df9f616e84a975c10386e6812d8de77e71ebee4ebe96a (container=a3a8287b9886c94793f41cc61f37c572416a7c87361a2062912ae30513fc5f44, name=bridge, type=bridge)
+2016-12-21T00:46:58.524977790-06:00 container start a3a8287b9886c94793f41cc61f37c572416a7c87361a2062912ae30513fc5f44 (image=ubuntu:xenial, name=mycontainerrenamedbyid)
+^C
+xfrarod@Satellite-L955 ~ $ </span></span>
+
+<b>Aplicando Filtros:</b>
+<span style="font-size:small"><span style="font-family:monospace">docker events -f &lt;filtro&gt;
+docker events --filter &lt;filtro&gt;</span></span>
+
+<b>filtro</b> choice of:
+	<span style="font-size:small">container
+	event
+	image
+	label
+	type
+	volume
+	network
+	daemon</span>
+
+<b>examples:</b>
+	<span style="font-size:small"><span style="font-family:monospace">docker events --filter event=attach</span></span>
+	<span style="font-size:small"><span style="font-family:monospace">docker events --filter event=attach</span></span> <span style="font-size:small"><span style="font-family:monospace">--filter event=die</span></span> <span style="font-size:small"><span style="font-family:monospace">--filter event=stop</span></span></div></body></html>

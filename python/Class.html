@@ -1,0 +1,55 @@
+<html xmlns:tomboy="http://beatniksoftware.com/tomboy" xmlns:link="http://beatniksoftware.com/tomboy/link" xmlns:size="http://beatniksoftware.com/tomboy/size"><head><META http-equiv="Content-Type" content="text/html; charset=utf-8"><title>Class</title><style type="text/css">
+        
+	body {  }
+	h1 { font-size: xx-large;
+     	     font-weight: bold;
+     	     border-bottom: 1px solid black; }
+	div.note {
+		   position: relative;
+		   display: block;
+		   padding: 5pt;
+		   margin: 5pt; 
+		   white-space: -moz-pre-wrap; /* Mozilla */
+ 	      	   white-space: -pre-wrap;     /* Opera 4 - 6 */
+ 	      	   white-space: -o-pre-wrap;   /* Opera 7 */
+ 	      	   white-space: pre-wrap;      /* CSS3 */
+ 	      	   word-wrap: break-word;      /* IE 5.5+ */ }
+	</style></head><body><div class="note" id="Class"><a name="class"></a><h1>Class</h1>
+A basic class consists only of the class keyword, the name of the class, and the class from which the new class inherits in parentheses, like so:
+
+<span style="font-size:small"><span style="font-family:monospace">	class NewClass(object):		# This class will inherit from the object class
+	    <i># Class magic here</i></span></span>
+
+<b>pass</b>
+pass doesn't do anything, but it's useful as a placeholder in areas of your code where Python expects an expression. Example
+	<span style="font-size:small"><span style="font-family:monospace">class Animal(object): 
+	pass			 </span></span>
+
+<b>__init__()</b>
+This <a style="color:#204A87" href="Function.html">function</a> is required for classes, and it's used to initialize the objects it creates. The first argument __init__() gets is used to refer to the instance object, and by convention, that argument is called self, that refers to the object being created.  You can think of __init__() as the <a style="color:#204A87" href="Function.html">function</a> that "boots up" each object the class creates.
+
+<span style="background:yellow">If you add additional arguments</span>—for instance, a name and age for your animal—setting each of those equal to self.name and self.age in the body of __init__() will make it so that when you create an instance object of your Animal class, you need to give each instance a name and an age, and those will be associated with the particular instance you create.
+
+<b>Class Scope</b>
+Not all <a style="color:#204A87" href="../ruby/Variables.html">variables</a> are accessible to all parts of a Python program at all times. When dealing with classes, you can have <a style="color:#204A87" href="../ruby/Variables.html">variables</a> that are available everywhere (<b>global <a style="color:#204A87" href="../ruby/Variables.html">variables</a></b>), <a style="color:#204A87" href="../ruby/Variables.html">variables</a> that are only available to members of a certain class (<b>member <a style="color:#204A87" href="../ruby/Variables.html">variables</a></b>), and <a style="color:#204A87" href="../ruby/Variables.html">variables</a> that are only available to particular instances of a class (<b>instance <a style="color:#204A87" href="../ruby/Variables.html">variables</a></b>).
+
+<b>Methods</b>
+
+
+<b>__repr__()</b>
+Usually, classes are most useful for holding and accessing abstract collections of data. This method is short for representation; by providing a return value in this method, we can tell Python how to represent an object of our class (for instance, when using a <a style="color:#204A87" href="Print.html">print</a> statement).
+<span style="font-size:small"><span style="font-family:monospace">	class Point3D(object):
+		def __init__(self, x, y, z):
+			self.x = x
+			self.y = y
+			self.z = z
+		
+		def __repr__(self):
+			return "(%d, %d, %d)" % (self.x, self.y, self.z)
+	
+	my_point = Point3D(1, 2, 3)
+	
+	<a style="color:#204A87" href="Print.html">print</a></span></span><span style="font-size:small"><span style="font-family:monospace"> my_point 		<b><i># prints (1, 2, 3) otherwise if __repr__() wouldn't
+				# be defined, the printout would be: 
+				# &lt;Point3D object at 0x7f8245<a style="color:#204A87" href="../metrored pitfalls/Installation of Web GUI 7_4 64-bit package for Linux fails.html">Installation of Web GUI 7.4 64-bit package for Linux fails</a></i></b></span></span><span style="font-size:small"><span style="font-family:monospace"><b><i>16310&gt;</i></b></span></span>
+</div></body></html>

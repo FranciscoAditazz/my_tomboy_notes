@@ -1,0 +1,80 @@
+<html xmlns:tomboy="http://beatniksoftware.com/tomboy" xmlns:link="http://beatniksoftware.com/tomboy/link" xmlns:size="http://beatniksoftware.com/tomboy/size"><head><META http-equiv="Content-Type" content="text/html; charset=utf-8"><title>Pushing to Docker Hub</title><style type="text/css">
+        
+	body {  }
+	h1 { font-size: xx-large;
+     	     font-weight: bold;
+     	     border-bottom: 1px solid black; }
+	div.note {
+		   position: relative;
+		   display: block;
+		   padding: 5pt;
+		   margin: 5pt; 
+		   white-space: -moz-pre-wrap; /* Mozilla */
+ 	      	   white-space: -pre-wrap;     /* Opera 4 - 6 */
+ 	      	   white-space: -o-pre-wrap;   /* Opera 7 */
+ 	      	   white-space: pre-wrap;      /* CSS3 */
+ 	      	   word-wrap: break-word;      /* IE 5.5+ */ }
+	</style></head><body><div class="note" id="Pushing to Docker Hub"><a name="pushing to docker hub"></a><h1>Pushing to Docker Hub</h1>
+Es necesario hacer TAG en la imagen que se quiera subir al repositorio
+
+<span style="font-size:small"><span style="font-family:monospace">xfrarod@Satellite-L955 ~ $ <b>docker login</b></span></span><span style="font-size:small"><span style="font-family:monospace">
+Login with your Docker ID to push and pull images from Docker Hub. If you don't have a Docker ID, head over to <a style="color:#3465A4" href="https://hub.docker.com">https://hub.docker.com</a></span></span><span style="font-size:small"><span style="font-family:monospace"> to create one.
+Username (xfrarod): franciscoaditazz
+Password: 
+Login Succeeded
+xfrarod@Satellite-L955 ~ $ <b>cat .docker/config.json </b></span></span><span style="font-size:small"><span style="font-family:monospace">
+{
+	"auths": {
+		"<a style="color:#3465A4" href="https://index.docker.io/v1/&quot;:">https://index.docker.io/v1/":</a></span></span><span style="font-size:small"><span style="font-family:monospace"> {
+			"auth": "ZnJhbmNpc2NvYWRpdGF6ejpmanJnQGFtaWdvNDQ=",
+			"email": "<a style="color:#3465A4" href="a00275009@gmail.com&quot;">a00275009@gmail.com"</a></span></span><span style="font-size:small"><span style="font-family:monospace">
+		}
+	}
+}xfrarod@Satellite-L955 ~ $ <b>docker logout</b></span></span><span style="font-size:small"><span style="font-family:monospace">
+Remove login credentials for <a style="color:#3465A4" href="https://index.docker.io/v1/">https://index.docker.io/v1/</a></span></span><span style="font-size:small"><span style="font-family:monospace">
+xfrarod@Satellite-L955 ~ $ <b>cat .docker/config.json</b></span></span><span style="font-size:small"><span style="font-family:monospace"> 
+{
+	"auths": {}
+}
+xfrarod@Satellite-L955 ~ $ <a style="color:#204A87" href="docker images.html">docker images</a></span></span><span style="font-size:small"><span style="font-family:monospace">
+REPOSITORY          TAG                 IMAGE ID            CREATED             SIZE
+centos7/entry       v1                  5ab5b3b7194c        7 weeks ago         196.8 MB
+centos7/echo        v1                  31af935aadd1        7 weeks ago         196.8 MB
+centos7/java8       v2                  0be5471e0763        7 weeks ago         634 MB
+centos7/java8       v1                  ba9d3a261aef        7 weeks ago         634 MB
+centos7/config      v1                  7e646d71f1a7        7 weeks ago         196.8 MB
+centos7/nonroot     v1                  d4192be59345        7 weeks ago         196.8 MB
+nginx               latest              e43d811ce2f4        8 weeks ago         181.5 MB
+ubuntu              xenial              c73a085dc378        12 weeks ago        127.1 MB
+centos              latest              980e0e4c79ec        3 months ago        196.8 MB
+xfrarod@Satellite-L955 ~ $ <b><span style="background:yellow">docker tag centos7/nonroot:v1 franciscoaditazz/mycentos</span></b></span></span><span style="font-size:small"><span style="font-family:monospace"></span></span><span style="font-size:small"><span style="font-family:monospace">
+xfrarod@Satellite-L955 ~ $ <a style="color:#204A87" href="docker images.html">docker images</a></span></span><span style="font-size:small"><span style="font-family:monospace">
+REPOSITORY                  TAG                 IMAGE ID            CREATED             SIZE
+centos7/entry               v1                  5ab5b3b7194c        7 weeks ago         196.8 MB
+centos7/echo                v1                  31af935aadd1        7 weeks ago         196.8 MB
+centos7/java8               v2                  0be5471e0763        7 weeks ago         634 MB
+centos7/java8               v1                  ba9d3a261aef        7 weeks ago         634 MB
+centos7/config              v1                  7e646d71f1a7        7 weeks ago         196.8 MB
+centos7/nonroot             v1                  d4192be59345        7 weeks ago         196.8 MB
+<b><span style="background:yellow">franciscoaditazz/mycentos   latest              d4192be59345        7 weeks ago         196.8 MB</span></b></span></span><span style="font-size:small"><span style="font-family:monospace"></span></span><span style="font-size:small"><span style="font-family:monospace">
+nginx                       latest              e43d811ce2f4        8 weeks ago         181.5 MB
+ubuntu                      xenial              c73a085dc378        12 weeks ago        127.1 MB
+centos                      latest              980e0e4c79ec        3 months ago        196.8 MB
+xfrarod@Satellite-L955 ~ $ <b><span style="background:yellow">docker login --username=franciscoaditazz --<a style="color:#3465A4" href="email=francisco.rodriguez@aditazz.com">email=francisco.rodriguez@aditazz.com</a></span></b></span></span><span style="font-size:small"><span style="font-family:monospace"></span></span><span style="font-size:small"><span style="font-family:monospace"></span></span><span style="font-size:small"><span style="font-family:monospace">
+Flag --email has been deprecated, will be removed in 1.13.
+Password: 
+Login Succeeded
+xfrarod@Satellite-L955 ~ $ <b><span style="background:yellow">docker push franciscoaditazz/mycentos</span></b></span></span><span style="font-size:small"><span style="font-family:monospace"></span></span><span style="font-size:small"><span style="font-family:monospace">
+The push refers to a repository [docker.io/franciscoaditazz/mycentos]
+f072cfe662be: Pushed 
+0aeb287b1ba9: Mounted from library/centos 
+latest: digest: sha256:21c37167bd4d5b90eb72e3585b5f7587a32008461f5c9550d8a8d55e425aaf79 size: 737
+xfrarod@Satellite-L955 ~ $ <b>docker logout</b></span></span><span style="font-size:small"><span style="font-family:monospace">
+Remove login credentials for <a style="color:#3465A4" href="https://index.docker.io/v1/">https://index.docker.io/v1/</a></span></span><span style="font-size:small"><span style="font-family:monospace">
+xfrarod@Satellite-L955 ~ $ <b>docker push franciscoaditazz/mycentos</b></span></span><span style="font-size:small"><span style="font-family:monospace">
+The push refers to a repository [docker.io/franciscoaditazz/mycentos]
+f072cfe662be: Layer already exists 
+0aeb287b1ba9: Layer already exists 
+unauthorized: authentication required
+xfrarod@Satellite-L955 ~ $ </span></span>
+</div></body></html>

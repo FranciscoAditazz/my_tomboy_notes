@@ -1,0 +1,47 @@
+<html xmlns:tomboy="http://beatniksoftware.com/tomboy" xmlns:link="http://beatniksoftware.com/tomboy/link" xmlns:size="http://beatniksoftware.com/tomboy/size"><head><META http-equiv="Content-Type" content="text/html; charset=utf-8"><title>Installation of Web GUI 7.4 64-bit package for Linux fails</title><style type="text/css">
+        
+	body {  }
+	h1 { font-size: xx-large;
+     	     font-weight: bold;
+     	     border-bottom: 1px solid black; }
+	div.note {
+		   position: relative;
+		   display: block;
+		   padding: 5pt;
+		   margin: 5pt; 
+		   white-space: -moz-pre-wrap; /* Mozilla */
+ 	      	   white-space: -pre-wrap;     /* Opera 4 - 6 */
+ 	      	   white-space: -o-pre-wrap;   /* Opera 7 */
+ 	      	   white-space: pre-wrap;      /* CSS3 */
+ 	      	   word-wrap: break-word;      /* IE 5.5+ */ }
+	</style></head><body><div class="note" id="Installation of Web GUI 7.4 64-bit package for Linux fails"><a name="installation of web gui 7.4 64-bit package for linux fails"></a><h1>Installation of Web GUI 7.4 64-bit package for Linux fails</h1>
+<b>El error ocurre en el siguiente archivo:</b>
+
+<span style="font-size:small"><span style="font-family:monospace">[netcool@tnottxm ~]$ tail -f OMNIbusWebGUI_Install-00.log</span></span>
+
+
+<b>Aqui es donde se puede localizar la falla</b>
+
+<span style="font-size:small"><span style="font-family:monospace">[netcool@tnottxm logs]$ cat validatePrereqs.out 
+Checking Installation Requirements
+Passed Operating system validation check 10:28:14
+libstdc++.so.5.
+<span style="background:yellow">Failed ! None of the Librariesin {libstdc++.so.5.} are installed. 10:28:14</span></span></span><span style="font-size:small"><span style="font-family:monospace">
+Passed System memory prerequisite check 10:28:14
+Passed Accessibility prerequisite check 10:28:14
+Passed Disk space prerequisite check 10:28:14</span></span>
+
+
+<b>para solucionar el error </b>
+ 	<span style="font-size:small"><a style="color:#204A87" href="../linux processes and commands/Sudo.html">sudo</a></span><span style="font-size:small"><span style="font-family:monospace"> yum -y install libstdc++.so.5</span></span>
+
+<b>Después de corregir el error:
+</b>
+<span style="font-size:small"><span style="font-family:monospace">[netcool@tnottxm logs]$ tail -f validatePrereqs.out 
+Checking Installation Requirements
+Passed Operating system validation check 10:50:50
+libstdc++.so.5.
+Passed Installed Libraries prerequisite check 10:50:50
+Passed System memory prerequisite check 10:50:50
+Passed Accessibility prerequisite check 10:50:50
+Passed Disk space prerequisite check 10:50:50</span></span></div></body></html>

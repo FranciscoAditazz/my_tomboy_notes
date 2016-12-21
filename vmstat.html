@@ -1,0 +1,59 @@
+<html xmlns:tomboy="http://beatniksoftware.com/tomboy" xmlns:link="http://beatniksoftware.com/tomboy/link" xmlns:size="http://beatniksoftware.com/tomboy/size"><head><META http-equiv="Content-Type" content="text/html; charset=utf-8"><title>vmstat</title><style type="text/css">
+        
+	body {  }
+	h1 { font-size: xx-large;
+     	     font-weight: bold;
+     	     border-bottom: 1px solid black; }
+	div.note {
+		   position: relative;
+		   display: block;
+		   padding: 5pt;
+		   margin: 5pt; 
+		   white-space: -moz-pre-wrap; /* Mozilla */
+ 	      	   white-space: -pre-wrap;     /* Opera 4 - 6 */
+ 	      	   white-space: -o-pre-wrap;   /* Opera 7 */
+ 	      	   white-space: pre-wrap;      /* CSS3 */
+ 	      	   word-wrap: break-word;      /* IE 5.5+ */ }
+	</style></head><body><div class="note" id="vmstat"><a name="vmstat"></a><h1>vmstat</h1>
+<b>Identificando cuellos de botella</b>
+
+<b><span style="font-family:monospace">vmstat</span></b> muestra en tiempo real el desempeño de los procesos, memoria, paging, I/0 en el disco y CPU
+
+<span style="font-family:monospace">[oracle@m9 ~]$ vmstat
+procs -----------memory---------- ---swap-- -----io---- --system-- -----cpu------
+ r  b   swpd   free   buff  cache   si   so    bi    bo   in   cs us sy id wa st
+ 0  0 160264  48332  37540 1332692    1    1    52   120   13   32 14  6 80  1  0</span>
+
+Si <b><span style="font-family:monospace">wa</span></b> (time waiting for I/O) es muy alto, generalmente nos indica que el sistema de storage esta sobrecargado. En este caso vea Monitoreando el I/O y Analizando el historico de I/O.
+
+Si <b><span style="font-family:monospace">b</span></b> (processes sleeping) es constantemente mayor a 0, entonces posiblemente no tengamos suficiente procesamiento (CPU). En este caso vea Identificando procesos con alto consumo de CPU.
+
+Si <b><span style="font-family:monospace">so</span></b> (memory swapped out of disk) y <b><span style="font-family:monospace">si</span></b> (memory swapped in of disk) son constantemente mayores a 0, posiblemente se tengan problemas de memoria. En este caso ver Identificando procesos con alto consumo de memoria.
+
+vmstat no se cuenta a si mismo como un proceso en ejecución.
+
+Por ejemplo si quiero reportar estadisticas cada 2 segundos durante 10 intervalos
+
+<span style="font-family:monospace">[oracle@m9 ~]$ vmstat 2 10</span>
+
+
+Descripción de las columas de vmstat:
+
+Columna			Descripción
+<span style="font-family:monospace">r</span>		Número de procesos esperando a ser ejecutados
+<span style="font-family:monospace">b</span>		Número de procesos en sleep
+<span style="font-family:monospace">swpd</span>		Memoria virtual total (swap) en uso (KB)
+<span style="font-family:monospace">free</span>		Memoria total idle (KB)
+<span style="font-family:monospace">buff</span>		Memoria total utilizada como (KB)
+cache			Memoria total usada como cache (KB)
+<span style="font-family:monospace">si</span>		Memory swapped in from disk (KB/s)
+<span style="font-family:monospace">so</span>		Memory swapped out to disk (KB/s)
+<span style="font-family:monospace">bi</span>		Bloques leidos del dispositivo (blocks/s)
+<span style="font-family:monospace">bo</span>		Bloques escritos al dispositivo(blocks/s)
+<span style="font-family:monospace">in</span>		Interrupciones por segundo
+<span style="font-family:monospace">cs</span>		Context switches por segundo
+<span style="font-family:monospace">us</span>		User-level code time as a percentage of total CPU time
+<span style="font-family:monospace">sy</span>		System-level code time as a percentage of total CPU time
+<span style="font-family:monospace">id</span>		Idle time como porcentaje del total del tiempo del CPU time
+<span style="font-family:monospace">wa</span>		Tiempo en espera para completer el I/O
+</div></body></html>

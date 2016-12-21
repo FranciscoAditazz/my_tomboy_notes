@@ -1,0 +1,33 @@
+<html xmlns:tomboy="http://beatniksoftware.com/tomboy" xmlns:link="http://beatniksoftware.com/tomboy/link" xmlns:size="http://beatniksoftware.com/tomboy/size"><head><META http-equiv="Content-Type" content="text/html; charset=utf-8"><title>Change hostname</title><style type="text/css">
+        
+	body {  }
+	h1 { font-size: xx-large;
+     	     font-weight: bold;
+     	     border-bottom: 1px solid black; }
+	div.note {
+		   position: relative;
+		   display: block;
+		   padding: 5pt;
+		   margin: 5pt; 
+		   white-space: -moz-pre-wrap; /* Mozilla */
+ 	      	   white-space: -pre-wrap;     /* Opera 4 - 6 */
+ 	      	   white-space: -o-pre-wrap;   /* Opera 7 */
+ 	      	   white-space: pre-wrap;      /* CSS3 */
+ 	      	   word-wrap: break-word;      /* IE 5.5+ */ }
+	</style></head><body><div class="note" id="Change hostname"><a name="change hostname"></a><h1>Change hostname</h1>
+<b>nmtui</b> 
+NetworkManager tool is used to set the static host name in <a style="color:#3465A4" href="/etc/hostname">/etc/hostname</a> file.
+<span style="font-size:small"><span style="font-family:monospace">systemctl restart systemd-hostnamed</span></span>
+
+<b>hostnamectl</b>
+It can be used to query and setup the static host name in <a style="color:#3465A4" href="/etc/hostname">/etc/hostname</a> file.
+<span style="font-size:small"><span style="font-family:monospace">hostnamectl status
+hostnamectl set-hostname client.itzgeek.com
+</span></span>
+<b>nmcli</b>
+<span style="font-size:small"><span style="font-family:monospace">nmcli general hostname
+nmcli general hostname server.itzgeek.com
+systemctl restart systemd-hostnamed</span></span>
+
+
+</div></body></html>

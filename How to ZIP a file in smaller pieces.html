@@ -1,0 +1,28 @@
+<html xmlns:tomboy="http://beatniksoftware.com/tomboy" xmlns:link="http://beatniksoftware.com/tomboy/link" xmlns:size="http://beatniksoftware.com/tomboy/size"><head><META http-equiv="Content-Type" content="text/html; charset=utf-8"><title>How to ZIP a file in smaller pieces</title><style type="text/css">
+        
+	body {  }
+	h1 { font-size: xx-large;
+     	     font-weight: bold;
+     	     border-bottom: 1px solid black; }
+	div.note {
+		   position: relative;
+		   display: block;
+		   padding: 5pt;
+		   margin: 5pt; 
+		   white-space: -moz-pre-wrap; /* Mozilla */
+ 	      	   white-space: -pre-wrap;     /* Opera 4 - 6 */
+ 	      	   white-space: -o-pre-wrap;   /* Opera 7 */
+ 	      	   white-space: pre-wrap;      /* CSS3 */
+ 	      	   word-wrap: break-word;      /* IE 5.5+ */ }
+	</style></head><body><div class="note" id="How to ZIP a file in smaller pieces"><a name="how to zip a file in smaller pieces"></a><h1>How to ZIP a file in smaller pieces</h1>
+Use the -s switch on the zip command in terminal. So if your folder was called FolderName
+
+zip -r -s 64 archive.zip FolderName/
+64 is the size of the split (in this case 64Mb).
+
+Use -s to set the split size and create a split archive.  
+The size is  given  as  a  number  followed optionally  by  one  
+of  k (kB), m (MB), g (GB), or t (TB) (the default is m). [1]
+Use zipsplit to split a zip file in to multiple smaller zipfiles. Use the -n switch to set the size of the splits.
+
+[1] <a style="color:#3465A4" href="http://developer.apple.com/library/mac/#documentation/Darwin/Reference/ManPages/man1/zip.1.html.">http://developer.apple.com/library/mac/#documentation/Darwin/Reference/ManPages/man1/zip.1.html.</a></div></body></html>

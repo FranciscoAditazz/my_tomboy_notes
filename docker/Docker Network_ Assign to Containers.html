@@ -1,0 +1,308 @@
+<html xmlns:tomboy="http://beatniksoftware.com/tomboy" xmlns:link="http://beatniksoftware.com/tomboy/link" xmlns:size="http://beatniksoftware.com/tomboy/size"><head><META http-equiv="Content-Type" content="text/html; charset=utf-8"><title>Docker Network: Assign to Containers</title><style type="text/css">
+        
+	body {  }
+	h1 { font-size: xx-large;
+     	     font-weight: bold;
+     	     border-bottom: 1px solid black; }
+	div.note {
+		   position: relative;
+		   display: block;
+		   padding: 5pt;
+		   margin: 5pt; 
+		   white-space: -moz-pre-wrap; /* Mozilla */
+ 	      	   white-space: -pre-wrap;     /* Opera 4 - 6 */
+ 	      	   white-space: -o-pre-wrap;   /* Opera 7 */
+ 	      	   white-space: pre-wrap;      /* CSS3 */
+ 	      	   word-wrap: break-word;      /* IE 5.5+ */ }
+	</style></head><body><div class="note" id="Docker Network: Assign to Containers"><a name="docker network: assign to containers"></a><h1>Docker Network: Assign to Containers</h1>
+Defines how to create our local network configuration.
+
+Creation of a complex ClassB network that has a subnet of a large <a style="color:#204A87" href="../python/Range.html">range</a> of addresses. Then for a particular host we want to tell this host only to assign IPs to our containers from a subset <a style="color:#204A87" href="../python/Range.html">range</a> of IP adresses for that particular network
+
+<b>1) Assigning the IP through DNS</b>
+<span style="font-size:small"><span style="font-family:monospace">Satellite-L955 build # <span style="background:yellow">docker network create --subnet 10.1.0.0/16 --gateway 10.1.0.1 --ip-<a style="color:#204A87" href="../python/Range.html">range</a></span></span></span><span style="font-size:small"><span style="font-family:monospace"><span style="background:yellow">=10.1.4.0/24 --driver=bridge --label=host4network bridge04</span></span></span><span style="font-size:small"><span style="font-family:monospace">
+58ed21dfa9b338656457b81f7ddb5b2879e2c31c01475b23dfc1527ae0819f72
+Satellite-L955 build # docker network ls
+NETWORK ID          NAME                DRIVER              SCOPE
+7b7c4ba5a398        bridge              bridge              local               
+<span style="background:yellow">58ed21dfa9b3</span></span></span><span style="font-size:small"><span style="font-family:monospace">        bridge04            bridge              local               
+fc2f258355f6        host                host                local               
+2ce4506784a5        none                null                local               
+Satellite-L955 build # ifconfig
+br-<span style="background:yellow">58ed21dfa9b3</span></span></span><span style="font-size:small"><span style="font-family:monospace"> Link encap:Ethernet  HWaddr 02:42:71:8d:d8:fc  
+          inet addr:10.1.0.1  Bcast:0.0.0.0  Mask:255.255.0.0
+          UP BROADCAST MULTICAST  MTU:1500  Metric:1
+          RX packets:0 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:0 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 txqueuelen:0 
+          RX bytes:0 (0.0 B)  TX bytes:0 (0.0 B)
+
+docker0   Link encap:Ethernet  HWaddr 02:42:bb:11:df:d2  
+          inet addr:172.17.0.1  Bcast:0.0.0.0  Mask:255.255.0.0
+          inet6 addr: fe80::42:bbff:fe11:dfd2/64 Scope:Link
+          UP BROADCAST MULTICAST  MTU:1500  Metric:1
+          RX packets:53302 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:114483 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 txqueuelen:0 
+          RX bytes:2852188 (2.8 MB)  TX bytes:166154988 (166.1 MB)
+
+wlan0     Link encap:Ethernet  HWaddr 24:ec:99:fe:43:8c  
+          inet addr:10.10.3.81  Bcast:10.10.3.255  Mask:255.255.255.0
+          inet6 addr: fe80::26ec:99ff:fefe:438c/64 Scope:Link
+          UP BROADCAST RUNNING MULTICAST  MTU:1500  Metric:1
+          RX packets:19606462 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:12312312 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 txqueuelen:1000 
+          RX bytes:23281395964 (23.2 GB)  TX bytes:6317744449 (6.3 GB)
+
+Satellite-L955 build # <span style="background:yellow">docker network inspect bridge04</span></span></span><span style="font-size:small"><span style="font-family:monospace">
+[
+    {
+        "Name": "bridge04",
+        "Id": "58ed21dfa9b338656457b81f7ddb5b2879e2c31c01475b23dfc1527ae0819f72",
+        "Scope": "local",
+        "Driver": "bridge",
+        "EnableIPv6": false,
+        "IPAM": {
+            "Driver": "default",
+            "Options": {},
+            "Config": [
+                {
+                    "Subnet": "10.1.0.0/16",
+                    "IPRange": "10.1.4.0/24",
+                    "Gateway": "10.1.0.1"
+                }
+            ]
+        },
+        "Internal": false,
+        "Containers": {},
+        "Options": {},
+        "Labels": {
+            "host4network": ""
+        }
+    }
+]
+Satellite-L955 build #
+Satellite-L955 build # 
+Satellite-L955 build # <span style="background:yellow"><a style="color:#204A87" href="docker run.html">docker run</a></span></span></span><span style="font-size:small"><span style="font-family:monospace"><span style="background:yellow"> -it --name nettest1 --net bridge04 centos:latest <a style="color:#3465A4" href="/bin/bash">/bin/bash</a></span></span></span><span style="font-size:small"><span style="font-family:monospace"></span></span><span style="font-size:small"><span style="font-family:monospace">
+[root@af227ac8a288 /]# yum update
+Loaded plugins: fastestmirror, ovl
+:
+:
+Complete!
+[root@af227ac8a288 /]# 
+[root@af227ac8a288 /]# yum -y install net-tools
+Loaded plugins: fastestmirror, ovl
+:                                                                                                        
+:
+Complete!
+[root@af227ac8a288 /]# 
+[root@af227ac8a288 /]# ifconfig
+eth0: flags=4163&lt;UP,BROADCAST,RUNNING,MULTICAST&gt;  mtu 1500
+        inet <span style="background:yellow">10.1.4.0</span></span></span><span style="font-size:small"><span style="font-family:monospace">  netmask 255.255.0.0  broadcast 0.0.0.0
+        inet6 fe80::42:aff:fe01:400  prefixlen 64  scopeid 0x20&lt;link&gt;
+        ether 02:42:0a:01:04:00  txqueuelen 0  (Ethernet)
+        RX packets 21167  bytes 30665321 (29.2 MiB)
+        RX errors 0  dropped 0  overruns 0  frame 0
+        TX packets 11700  bytes 807776 (788.8 KiB)
+        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
+
+lo: flags=73&lt;UP,LOOPBACK,RUNNING&gt;  mtu 65536
+        inet 127.0.0.1  netmask 255.0.0.0
+        inet6 ::1  prefixlen 128  scopeid 0x10&lt;host&gt;
+        loop  txqueuelen 0  (Local Loopback)
+        RX packets 112  bytes 9309 (9.0 KiB)
+        RX errors 0  dropped 0  overruns 0  frame 0
+        TX packets 112  bytes 9309 (9.0 KiB)
+        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
+
+[root@af227ac8a288 /]# <span style="background:yellow">netstat -rn</span></span></span><span style="font-size:small"><span style="font-family:monospace">
+Kernel IP routing table
+Destination     Gateway         Genmask         Flags   MSS Window  irtt Iface
+0.0.0.0         <span style="background:yellow">10.1.0.1</span></span></span><span style="font-size:small"><span style="font-family:monospace">        0.0.0.0         UG        0 0          0 eth0
+10.1.0.0        0.0.0.0         255.255.0.0     U         0 0          0 eth0
+[root@af227ac8a288 /]# ping google.com
+PING google.com (189.247.145.40) 56(84) bytes of data.
+64 bytes from dsl-189-247-145-40-dyn.prod-infinitum.com.mx (189.247.145.40): icmp_seq=1 ttl=61 time=5.55 ms
+64 bytes from dsl-189-247-145-40-dyn.prod-infinitum.com.mx (189.247.145.40): icmp_seq=2 ttl=61 time=17.7 ms
+64 bytes from dsl-189-247-145-40-dyn.prod-infinitum.com.mx (189.247.145.40): icmp_seq=3 ttl=61 time=5.62 ms
+^C
+--- google.com ping statistics ---
+3 packets transmitted, 3 received, 0% packet loss, time 2002ms
+rtt min/avg/max/mdev = 5.556/9.632/17.715/5.715 ms
+[root@af227ac8a288 /]# cat <a style="color:#3465A4" href="/etc/resolv.conf">/etc/resolv.conf</a></span></span><span style="font-size:small"><span style="font-family:monospace"> 
+nameserver 127.0.0.11
+options ndots:0
+[root@af227ac8a288 /]# </span></span>
+
+<b>2) Assigning an static IP</b>
+
+<span style="font-size:small"><span style="font-family:monospace">Satellite-L955 build # <span style="background:yellow"><a style="color:#204A87" href="docker run.html">docker run</a></span></span></span><span style="font-size:small"><span style="font-family:monospace"><span style="background:yellow"> -it --name nettest2 --net bridge04 --ip 10.1.4.100 centos:latest <a style="color:#3465A4" href="/bin/bash">/bin/bash</a></span></span></span><span style="font-size:small"><span style="font-family:monospace"></span></span><span style="font-size:small"><span style="font-family:monospace">
+[root@e9f173ec415f /]# yum -y update
+Loaded plugins: fastestmirror, ovl
+:
+:
+Complete!
+[root@e9f173ec415f /]# yum -y install net-tools
+&lt;Loaded plugins: fastestmirror, ovl
+:
+:
+Complete!
+[root@e9f173ec415f /]# ifconfig
+eth0: flags=4163&lt;UP,BROADCAST,RUNNING,MULTICAST&gt;  mtu 1500
+        inet <span style="background:yellow">10.1.4.100</span></span></span><span style="font-size:small"><span style="font-family:monospace">  netmask 255.255.0.0  broadcast 0.0.0.0
+        inet6 fe80::42:aff:fe01:464  prefixlen 64  scopeid 0x20&lt;link&gt;
+        ether 02:42:0a:01:04:64  txqueuelen 0  (Ethernet)
+        RX packets 21088  bytes 30609664 (29.1 MiB)
+        RX errors 0  dropped 0  overruns 0  frame 0
+        TX packets 11030  bytes 748275 (730.7 KiB)
+        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
+
+lo: flags=73&lt;UP,LOOPBACK,RUNNING&gt;  mtu 65536
+        inet 127.0.0.1  netmask 255.0.0.0
+        inet6 ::1  prefixlen 128  scopeid 0x10&lt;host&gt;
+        loop  txqueuelen 0  (Local Loopback)
+        RX packets 112  bytes 9201 (8.9 KiB)
+        RX errors 0  dropped 0  overruns 0  frame 0
+        TX packets 112  bytes 9201 (8.9 KiB)
+        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
+
+[root@e9f173ec415f /]# exit
+Satellite-L955 build #
+Satellite-L955 build # docker start nettest2
+nettest21. Create a directory in your 'user' home directory called 'docker'. Within that directory, create another directory called 'mydata'. Within that directory, create a file called 'mydata.txt' containing any text message you want.
+[user@linuxacademy ~]$ mkdir docker
+
+[user@linuxacademy ~]$ cd docker
+
+[user@linuxacademy ~]$ mkdir mydata
+
+[user@linuxacademy ~]$ cd mydata
+
+[user@linuxacademy mydata]$ ll
+
+total 0
+
+[user@linuxacademy mydata]$ echo "this is host data" &gt;&gt; mydata.txt
+
+[user@linuxacademy mydata]$ ll
+
+total 4
+
+-rw-rw-r-- 1 user user 18 Aug 25 15:21 mydata.txt
+
+[user@linuxacademy mydata]$ cd ..
+
+[user@linuxacademy docker]$ ll
+
+total 0
+
+drwxrwxr-x 2 user user 23 Aug 25 15:21 mydata
+ 
+2. Create a docker container name 'local_vol' from the 'centos:6' image. The container should be created in interactive mode, attached to the current terminal and running the bash shell. Finally create the container with a volume (or directory) called 'containerdata' so that the system will automatically create the directory/mount when the container starts.
+[user@linuxacademy docker]$ <a style="color:#204A87" href="docker run.html">docker run</a></span></span><span style="font-size:small"><span style="font-family:monospace"> -it --name="local_vol" -v /containerdata centos:6 <a style="color:#3465A4" href="/bin/bash">/bin/bash</a></span></span><span style="font-size:small"><span style="font-family:monospace">
+
+[root@191131068f8c /]#
+ 
+ 
+3. <a style="color:#204A87" href="../python/List.html">List</a></span></span><span style="font-size:small"><span style="font-family:monospace"> the filesystems within the container, specifically looking for the volume/directory that was added to the container during creation.
+[root@191131068f8c /]# df -h
+
+Filesystem            Size  Used Avail Use% Mounted on
+
+rootfs                9.8G  254M  9.0G   3% /
+
+<a style="color:#3465A4" href="/dev/mapper/docker-8:2-203558447-191131068f8ceffe6fb38198a61b9806f27e4d22de3c8b0d2aec4c0c4fe7f88d">/dev/mapper/docker-8:2-203558447-191131068f8ceffe6fb38198a61b9806f27e4d22de3c8b0d2aec4c0c4fe7f88d</a></span></span><span style="font-size:small"><span style="font-family:monospace">
+
+                      9.8G  254M  9.0G   3% /
+
+tmpfs                 2.0G     0  2.0G   0% /dev
+
+shm                    64M     0   64M   0% <a style="color:#3465A4" href="/dev/shm">/dev/shm</a></span></span><span style="font-size:small"><span style="font-family:monospace">
+
+<a style="color:#3465A4" href="/dev/sda2">/dev/sda2</a></span></span><span style="font-size:small"><span style="font-family:monospace">              36G  4.3G   32G  12% /containerdata
+
+tmpfs                 2.0G     0  2.0G   0% <a style="color:#3465A4" href="/run/secrets">/run/secrets</a></span></span><span style="font-size:small"><span style="font-family:monospace">
+
+<a style="color:#3465A4" href="/dev/sda2">/dev/sda2</a></span></span><span style="font-size:small"><span style="font-family:monospace">              36G  4.3G   32G  12% <a style="color:#3465A4" href="/etc/resolv.conf">/etc/resolv.conf</a></span></span><span style="font-size:small"><span style="font-family:monospace">
+
+<a style="color:#3465A4" href="/dev/sda2">/dev/sda2</a></span></span><span style="font-size:small"><span style="font-family:monospace">              36G  4.3G   32G  12% <a style="color:#3465A4" href="/etc/hostname">/etc/hostname</a></span></span><span style="font-size:small"><span style="font-family:monospace">
+
+<a style="color:#3465A4" href="/dev/sda2">/dev/sda2</a></span></span><span style="font-size:small"><span style="font-family:monospace">              36G  4.3G   32G  12% <a style="color:#3465A4" href="/etc/hosts">/etc/hosts</a></span></span><span style="font-size:small"><span style="font-family:monospace">
+
+tmpfs                 2.0G     0  2.0G   0% <a style="color:#3465A4" href="/proc/kcore">/proc/kcore</a></span></span><span style="font-size:small"><span style="font-family:monospace">
+
+tmpfs                 2.0G     0  2.0G   0% <a style="color:#3465A4" href="/proc/timer_stats">/proc/timer_stats</a></span></span><span style="font-size:small"><span style="font-family:monospace">
+
+[root@191131068f8c /]# ls -al <a style="color:#3465A4" href="/containerdata/">/containerdata/</a></span></span><span style="font-size:small"><span style="font-family:monospace">
+
+total 4
+
+drwxr-xr-x  2 root root    6 Aug 25 20:46 .
+
+drwxr-xr-x 23 root root 4096 Aug 25 20:46 ..
+
+ 
+
+[root@191131068f8c /]#
+ 
+4. Exit the container. This time, create another container called 'remote_vol' with the same container configuration except when creating the volume in the container, link the volume name 'mydata' to the underlying host directory structure created in Step #1.
+[user@linuxacademy docker]$ <a style="color:#204A87" href="docker run.html">docker run</a></span></span><span style="font-size:small"><span style="font-family:monospace"> -it --name="remote_vol" -v <a style="color:#3465A4" href="/home/user/docker/mydata:/mydata">/home/user/docker/mydata:/mydata</a></span></span><span style="font-size:small"><span style="font-family:monospace"> centos:6 <a style="color:#3465A4" href="/bin/bash">/bin/bash</a></span></span><span style="font-size:small"><span style="font-family:monospace">
+
+[root@0476d5af242f /]#
+ 
+5. Once the container is started, <a style="color:#204A87" href="../python/List.html">list</a></span></span><span style="font-size:small"><span style="font-family:monospace"> the disk mounts and verify the remote (host) volume is mounted. Change to that directory and verify that the text file created in Step #1 appears with the content created.
+[root@0476d5af242f /]# df -h
+
+Filesystem            Size  Used Avail Use% Mounted on
+
+rootfs                9.8G  254M  9.0G   3% /
+
+<a style="color:#3465A4" href="/dev/mapper/docker-8:2-203558447-0476d5af242fa74f4e0e65efd02191685570ef89995d57716a2ff09c3078d7f8">/dev/mapper/docker-8:2-203558447-0476d5af242fa74f4e0e65efd02191685570ef89995d57716a2ff09c3078d7f8</a></span></span><span style="font-size:small"><span style="font-family:monospace">
+
+                      9.8G  254M  9.0G   3% /
+
+tmpfs                 2.0G     0  2.0G   0% /dev
+
+shm                    64M     0   64M   0% <a style="color:#3465A4" href="/dev/shm">/dev/shm</a></span></span><span style="font-size:small"><span style="font-family:monospace">
+
+<a style="color:#3465A4" href="/dev/sda2">/dev/sda2</a></span></span><span style="font-size:small"><span style="font-family:monospace">              36G  4.3G   32G  12% /mydata
+
+tmpfs                 2.0G     0  2.0G   0% <a style="color:#3465A4" href="/run/secrets">/run/secrets</a></span></span><span style="font-size:small"><span style="font-family:monospace">
+
+<a style="color:#3465A4" href="/dev/sda2">/dev/sda2</a></span></span><span style="font-size:small"><span style="font-family:monospace">              36G  4.3G   32G  12% <a style="color:#3465A4" href="/etc/resolv.conf">/etc/resolv.conf</a></span></span><span style="font-size:small"><span style="font-family:monospace">
+
+<a style="color:#3465A4" href="/dev/sda2">/dev/sda2</a></span></span><span style="font-size:small"><span style="font-family:monospace">              36G  4.3G   32G  12% <a style="color:#3465A4" href="/etc/hostname">/etc/hostname</a></span></span><span style="font-size:small"><span style="font-family:monospace">
+
+<a style="color:#3465A4" href="/dev/sda2">/dev/sda2</a></span></span><span style="font-size:small"><span style="font-family:monospace">              36G  4.3G   32G  12% <a style="color:#3465A4" href="/etc/hosts">/etc/hosts</a></span></span><span style="font-size:small"><span style="font-family:monospace">
+
+tmpfs                 2.0G     0  2.0G   0% <a style="color:#3465A4" href="/proc/kcore">/proc/kcore</a></span></span><span style="font-size:small"><span style="font-family:monospace">
+
+tmpfs                 2.0G     0  2.0G   0% <a style="color:#3465A4" href="/proc/timer_stats">/proc/timer_stats</a></span></span><span style="font-size:small"><span style="font-family:monospace">
+
+[root@0476d5af242f /]# ls -al <a style="color:#3465A4" href="/mydata/">/mydata/</a></span></span><span style="font-size:small"><span style="font-family:monospace">
+
+total 8
+
+drwxrwxr-x  2 1000 1000   23 Aug 25 20:21 .
+
+drwxr-xr-x 23 root root 4096 Aug 25 20:51 ..
+
+-rw-rw-r--  1 1000 1000   18 Aug 25 20:21 mydata.txt
+
+[root@0476d5af242f /]# cat <a style="color:#3465A4" href="/mydata/mydata.txt">/mydata/mydata.txt</a></span></span><span style="font-size:small"><span style="font-family:monospace"> 
+
+this is host data
+
+[root@0476d5af242f /]#
+Back  Mark as Completed
+Satellite-L955 build # <a style="color:#204A87" href="docker ps.html">docker ps</a></span></span><span style="font-size:small"><span style="font-family:monospace">
+CONTAINER ID        IMAGE               COMMAND             CREATED             STATUS              PORTS               NAMES
+e9f173ec415f        centos:latest       "/bin/bash"         9 minutes ago       Up 6 seconds                            nettest2
+Satellite-L955 build # <a style="color:#204A87" href="docker inspect.html">docker inspect</a></span></span><span style="font-size:small"><span style="font-family:monospace"> nettest2 | grep IPAddr
+            "SecondaryIPAddresses": null,
+            "IPAddress": "",
+                    "IPAddress": "<span style="background:yellow">10.1.4.100</span></span></span><span style="font-size:small"><span style="font-family:monospace">",
+Satellite-L955 build # </span></span>
+
+</div></body></html>

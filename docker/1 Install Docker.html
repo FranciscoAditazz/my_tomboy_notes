@@ -1,0 +1,30 @@
+<html xmlns:tomboy="http://beatniksoftware.com/tomboy" xmlns:link="http://beatniksoftware.com/tomboy/link" xmlns:size="http://beatniksoftware.com/tomboy/size"><head><META http-equiv="Content-Type" content="text/html; charset=utf-8"><title>1 Install Docker</title><style type="text/css">
+        
+	body {  }
+	h1 { font-size: xx-large;
+     	     font-weight: bold;
+     	     border-bottom: 1px solid black; }
+	div.note {
+		   position: relative;
+		   display: block;
+		   padding: 5pt;
+		   margin: 5pt; 
+		   white-space: -moz-pre-wrap; /* Mozilla */
+ 	      	   white-space: -pre-wrap;     /* Opera 4 - 6 */
+ 	      	   white-space: -o-pre-wrap;   /* Opera 7 */
+ 	      	   white-space: pre-wrap;      /* CSS3 */
+ 	      	   word-wrap: break-word;      /* IE 5.5+ */ }
+	</style></head><body><div class="note" id="1 Install Docker"><a name="1 install docker"></a><h1>1 Install Docker</h1>
+1) yum update
+2) wget <a style="color:#3465A4" href="http://ftp.osuosl.org/pub/fedora-epel/6/i386/epel-release-6-8.noarch.rpm">http://ftp.osuosl.org/pub/fedora-epel/6/i386/epel-release-6-8.noarch.rpm</a>
+3) rpm -Uvh epel-release-6-8.noarch.rpm
+4) yum update
+5) yum install docker-io
+
+By using automated <span style="color:#555753;text-decoration:underline">script</span>:
+
+•	 For curl command:
+<span style="font-family:monospace">$ <a style="color:#204A87" href="../linux processes and commands/Sudo.html">sudo</a></span><span style="font-family:monospace"> curl -sSL <a style="color:#3465A4" href="https://get.docker.io/">https://get.docker.io/</a></span><span style="font-family:monospace"> | sh</span>
+
+•	 For wget command:
+<span style="font-family:monospace">$ <a style="color:#204A87" href="../linux processes and commands/Sudo.html">sudo</a></span><span style="font-family:monospace"> wget -qO- <a style="color:#3465A4" href="https://get.docker.io/">https://get.docker.io/</a></span><span style="font-family:monospace"> | sh</span></div></body></html>

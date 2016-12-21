@@ -1,0 +1,51 @@
+<html xmlns:tomboy="http://beatniksoftware.com/tomboy" xmlns:link="http://beatniksoftware.com/tomboy/link" xmlns:size="http://beatniksoftware.com/tomboy/size"><head><META http-equiv="Content-Type" content="text/html; charset=utf-8"><title>How to Create a Web App in 5 min</title><style type="text/css">
+        
+	body {  }
+	h1 { font-size: xx-large;
+     	     font-weight: bold;
+     	     border-bottom: 1px solid black; }
+	div.note {
+		   position: relative;
+		   display: block;
+		   padding: 5pt;
+		   margin: 5pt; 
+		   white-space: -moz-pre-wrap; /* Mozilla */
+ 	      	   white-space: -pre-wrap;     /* Opera 4 - 6 */
+ 	      	   white-space: -o-pre-wrap;   /* Opera 7 */
+ 	      	   white-space: pre-wrap;      /* CSS3 */
+ 	      	   word-wrap: break-word;      /* IE 5.5+ */ }
+	</style></head><body><div class="note" id="How to Create a Web App in 5 min"><a name="how to create a web app in 5 min"></a><h1>How to Create a Web App in 5 min</h1>
+1) Create a directory for the project
+<span style="font-size:small"><span style="font-family:monospace">mkdir code
+cd code
+</span></span>
+2) Create the container and artifacts necessary... and the baseline widgets which are call gems that get the server up and running
+<span style="font-size:small"><span style="font-family:monospace">rails new app1</span></span>
+
+3) Create the M - data access layer, C - the business layer and V - the presentation layer (MVC).
+<span style="font-size:small"><span style="font-family:monospace">rails generate scaffold post title text:text</span></span>
+
+4) Create the database base on our model
+<span style="font-size:small"><span style="font-family:monospace">rake db:migrate</span></span>
+
+5) Start the web server
+<span style="font-size:small"><span style="font-family:monospace">rails s</span></span>
+
+<b>For publishing the application on horuku</b>
+6) Edit the Gemfile (which contains all the widgets that the aplications to use), and do the following:
+
+replace:
+<span style="font-size:small"><span style="font-family:monospace">gem 'sqllite3'</span></span>
+
+by:
+<span style="font-size:small"><span style="font-family:monospace">group :production do
+	gem 'pg'
+end
+group :development, :test do
+	gem 'sqllite3'
+end</span></span>
+
+7) since horuku only supports postgresql (pg) database, we have to install the gem
+gem install pg
+
+</div></body></html>

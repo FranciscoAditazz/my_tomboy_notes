@@ -1,0 +1,520 @@
+<html xmlns:tomboy="http://beatniksoftware.com/tomboy" xmlns:link="http://beatniksoftware.com/tomboy/link" xmlns:size="http://beatniksoftware.com/tomboy/size"><head><META http-equiv="Content-Type" content="text/html; charset=utf-8"><title>Exercise: Exposing Container Ports to the Host</title><style type="text/css">
+        
+	body {  }
+	h1 { font-size: xx-large;
+     	     font-weight: bold;
+     	     border-bottom: 1px solid black; }
+	div.note {
+		   position: relative;
+		   display: block;
+		   padding: 5pt;
+		   margin: 5pt; 
+		   white-space: -moz-pre-wrap; /* Mozilla */
+ 	      	   white-space: -pre-wrap;     /* Opera 4 - 6 */
+ 	      	   white-space: -o-pre-wrap;   /* Opera 7 */
+ 	      	   white-space: pre-wrap;      /* CSS3 */
+ 	      	   word-wrap: break-word;      /* IE 5.5+ */ }
+	</style></head><body><div class="note" id="Exercise: Exposing Container Ports to the Host"><a name="exercise: exposing container ports to the host"></a><h1>Exercise: Exposing Container Ports to the Host</h1>
+<b>NOTE</b>: Although you should be able to run these commands on any Docker version on any Linux Distribution, for the purposes of these exercises, be sure you are running Docker v1.10+ as well as the latest CentOS or Ubuntu distribution. Be sure to have pulled the 'centos:6' and 'ubuntu:latest' images from the Docker Hub (docker pull) before starting this exercise
+
+<b>1. Create a container from the 'centos:6' base image on your system. This container does not need to be name but should be run in <span style="background:yellow">daemon mode</span></b><b> (d), <span style="background:yellow">interactive</span></b><b> (i) and <span style="background:yellow">connected to the current terminal</span></b><b> (t). Finally, it should start the bash shell on start up.
+</b>
+<span style="font-size:small"><span style="font-family:monospace">[user@linuxacademy ~]$ <a style="color:#204A87" href="docker run.html">docker run</a></span></span><span style="font-size:small"><span style="font-family:monospace"> -itd docker.io/centos:6 <a style="color:#3465A4" href="/bin/bash">/bin/bash</a></span></span><span style="font-size:small"><span style="font-family:monospace">
+
+99f87625ff34a5a25af8edd7e95ad9b6a4bc70db63c2ac6e0850dd4cfae58cef
+
+[user@linuxacademy ~]$ <a style="color:#204A87" href="docker ps.html">docker ps</a></span></span><span style="font-size:small"><span style="font-family:monospace">
+
+CONTAINER ID        IMAGE                COMMAND             CREATED             STATUS              PORTS               NAMES
+
+99f87625ff34        docker.io/centos:6   "/bin/bash"         3 seconds ago       Up 2 seconds                            elegant_bohr        
+
+[user@linuxacademy ~]$ <a style="color:#204A87" href="docker ps.html">docker ps</a></span></span><span style="font-size:small"><span style="font-family:monospace">
+
+CONTAINER ID        IMAGE                COMMAND             CREATED             STATUS              PORTS               NAMES
+
+99f87625ff34        docker.io/centos:6   "/bin/bash"         5 seconds ago       Up 5 seconds                            elegant_bohr
+</span></span> 
+<b>2. Using the appropriate Docker inspection command, find the IP address and name for the running container. Once you have the IP, ping the IP to be sure it is running. Finally, attach to the running container so you are logged into the shell.
+</b>
+<span style="font-size:small"><span style="font-family:monospace">[user@linuxacademy ~]$ <a style="color:#204A87" href="docker ps.html">docker ps</a></span></span><span style="font-size:small"><span style="font-family:monospace">
+
+CONTAINER ID        IMAGE                COMMAND             CREATED             STATUS              PORTS               NAMES
+
+99f87625ff34        docker.io/centos:6   "/bin/bash"         7 minutes ago       Up 7 minutes                            elegant_bohr        
+
+[user@linuxacademy]$ <a style="color:#204A87" href="docker inspect.html">docker inspect</a></span></span><span style="font-size:small"><span style="font-family:monospace"> elegant_bohr | grep IP
+
+        "GlobalIPv6Address": "",
+
+        "GlobalIPv6PrefixLen": 0,
+
+        "IPAddress": "172.17.0.2",
+
+        "IPPrefixLen": 16,
+
+        "IPv6Gateway": "",
+
+        "LinkLocalIPv6Address": "",
+
+        "LinkLocalIPv6PrefixLen": 0,
+
+        "SecondaryIPAddresses": null,
+
+        "SecondaryIPv6Addresses": null
+
+[user@linuxacademy ~]$ ping 172.17.0.2
+
+PING 172.17.0.2 (172.17.0.2) 56(84) bytes of data.
+
+64 bytes from 172.17.0.2: icmp_seq=1 ttl=64 time=0.069 ms
+
+64 bytes from 172.17.0.2: icmp_seq=2 ttl=64 time=0.096 ms
+
+^C
+
+--- 172.17.0.2 ping statistics ---
+
+2 packets transmitted, 2 received, 0% packet loss, time 999ms
+
+rtt min/avg/max/mdev = 0.069/0.082/0.096/0.016 ms
+
+[user@linuxacademy ~]$ docker attach elegant_bohr
+
+[root@99f87625ff34 /]#
+</span></span> 
+<b>3. From within the container, install the Open-SSH server and make sure the service is running. From another terminal, try to log into the container over SSH by IP and note the result.
+</b>
+<span style="font-size:small"><span style="font-family:monospace">[root@99f87625ff34 /]# yum install openssh-server
+
+... Lots of Output Here
+
+Installed:
+
+  openssh-server.x86_64 0:5.3p1-112.el6_7                                                                                      
+
+ 
+
+Dependency Installed:
+
+  fipscheck.x86_64 0:1.2.0-7.el6              fipscheck-lib.x86_64 0:1.2.0-7.el6       openssh.x86_64 0:5.3p1-112.el6_7      
+
+  tcp_wrappers-libs.x86_64 0:7.6-57.el6      
+
+ 
+
+Complete!
+
+[root@99f87625ff34 /]# service sshd start
+
+Generating SSH2 RSA host key:                              [  OK  ]
+
+Generating SSH1 RSA host key:                              [  OK  ]
+
+Generating SSH2 DSA host key:                              [  OK  ]
+
+Starting sshd:
+
+(Different Terminal)
+
+[user@linuxacademy ~]$ ssh <a style="color:#3465A4" href="test@172.17.0.2">test@172.17.0.2</a></span></span><span style="font-size:small"><span style="font-family:monospace">
+
+ssh: connect to host 172.17.0.2 port 22: Connection refused
+</span></span> 
+<b>4. Exit and stop the container. Remove the container from the <a style="color:#204A87" href="../python/List.html">list</a></b><b> of previously run containers once you obtain the name from the appropriate Docker command.
+</b>
+<span style="font-size:small"><span style="font-family:monospace">[user@linuxacademy ~]$ <a style="color:#204A87" href="docker ps.html">docker ps</a></span></span><span style="font-size:small"><span style="font-family:monospace"> -a
+
+CONTAINER ID        IMAGE                COMMAND             CREATED             STATUS                         PORTS               NAMES
+
+99f87625ff34        docker.io/centos:6   "/bin/bash"         About an hour ago   Exited (0) 4 seconds ago                           elegant_bohr        
+
+8ef073d5c7f4        docker.io/centos:6   "/bin/bash"         About an hour ago   Exited (0) About an hour ago                       silly_poincare      
+
+[user@linuxacademy ~]$ docker rm elegant_bohr
+
+elegant_bohr
+
+[user@linuxacademy ~]$ docker rm silly_poincare
+
+silly_poincare
+
+[user@linuxacademy ~]$ <a style="color:#204A87" href="docker images.html">docker images</a></span></span><span style="font-size:small"><span style="font-family:monospace">
+
+REPOSITORY          TAG                 IMAGE ID            CREATED             VIRTUAL SIZE
+
+docker.io/ubuntu    latest              91e54dfb1179        4 days ago          188.3 MB
+
+docker.io/centos    6                   a005304e4e74        9 weeks ago         203.1 MB
+
+[user@linuxacademy ~]$
+</span></span> 
+<b>5. Create another container, name this container 'test_ssh'. When creating the container, it should be run in interactive mode and attached to the current terminal running the bash shell. Finally, expose port 22 on the container to port 8022 on the host system. Once logged in, install the Open-SSH server and make sure the service is running. Find the IP address of the container and note it.
+</b>
+<span style="font-size:small"><span style="font-family:monospace">[user@linuxacademy ~]$ <a style="color:#204A87" href="docker ps.html">docker ps</a></span></span><span style="font-size:small"><span style="font-family:monospace">
+
+CONTAINER ID        IMAGE               COMMAND             CREATED             STATUS              PORTS               NAMES
+
+[user@linuxacademy ~]$ <a style="color:#204A87" href="docker ps.html">docker ps</a></span></span><span style="font-size:small"><span style="font-family:monospace"> -a
+
+CONTAINER ID        IMAGE                COMMAND             CREATED             STATUS                         PORTS               NAMES
+
+99f87625ff34        docker.io/centos:6   "/bin/bash"         About an hour ago   Exited (0) 4 seconds ago                           elegant_bohr        
+
+8ef073d5c7f4        docker.io/centos:6   "/bin/bash"         About an hour ago   Exited (0) About an hour ago                       silly_poincare      
+
+[user@linuxacademy ~]$ docker rm elegant_bohr
+
+elegant_bohr
+
+[user@linuxacademy ~]$ docker rm silly_poincare
+
+silly_poincare
+
+[user@linuxacademy ~]$ <a style="color:#204A87" href="docker images.html">docker images</a></span></span><span style="font-size:small"><span style="font-family:monospace">
+
+REPOSITORY          TAG                 IMAGE ID            CREATED             VIRTUAL SIZE
+
+docker.io/ubuntu    latest              91e54dfb1179        4 days ago          188.3 MB
+
+docker.io/centos    6                   a005304e4e74        9 weeks ago         203.1 MB
+
+[user@linuxacademy ~]$ <a style="color:#204A87" href="docker images.html">docker images</a></span></span><span style="font-size:small"><span style="font-family:monospace">
+
+REPOSITORY          TAG                 IMAGE ID            CREATED             VIRTUAL SIZE
+
+docker.io/ubuntu    latest              91e54dfb1179        4 days ago          188.3 MB
+
+docker.io/centos    6                   a005304e4e74        9 weeks ago         203.1 MB
+
+[user@linuxacademy ~]$ <span style="background:yellow"><a style="color:#204A87" href="docker run.html">docker run</a></span></span></span><span style="font-size:small"><span style="font-family:monospace"><span style="background:yellow"> -it --name="test_ssh" -p 8022:22 docker.io/centos:6 <a style="color:#3465A4" href="/bin/bash">/bin/bash</a></span></span></span><span style="font-size:small"><span style="font-family:monospace"></span></span><span style="font-size:small"><span style="font-family:monospace">
+
+Usage of loopback devices is strongly discouraged for production use. Either use `--storage-opt dm.thinpooldev` or use `--storage-opt dm.no_warn_on_loop_devices=true` to suppress this warning.
+
+[root@de1119934beb /]# yum install openssh-server
+
+Loaded plugins: fastestmirror
+
+Setting up Install Process
+
+base                                                                                                    | 3.7 kB     00:00     
+
+base/primary_db                                                                                         | 4.6 MB     00:07     
+
+extras                                                                                                  | 3.4 kB     00:00     
+
+extras/primary_db                                                                                       |  27 kB     00:00     
+
+updates                                                                                                 | 3.4 kB     00:00     
+
+updates/primary_db                                                                                      | 1.3 MB     00:01     
+
+Resolving Dependencies
+
+--&gt; Running transaction check
+
+---&gt; Package openssh-server.x86_64 0:5.3p1-112.el6_7 will be installed
+
+--&gt; Processing Dependency: openssh = 5.3p1-112.el6_7 for package: openssh-server-5.3p1-112.el6_7.x86_64
+
+--&gt; Processing Dependency: libwrap.so.0()(64bit) for package: openssh-server-5.3p1-112.el6_7.x86_64
+
+--&gt; Processing Dependency: libfipscheck.so.1()(64bit) for package: openssh-server-5.3p1-112.el6_7.x86_64
+
+--&gt; Running transaction check
+
+---&gt; Package fipscheck-lib.x86_64 0:1.2.0-7.el6 will be installed
+
+--&gt; Processing Dependency: <a style="color:#3465A4" href="/usr/bin/fipscheck">/usr/bin/fipscheck</a></span></span><span style="font-size:small"><span style="font-family:monospace"> for package: fipscheck-lib-1.2.0-7.el6.x86_64
+
+---&gt; Package openssh.x86_64 0:5.3p1-112.el6_7 will be installed
+
+---&gt; Package tcp_wrappers-libs.x86_64 0:7.6-57.el6 will be installed
+
+--&gt; Running transaction check
+
+---&gt; Package fipscheck.x86_64 0:1.2.0-7.el6 will be installed
+
+--&gt; Finished Dependency Resolution
+
+ 
+
+Dependencies Resolved
+
+ 
+
+===============================================================================================================================
+
+ Package                            Arch                    Version                             Repository                Size
+
+===============================================================================================================================
+
+Installing:
+
+ openssh-server                     x86_64                  5.3p1-112.el6_7                     updates                  324 k
+
+Installing for dependencies:
+
+ fipscheck                          x86_64                  1.2.0-7.el6                         base                      14 k
+
+ fipscheck-lib                      x86_64                  1.2.0-7.el6                         base                     8.3 k
+
+ openssh                            x86_64                  5.3p1-112.el6_7                     updates                  274 k
+
+ tcp_wrappers-libs                  x86_64                  7.6-57.el6                          base                      62 k
+
+ 
+
+Transaction Summary
+
+===============================================================================================================================
+
+Install       5 Package(s)
+
+ 
+
+Total download size: 682 k
+
+Installed size: 1.6 M
+
+Is this ok [y/N]: y
+
+Downloading Packages:
+
+(1/5): fipscheck-1.2.0-7.el6.x86_64.rpm                                                                 |  14 kB     00:00     
+
+(2/5): fipscheck-lib-1.2.0-7.el6.x86_64.rpm                                                             | 8.3 kB     00:00     
+
+(3/5): openssh-5.3p1-112.el6_7.x86_64.rpm                                                               | 274 kB     00:00     
+
+(4/5): openssh-server-5.3p1-112.el6_7.x86_64.rpm                                                        | 324 kB     00:00     
+
+(5/5): tcp_wrappers-libs-7.6-57.el6.x86_64.rpm                                                          |  62 kB     00:00     
+
+-------------------------------------------------------------------------------------------------------------------------------
+
+Total                                                                                          306 kB/s | 682 kB     00:02     
+
+warning: rpmts_HdrFromFdno: Header V3 RSA/SHA1 Signature, key ID c105b9de: NOKEY
+
+Retrieving key from <a style="color:#3465A4" href="file:///etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-6">file:///etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-6</a></span></span><span style="font-size:small"><span style="font-family:monospace">
+
+Importing GPG key 0xC105B9DE:
+
+ Userid : CentOS-6 Key (CentOS 6 Official Signing Key) &lt;<a style="color:#3465A4" href="centos-6-key@centos.org>">centos-6-key@centos.org&gt;</a></span></span><span style="font-size:small"><span style="font-family:monospace">
+
+ Package: centos-release-6-6.el6.centos.12.2.x86_64 (@CentOS/$releasever)
+
+ From   : <a style="color:#3465A4" href="/etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-6">/etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-6</a></span></span><span style="font-size:small"><span style="font-family:monospace">
+
+Is this ok [y/N]: y
+
+Running rpm_check_debug
+
+Running Transaction Test
+
+Transaction Test Succeeded
+
+Running Transaction
+
+Warning: RPMDB altered outside of yum.
+
+  Installing : fipscheck-1.2.0-7.el6.x86_64                                                                                1/5 
+
+  Installing : fipscheck-lib-1.2.0-7.el6.x86_64                                                                            2/5 
+
+  Installing : openssh-5.3p1-112.el6_7.x86_64                                                                              3/5 
+
+  Installing : tcp_wrappers-libs-7.6-57.el6.x86_64                                                                         4/5 
+
+  Installing : openssh-server-5.3p1-112.el6_7.x86_64                                                                       5/5 
+
+  Verifying  : tcp_wrappers-libs-7.6-57.el6.x86_64                                                                         1/5 
+
+  Verifying  : fipscheck-lib-1.2.0-7.el6.x86_64                                                                            2/5 
+
+  Verifying  : fipscheck-1.2.0-7.el6.x86_64                                                                                3/5 
+
+  Verifying  : openssh-5.3p1-112.el6_7.x86_64                                                                              4/5 
+
+  Verifying  : openssh-server-5.3p1-112.el6_7.x86_64                                                                       5/5 
+
+ 
+
+Installed:
+
+  openssh-server.x86_64 0:5.3p1-112.el6_7                                                                                      
+
+ 
+
+Dependency Installed:
+
+  fipscheck.x86_64 0:1.2.0-7.el6              fipscheck-lib.x86_64 0:1.2.0-7.el6       openssh.x86_64 0:5.3p1-112.el6_7      
+
+  tcp_wrappers-libs.x86_64 0:7.6-57.el6      
+
+ 
+
+Complete!
+
+[root@de1119934beb /]# service sshd start
+
+Generating SSH2 RSA host key:                              [  OK  ]
+
+Generating SSH1 RSA host key:                              [  OK  ]
+
+Generating SSH2 DSA host key:                              [  OK  ]
+
+Starting sshd:                                             [  OK  ]
+
+[root@de1119934beb /]# ifconfig
+
+eth0      Link encap:Ethernet  HWaddr 02:42:AC:11:00:03  
+
+          inet addr:172.17.0.3  Bcast:0.0.0.0  Mask:255.255.0.0
+
+          inet6 addr: fe80::42:acff:fe11:3/64 Scope:Link
+
+          UP BROADCAST RUNNING MULTICAST  MTU:1500  Metric:1
+
+          RX packets:3944 errors:0 dropped:0 overruns:0 frame:0
+
+          TX packets:2104 errors:0 dropped:0 overruns:0 carrier:0
+
+          collisions:0 txqueuelen:0 
+
+          RX bytes:7151212 (6.8 MiB)  TX bytes:116622 (113.8 KiB)
+
+ 
+
+lo        Link encap:Local Loopback  
+
+          inet addr:127.0.0.1  Mask:255.0.0.0
+
+          inet6 addr: ::1/128 Scope:Host
+
+          UP LOOPBACK RUNNING  MTU:65536  Metric:1
+
+          RX packets:0 errors:0 dropped:0 overruns:0 frame:0
+
+          TX packets:0 errors:0 dropped:0 overruns:0 carrier:0
+
+          collisions:0 txqueuelen:0 
+
+          RX bytes:0 (0.0 b)  TX bytes:0 (0.0 b)
+
+[root@de1119934beb /]#
+</span></span> 
+<b>6. Install the '<a style="color:#204A87" href="../linux processes and commands/Sudo.html">sudo</a></b><b>' utility. Add a user called 'test' and set a password for that user. Add the 'test' user to the 'sudoers' file. From another terminal window, attempt to log into the container via SSH on port 8022 as the 'test' user and confirm access.
+</b>
+<span style="font-size:small"><span style="font-family:monospace">[root@de1119934beb /]# yum install <a style="color:#204A87" href="../linux processes and commands/Sudo.html">sudo</a></span></span><span style="font-size:small"><span style="font-family:monospace"> 
+
+Loaded plugins: fastestmirror
+
+Setting up Install Process
+
+Determining fastest mirrors
+
+ * base: repos.dfw.quadranet.com
+
+ * extras: centos.mirror.lstn.net
+
+ * updates: mirror.steadfast.net
+
+Resolving Dependencies
+
+--&gt; Running transaction check
+
+---&gt; Package <a style="color:#204A87" href="../linux processes and commands/Sudo.html">sudo</a></span></span><span style="font-size:small"><span style="font-family:monospace">.x86_64 0:1.8.6p3-20.el6_7 will be installed
+
+--&gt; Finished Dependency Resolution
+
+ 
+
+Dependencies Resolved
+
+ 
+
+===============================================================================================================================
+
+ Package                  Arch                       Version                                 Repository                   Size
+
+===============================================================================================================================
+
+Installing:
+
+ <a style="color:#204A87" href="../linux processes and commands/Sudo.html">sudo</a></span></span><span style="font-size:small"><span style="font-family:monospace">                     x86_64                     1.8.6p3-20.el6_7                        updates                     707 k
+
+ 
+
+Transaction Summary
+
+===============================================================================================================================
+
+Install       1 Package(s)
+
+ 
+
+Total download size: 707 k
+
+Installed size: 2.4 M
+
+Is this ok [y/N]: y
+
+Downloading Packages:
+
+<a style="color:#204A87" href="../linux processes and commands/Sudo.html">sudo</a></span></span><span style="font-size:small"><span style="font-family:monospace">-1.8.6p3-20.el6_7.x86_64.rpm                                                                        | 707 kB     00:02     
+
+Running rpm_check_debug
+
+Running Transaction Test
+
+Transaction Test Succeeded
+
+Running Transaction
+
+  Installing : <a style="color:#204A87" href="../linux processes and commands/Sudo.html">sudo</a></span></span><span style="font-size:small"><span style="font-family:monospace">-1.8.6p3-20.el6_7.x86_64                                                                                1/1 
+
+  Verifying  : <a style="color:#204A87" href="../linux processes and commands/Sudo.html">sudo</a></span></span><span style="font-size:small"><span style="font-family:monospace">-1.8.6p3-20.el6_7.x86_64                                                                                1/1 
+
+ 
+
+Installed:
+
+  <a style="color:#204A87" href="../linux processes and commands/Sudo.html">sudo</a></span></span><span style="font-size:small"><span style="font-family:monospace">.x86_64 0:1.8.6p3-20.el6_7                                                                                               
+
+ 
+
+Complete!
+
+[root@de1119934beb /]# adduser test
+
+[root@de1119934beb /]# passwd test
+
+Changing password for user test.
+
+New password: 
+
+BAD PASSWORD: it is based on a <a style="color:#204A87" href="../python/Dictionary.html">dictionary</a></span></span><span style="font-size:small"><span style="font-family:monospace"> word
+
+Retype new password: 
+
+passwd: all authentication tokens updated successfully.
+
+[root@de1119934beb /]#
+
+(Other Terminal Window)
+
+[user@linuxacademy ~]$ ssh <a style="color:#3465A4" href="test@172.17.0.3">test@172.17.0.3</a></span></span><span style="font-size:small"><span style="font-family:monospace">
+
+The authenticity of host '172.17.0.3 (172.17.0.3)' can't be established.
+
+RSA key fingerprint is e8:5e:28:d8:64:1f:81:3a:d9:4c:2c:0c:8e:a1:27:b7.
+
+Are you sure you want to continue connecting (yes/no)? yes
+
+Warning: Permanently added '172.17.0.3' (RSA) to the <a style="color:#204A87" href="../python/List.html">list</a></span></span><span style="font-size:small"><span style="font-family:monospace"> of known hosts.
+
+<a style="color:#3465A4" href="test@172.17.0.3's">test@172.17.0.3's</a></span></span><span style="font-size:small"><span style="font-family:monospace"> password: 
+
+[test@de1119934beb ~]$</span></span></div></body></html>

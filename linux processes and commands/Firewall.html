@@ -1,0 +1,48 @@
+<html xmlns:tomboy="http://beatniksoftware.com/tomboy" xmlns:link="http://beatniksoftware.com/tomboy/link" xmlns:size="http://beatniksoftware.com/tomboy/size"><head><META http-equiv="Content-Type" content="text/html; charset=utf-8"><title>Firewall</title><style type="text/css">
+        
+	body {  }
+	h1 { font-size: xx-large;
+     	     font-weight: bold;
+     	     border-bottom: 1px solid black; }
+	div.note {
+		   position: relative;
+		   display: block;
+		   padding: 5pt;
+		   margin: 5pt; 
+		   white-space: -moz-pre-wrap; /* Mozilla */
+ 	      	   white-space: -pre-wrap;     /* Opera 4 - 6 */
+ 	      	   white-space: -o-pre-wrap;   /* Opera 7 */
+ 	      	   white-space: pre-wrap;      /* CSS3 */
+ 	      	   word-wrap: break-word;      /* IE 5.5+ */ }
+	</style></head><body><div class="note" id="Firewall"><a name="firewall"></a><h1>Firewall</h1>
+<b>For Linux Mint</b>
+<span style="font-size:small"><span style="font-family:monospace">	<a style="color:#204A87" href="Sudo.html">sudo</a></span></span><span style="font-size:small"><span style="font-family:monospace"> ufw disable</span></span>
+
+other usefull commands are:
+
+<span style="font-size:small"><a style="color:#204A87" href="Sudo.html">sudo</a></span><span style="font-size:small"><span style="font-family:monospace"> ufw status [verbose]
+<a style="color:#204A87" href="Sudo.html">sudo</a></span></span><span style="font-size:small"><span style="font-family:monospace"> ufw &lt;enable/disable&gt;
+<a style="color:#204A87" href="Sudo.html">sudo</a></span></span><span style="font-size:small"><span style="font-family:monospace"> ufw allow ssh  		#To Allow Access
+<a style="color:#204A87" href="Sudo.html">sudo</a></span></span><span style="font-size:small"><span style="font-family:monospace"> ufw allow from 192.168.0.104 
+<a style="color:#204A87" href="Sudo.html">sudo</a></span></span><span style="font-size:small"><span style="font-family:monospace"> ufw allow form 192.168.0.0/24</span></span>
+
+Reference:
+<a style="color:#3465A4" href="http://www.tecmint.com/how-to-install-and-configure-ufw-firewall/">http://www.tecmint.com/how-to-install-and-configure-ufw-firewall/</a>
+
+
+<b>In CentOS 7.0 we have different policy for the firewall-cmd, we will override it by using:</b>
+<span style="font-size:small"><span style="color:#555753;text-decoration:underline">netstat</span></span><span style="font-size:small"><span style="font-family:monospace"> -an | grep 8080
+firewall-cmd --zone=public --add-port=8080/tcp --permanent
+firewall-cmd --reload</span></span>
+
+
+<b>How to Stop and Disable Firewalld on CentOS 7</b>
+
+To disable firewalld, run the following command as root:
+<span style="font-size:small"><span style="font-family:monospace">systemctl disable firewalld</span></span>
+
+To stop firewalld, run the following command as root:
+<span style="font-size:small"><span style="font-family:monospace">systemctl stop firewalld</span></span>
+
+To check the status of firewalld, run the following command as root:
+<span style="font-size:small"><span style="font-family:monospace">systemctl status firewalld</span></span></div></body></html>

@@ -1,0 +1,58 @@
+<html xmlns:tomboy="http://beatniksoftware.com/tomboy" xmlns:link="http://beatniksoftware.com/tomboy/link" xmlns:size="http://beatniksoftware.com/tomboy/size"><head><META http-equiv="Content-Type" content="text/html; charset=utf-8"><title>Timers</title><style type="text/css">
+        
+	body {  }
+	h1 { font-size: xx-large;
+     	     font-weight: bold;
+     	     border-bottom: 1px solid black; }
+	div.note {
+		   position: relative;
+		   display: block;
+		   padding: 5pt;
+		   margin: 5pt; 
+		   white-space: -moz-pre-wrap; /* Mozilla */
+ 	      	   white-space: -pre-wrap;     /* Opera 4 - 6 */
+ 	      	   white-space: -o-pre-wrap;   /* Opera 7 */
+ 	      	   white-space: pre-wrap;      /* CSS3 */
+ 	      	   word-wrap: break-word;      /* IE 5.5+ */ }
+	</style></head><body><div class="note" id="Timers"><a name="timers"></a><h1>Timers</h1>
+<span style="font-size:small"><span style="font-family:monospace"># Simple "screensaver" program.
+
+# <a style="color:#204A87" href="../Import.html">Import</a></span></span><span style="font-size:small"><span style="font-family:monospace"> modules
+<a style="color:#204A87" href="../Import.html">import</a></span></span><span style="font-size:small"><span style="font-family:monospace"> simplegui
+<a style="color:#204A87" href="../Import.html">import</a></span></span><span style="font-size:small"><span style="font-family:monospace"> <a style="color:#204A87" href="Random.html">random</a></span></span><span style="font-size:small"><span style="font-family:monospace">
+
+# Global state
+message = "Python is Fun!"
+position = [50, 50]
+width = 500
+height = 500
+interval = 2000
+
+# Handler for text box
+def update(text):
+    global message
+    message = text
+    
+# Handler for timer
+def tick():
+    x = <a style="color:#204A87" href="Random.html">random</a></span></span><span style="font-size:small"><span style="font-family:monospace">.randrange(0, width)
+    y = <a style="color:#204A87" href="Random.html">random</a></span></span><span style="font-size:small"><span style="font-family:monospace">.randrange(0, height)
+    position[0] = x
+    position[1] = y
+
+# Handler to draw on canvas
+def draw(canvas):
+    canvas.draw_text(message, position, 36, "Red")
+
+# Create a frame 
+frame = simplegui.create_frame("Home", width, height)
+
+# Register event handlers
+text = frame.add_input("Message:", update, 150)
+frame.set_draw_handler(draw)
+timer = simplegui.create_timer(interval, tick)
+
+# Start the frame animation
+frame.start()
+timer.start()</span></span>
+</div></body></html>

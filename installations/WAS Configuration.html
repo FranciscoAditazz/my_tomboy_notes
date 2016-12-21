@@ -1,0 +1,75 @@
+<html xmlns:tomboy="http://beatniksoftware.com/tomboy" xmlns:link="http://beatniksoftware.com/tomboy/link" xmlns:size="http://beatniksoftware.com/tomboy/size"><head><META http-equiv="Content-Type" content="text/html; charset=utf-8"><title>WAS Configuration</title><style type="text/css">
+        
+	body {  }
+	h1 { font-size: xx-large;
+     	     font-weight: bold;
+     	     border-bottom: 1px solid black; }
+	div.note {
+		   position: relative;
+		   display: block;
+		   padding: 5pt;
+		   margin: 5pt; 
+		   white-space: -moz-pre-wrap; /* Mozilla */
+ 	      	   white-space: -pre-wrap;     /* Opera 4 - 6 */
+ 	      	   white-space: -o-pre-wrap;   /* Opera 7 */
+ 	      	   white-space: pre-wrap;      /* CSS3 */
+ 	      	   word-wrap: break-word;      /* IE 5.5+ */ }
+	</style></head><body><div class="note" id="WAS Configuration"><a name="was configuration"></a><h1>WAS Configuration</h1>
+<b>1)	Create Application server profiles -- </b>As part of this step, we create managed profiles as well as deployment manager profiles, if an existing deployment is not available for profile federation (<a style="color:#3465A4" href="http://www.redbooks.ibm.com/redbooks/SG248056/wwhelp/wwhimpl/api.htm?href=3-1.htm">http://www.redbooks.ibm.com/redbooks/SG248056/wwhelp/wwhimpl/api.htm?href=3-1.htm</a>)
+	Creating a deployment manager profile (<a style="color:#3465A4" href="http://www.redbooks.ibm.com/redbooks/SG248056/wwhelp/wwhimpl/api.htm?href=3-3-4.htm">http://www.redbooks.ibm.com/redbooks/SG248056/wwhelp/wwhimpl/api.htm?href=3-3-4.htm</a>)
+
+Depending on the operation that you want to perform with the <i><span style="font-family:monospace">manageprofiles</span></i> command, you need to provide one or more of the following parameters (<a style="color:#3465A4" href="http://www-01.ibm.com/support/knowledgecenter/SSAW57_8.5.5/com.ibm.websphere.nd.multiplatform.doc/ae/rxml_manageprofiles.html">http://www-01.ibm.com/support/knowledgecenter/SSAW57_8.5.5/com.ibm.websphere.nd.multiplatform.doc/ae/rxml_manageprofiles.html</a>)
+
+Example:
+        <span style="font-size:small"><span style="font-family:monospace">app_server_root/bin/manageprofiles.sh -create 
+           -profileName profile_name 
+           -profilePath profile_root 
+           -templatePath template_path</span></span>
+
+
+<b>2)	Federate the application server profile</b> created in the previous step to the deployment manager  (<a style="color:#3465A4" href="http://www.redbooks.ibm.com/redbooks/SG248056/wwhelp/wwhimpl/api.htm?href=09-25.htm">http://www.redbooks.ibm.com/redbooks/SG248056/wwhelp/wwhimpl/api.htm?href=09-25.htm</a>)
+
+The most important <i><span style="font-family:monospace">addNode</span></i> command parameters are:
+
+ 	<b>dmgr_host, dmgr_port, username, password</b>.   These parameters are used to obtain connection to the deployment manager.
+ 	<b>startingport, portprops &lt;filename&gt;</b>		The new node agent is assigned a <a style="color:#204A87" href="../python/Range.html">range</a> of ports automatically. If you want to specify the ports for the node rather than taking the default, you can specify a starting port using the startingport parameter. The numbers are incremented from this number.
+ 	<b>includeapps, includebuses</b>	If you are federating an application server, you can keep any applications or service integration buses that are deployed to the server. The default behavior is not to include any of these resources during federation, so they will be lost.
+
+For more information about the addNode syntax and more options, see the following information center website:
+ <a style="color:#3465A4" href="http://pic.dhe.ibm.com/infocenter/wasinfo/v8r5/topic/com.ibm.websphere.nd.doc/ae/rxml_addnode.html">http://pic.dhe.ibm.com/infocenter/wasinfo/v8r5/topic/com.ibm.websphere.nd.doc/ae/rxml_addnode.html</a>
+
+Example:
+<span style="font-size:small"><span style="font-family:monospace">	app_server_root/bin&gt;addNode.sh was85.ral.ibm.com 8879 -username wasadmin -password passw0rd -includeapps</span></span>
+
+<b>3)	Create Application Clusters  and member  <a style="color:#204A87" href="Java.html">Java</a></b><b> virtual machines (JVMs) ---</b> Clustering enables combining a group of machines into a logical entity that can be referenced as if it were one machine. (<a style="color:#3465A4" href="http://www.redbooks.ibm.com/redbooks/SG248056/wwhelp/wwhimpl/api.htm?href=14-083.htm">http://www.redbooks.ibm.com/redbooks/SG248056/wwhelp/wwhimpl/api.htm?href=14-083.htm</a>)
+
+<ul><li dir="ltr"><b>Reference of the process</b> : <a style="color:#3465A4" href="http://www-01.ibm.com/support/knowledgecenter/SSAW57_8.5.5/com.ibm.websphere.nd.doc/ae/trun_wlm_cluster_v61.html?lang=en">http://www-01.ibm.com/support/knowledgecenter/SSAW57_8.5.5/com.ibm.websphere.nd.doc/ae/trun_wlm_cluster_v61.html?lang=en</a>
+</li><li dir="ltr"><b>Cluster configuration scripts and parameters</b>: <a style="color:#3465A4" href="http://www-01.ibm.com/support/knowledgecenter/SSAW57_8.5.5/com.ibm.websphere.nd.doc/ae/rxml_7libcluster.html?cp=SSAW57_8.5.5%2F1-18-3-57&amp;lang=en">http://www-01.ibm.com/support/knowledgecenter/SSAW57_8.5.5/com.ibm.websphere.nd.doc/ae/rxml_7libcluster.html?cp=SSAW57_8.5.5%2F1-18-3-57&amp;lang=en</a>
+</li><li dir="ltr"><b>ClusterConfigCommands command group for the AdminTask object:</b> <a style="color:#3465A4" href="http://www-01.ibm.com/support/knowledgecenter/SSAW57_8.5.5/com.ibm.websphere.nd.multiplatform.doc/ae/rxml_atclusterconfig.html?lang=en">http://www-01.ibm.com/support/knowledgecenter/SSAW57_8.5.5/com.ibm.websphere.nd.multiplatform.doc/ae/rxml_atclusterconfig.html?lang=en</a>
+</li><li dir="ltr"><b>Automating server administration using wsadmin scripting: </b> <a style="color:#3465A4" href="http://www-01.ibm.com/support/knowledgecenter/SSAW57_8.5.5/com.ibm.websphere.nd.multiplatform.doc/ae/txml_7libserver.html?lang=en">http://www-01.ibm.com/support/knowledgecenter/SSAW57_8.5.5/com.ibm.websphere.nd.multiplatform.doc/ae/txml_7libserver.html?lang=en</a></li></ul>
+
+<b>4)	Create WebSphere resources as required by application</b> ()
+         -- <b>Configure Custom properties for application JVMs</b> 
+		Configure the <a style="color:#204A87" href="Java.html">Java</a> virtual machine (JVM): <a style="color:#3465A4" href="http://www-01.ibm.com/support/knowledgecenter/api/content/SSAW57_8.5.5/com.ibm.websphere.nd.multiplatform.doc/ae/txml_7libserver.html">http://www-01.ibm.com/support/knowledgecenter/api/content/SSAW57_8.5.5/com.ibm.websphere.nd.multiplatform.doc/ae/txml_7libserver.html</a>
+		Working with Web server JVM properties files: <a style="color:#3465A4" href="http://www-01.ibm.com/support/knowledgecenter/SSEQTP_7.0.0/com.ibm.websphere.soafep.multiplatform.doc/info/ae/ae/txml_config_prop_websrv_jvm.html?lang=en">http://www-01.ibm.com/support/knowledgecenter/SSEQTP_7.0.0/com.ibm.websphere.soafep.multiplatform.doc/info/ae/ae/txml_config_prop_websrv_jvm.html?lang=en</a>
+
+         -- <b>Create JDBC Provider &amp; data sources</b> 
+		JDBC configuration scripts: <a style="color:#3465A4" href="http://www-01.ibm.com/support/knowledgecenter/api/content/SSAW57_8.5.5/com.ibm.websphere.nd.multiplatform.doc/ae/rxml_7adminjdbc.html">http://www-01.ibm.com/support/knowledgecenter/api/content/SSAW57_8.5.5/com.ibm.websphere.nd.multiplatform.doc/ae/rxml_7adminjdbc.html</a>
+
+         -- <b>Create WMQ queues/topics and connection factories</b>
+		Working with WebSphere MQ topic connection factory properties files (<a style="color:#3465A4" href="http://www-01.ibm.com/support/knowledgecenter/SSEQTP_8.0.0/com.ibm.websphere.base.iseries.doc/info/iseries/ae/txml_config_prop_mqtopic_cf.html?lang=en">http://www-01.ibm.com/support/knowledgecenter/SSEQTP_8.0.0/com.ibm.websphere.base.iseries.doc/info/iseries/ae/txml_config_prop_mqtopic_cf.html?lang=en</a>)
+
+         -- <b>Create <a style="color:#204A87" href="../puppet/Resource.html">Resource</a></b><b> Adaptors/J2C Connection Factories for connecting to Mainframe Regions</b>
+		Adding an external <a style="color:#204A87" href="../puppet/Resource.html">resource</a> adapters target for WebSphere Application Server (<a style="color:#3465A4" href="http://www-01.ibm.com/support/knowledgecenter/SSEQTP_6.1.0/com.ibm.ws.ast.st.enhanced.ear.doc/topics/twj2cexternalv6.html?cp=SSEQTP_6.1.0&amp;lang=en">http://www-01.ibm.com/support/knowledgecenter/SSEQTP_6.1.0/com.ibm.ws.ast.st.enhanced.ear.doc/topics/twj2cexternalv6.html?cp=SSEQTP_6.1.0&amp;lang=en</a>)
+
+         -- <b>Enable Session management for the application JVMs for session persistence</b>
+		Session management custom properties (<a style="color:#3465A4" href="http://www-01.ibm.com/support/knowledgecenter/SSAW57_8.5.5/com.ibm.websphere.nd.doc/ae/rprs_custom_properties.html?cp=SSAW57_8.5.5%2F1-18-6-959">http://www-01.ibm.com/support/knowledgecenter/SSAW57_8.5.5/com.ibm.websphere.nd.doc/ae/rprs_custom_properties.html?cp=SSAW57_8.5.5%2F1-18-6-959</a>)
+
+         -- <b>Create Virtual hosts for application deployments.</b>
+		Creating and updating virtual hosts (<a style="color:#3465A4" href="http://www.redbooks.ibm.com/redbooks/SG248056/wwhelp/wwhimpl/api.htm?href=7-8.htm">http://www.redbooks.ibm.com/redbooks/SG248056/wwhelp/wwhimpl/api.htm?href=7-8.htm</a>)
+		Configuring a virtual host (<a style="color:#3465A4" href="http://www.redbooks.ibm.com/redbooks/SG248056/wwhelp/wwhimpl/api.htm?href=23-4-5.htm">http://www.redbooks.ibm.com/redbooks/SG248056/wwhelp/wwhimpl/api.htm?href=23-4-5.htm</a>)
+
+         -- Create Work Managers
+		Configuring work managers (<a style="color:#3465A4" href="http://www-01.ibm.com/support/knowledgecenter/SSAW57_8.5.5/com.ibm.websphere.nd.multiplatform.doc/asyncbns/tasks/tasb_workmanager.html?cp=SSAW57_8.5.5">http://www-01.ibm.com/support/knowledgecenter/SSAW57_8.5.5/com.ibm.websphere.nd.multiplatform.doc/asyncbns/tasks/tasb_workmanager.html?cp=SSAW57_8.5.5</a>)
+		Work managers (<a style="color:#3465A4" href="http://www-01.ibm.com/support/knowledgecenter/SSAW57_8.5.5/com.ibm.websphere.nd.multiplatform.doc/asyncbns/concepts/casb_workmgr.html?cp=SSAW57_8.5.5">http://www-01.ibm.com/support/knowledgecenter/SSAW57_8.5.5/com.ibm.websphere.nd.multiplatform.doc/asyncbns/concepts/casb_workmgr.html?cp=SSAW57_8.5.5</a>)
+</div></body></html>

@@ -1,0 +1,110 @@
+<html xmlns:tomboy="http://beatniksoftware.com/tomboy" xmlns:link="http://beatniksoftware.com/tomboy/link" xmlns:size="http://beatniksoftware.com/tomboy/size"><head><META http-equiv="Content-Type" content="text/html; charset=utf-8"><title>Linux commands</title><style type="text/css">
+        
+	body {  }
+	h1 { font-size: xx-large;
+     	     font-weight: bold;
+     	     border-bottom: 1px solid black; }
+	div.note {
+		   position: relative;
+		   display: block;
+		   padding: 5pt;
+		   margin: 5pt; 
+		   white-space: -moz-pre-wrap; /* Mozilla */
+ 	      	   white-space: -pre-wrap;     /* Opera 4 - 6 */
+ 	      	   white-space: -o-pre-wrap;   /* Opera 7 */
+ 	      	   white-space: pre-wrap;      /* CSS3 */
+ 	      	   word-wrap: break-word;      /* IE 5.5+ */ }
+	</style></head><body><div class="note" id="Linux commands"><a name="linux commands"></a><h1>Linux commands</h1>
+<b><i>Directorios</i></b>
+<b><span style="font-family:monospace">cd</span></b>		Cambiar de directorio
+<b><span style="font-family:monospace">rmdir</span></b>		Borrar un directorio
+<b><span style="font-family:monospace">mkdir</span></b>		Crear un directorio
+<b><span style="font-family:monospace">pwd</span></b>		Imprime el directorio actual
+
+<b><i>Archivos</i></b>
+<b><span style="font-family:monospace">cat</span></b>		Concatenar y desplegar (en pantalla) el contenido de un o varios archivos
+<b><span style="font-family:monospace">find</span></b>		Buscar archivos que corresponden a un criterio deseado
+<b><span style="font-family:monospace">file</span></b>		Determina el tipo de archivo(s)
+<b><span style="font-family:monospace">grep</span></b>		Busca en archivos por las líneas que correspondan al patrón buscado
+<b><span style="font-family:monospace">head</span></b>		Muestra la primera parte de uno o varios archivos
+<b><span style="font-family:monospace">less</span></b>		Despliega parte de un archivo en pantalla de manera interactiva
+<b><span style="font-family:monospace">ln</span></b>		Crear enlaces simbólicos o duros entre archivos
+<b><span style="font-family:monospace">ls</span></b>		Listar información sobre archivos
+<b><span style="font-family:monospace">sort</span></b>		Ordenar archivos de texto
+<b><span style="font-family:monospace">tail</span></b>		Muestra la última parte de un archivo
+<b><span style="font-family:monospace">tee</span></b>		Redirecciona la salida a múltiples archivos
+<b><span style="font-family:monospace">uniq</span></b>		Remueve lineas duplicadas en los archivos indicados
+<b><span style="font-family:monospace">wc</span></b>		Imprime el conteo de bytes, palabras y lineas
+
+<b><i>Manipulando Archivos</i></b>
+<b><span style="font-family:monospace">cp</span></b>		Copiar uno o mas archvios a otra ubicación o ruta
+<b><span style="font-family:monospace">mv</span></b>		Mover o renombrar archivos o directorios
+<b><span style="font-family:monospace">rm</span></b>		Remover archivo(s)
+
+<b><i>Trabajando con comandos Linux</i></b>
+<b><span style="font-family:monospace">type</span></b>		Describe un comando •
+<b><span style="font-family:monospace">which</span></b>		Buscar en el $path del usuario por un archivo de programa
+<b><span style="font-family:monospace">man</span></b>		Maual o ayuda de un comando
+<b><span style="font-family:monospace">apropos</span></b>		Buscar ayuda en la paginas de manual (man -k)
+<b><span style="font-family:monospace">info</span></b>		Leer documentos info del sistema o comandos
+<b><span style="font-family:monospace">whatis</span></b>		Imprime descripciones de páginas de manual
+<b><span style="font-family:monospace">alias</span></b>		Crear un alias •
+<b><span style="font-family:monospace">help</span></b>		Despliega la ayuda para un comando integrado en el sistema •
+
+<b><i>Miselaneos</i></b>
+<b><span style="font-family:monospace">echo</span></b>		Despliega un mensaje en la pantalla •
+<b><span style="font-family:monospace">clear</span></b>		Limpiar la pantalla de la terminal
+<b><span style="font-family:monospace">history</span></b>		Muestra el historial de los comandos ejecutados
+<b><span style="color:#555753;text-decoration:underline">script</span></b>		  Captura todas las entradas y salidas de los comandos dados en CLI 
+				&gt; <span style="font-size:small"><span style="color:#555753;text-decoration:underline">script</span></span><span style="font-size:small"><span style="font-family:monospace"> screen.log</span></span>
+elinks			Es un web browser de linux
+				<span style="font-size:small"><span style="font-family:monospace">&gt; elinks google.com</span></span>
+
+<b><i>Permisos</i></b>
+<b><span style="font-family:monospace">id</span></b>		Imprime los identificadores de usuario y grupo
+<b><span style="font-family:monospace">chmod</span></b>		Cambiar los permisos de acceso
+<b><span style="font-family:monospace">chown</span></b>		Cambiar el propietario y grupo de un archivo
+<b><span style="font-family:monospace">su</span></b> 		Cambia el id del usuario o para convertirse en superusuario (root)
+<b><a style="color:#204A87" href="Sudo.html">sudo</a></b>		Ejecuta un comando como otro usuario
+<b><span style="font-family:monospace">chgrp</span></b>		Cambiar la pertenencia a un grupo
+<b><span style="font-family:monospace">passwd</span></b>		Modificar la contraseña de un usuario
+
+<b><i>Procesos</i></b>
+<b><span style="font-family:monospace">top</span></b>		Despliega tareas
+<b><span style="font-family:monospace">jobs</span></b>		Lista los trabajos activos
+<b><span style="font-family:monospace">bg</span></b>		Pone un trabajo en segundo plano
+<b><span style="font-family:monospace">fg</span></b>		Pone un trabajo en primer plano
+<b><span style="font-family:monospace">free</span></b>		Muestra información relativa al uso de la memoria
+<b><span style="font-family:monospace">iostat</span></b>		muestra estadísticas sobre la lectura/escritura de los dispositivos
+<b><span style="font-family:monospace">kill</span></b>		Envía una señal a un proceso
+<b><span style="font-family:monospace">killall</span></b>		Mata procesos por nombre
+<b><span style="color:#555753;text-decoration:underline">netstat</span></b>		Despliega estadísticas de red
+<b><span style="font-family:monospace">pgrep</span></b>		Devuelve el ID del proceso que coincide con la búsqueda
+<b><span style="font-family:monospace">ps</span></b>		Muestra una lista de los procesos que se están ejecutando y el nombre del usuario actual
+<b><span style="font-family:monospace">pstree</span></b>		Muestra una lista de los procesos en forma un árbol que permite ver la relación padre/hijo entre los procesos
+<b><span style="font-family:monospace">uptime</span></b>		Este comando indica: hora actual, el tiempo del sistema en marcha, # de usuarios conectados, carga promedio del sistema los últimos 1, 5 y 15 minutos
+<b><a style="color:#204A87" href="../vmstat.html">vmstat</a></b>		Muestra un estado de uso los recursos del sistema, incluyendo memoria, espacio de intercambio y <a style="color:#204A87" href="../metrored pitfalls/Installation of Web GUI 7_4 64-bit package for Linux fails.html">Installation of Web GUI 7.4 64-bit package for Linux fails</a>/S de disco.
+<b><span style="font-family:monospace">who</span></b>		Muestra la lista de usuarios conectados
+<b><span style="font-family:monospace">xload</span></b>		Un programa gráfico que muestra la carga del sistema a través del tiempo
+<b><span style="font-family:monospace">shutdown</span></b>	Apaga o reinicia el sistema
+<b><span style="font-family:monospace">tload</span></b>		Similar a xload pero para la terminal
+
+<b><i>Almacenamiento</i></b>
+<b><span style="font-family:monospace">du</span></b>		Muestra el espacio en disco usado por los directorios y sub-directorios, por defecto, partiendo del directorio en uso
+<b><span style="font-family:monospace">df</span></b>		Muestra la cantidad de espacio libre en los diferentes dispositivos montados o pasados como parámetro
+<b><span style="font-family:monospace">mount</span></b>		Monta un sistema de archivos
+<b><span style="font-family:monospace">umount</span></b>		Desmonta un sistema de archivos
+<b><span style="font-family:monospace">fsck</span></b>		Verifica y Repara un sistema de archivos
+<b><span style="font-family:monospace">fdisk</span></b>		Programa para manipular tablas de particiones de discos
+<b><span style="font-family:monospace">mkfs</span></b>		Crea un sistema de archivos
+<b><span style="font-family:monospace">fdformat</span></b>	Da formato a un disco floppy
+<b><span style="font-family:monospace">dd</span></b>		Escribe datos en bloque directamente a un dispositivo
+<b><span style="font-family:monospace">genisoimage</span></b>	Crea un archivo de imagen ISO 9660
+<b><span style="font-family:monospace">wodim</span></b>		Escribe datos en un dispositivo óptico
+<b><span style="font-family:monospace">md5sum</span></b>		Calcula una suma de verificación MD5
+
+<b><i>Manejo de paquetes</i></b>
+<b><span style="font-family:monospace">rpm</span></b>		Manejo de paquetes de bajo nivel para RedHat
+<b><span style="font-family:monospace">yum</span></b>		Manejo de paquetes de alto nivel para RedHat
+<b><span style="font-family:monospace">dpkg</span></b>		Manejo de paquetes de bajo nivel para Debian / Ubuntu
+<b><span style="font-family:monospace">apt-get</span></b>		Manejo de paquetes de alto nivel para Debian / Ubuntu</div></body></html>

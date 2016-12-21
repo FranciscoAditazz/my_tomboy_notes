@@ -1,0 +1,59 @@
+<html xmlns:tomboy="http://beatniksoftware.com/tomboy" xmlns:link="http://beatniksoftware.com/tomboy/link" xmlns:size="http://beatniksoftware.com/tomboy/size"><head><META http-equiv="Content-Type" content="text/html; charset=utf-8"><title>I/O File</title><style type="text/css">
+        
+	body {  }
+	h1 { font-size: xx-large;
+     	     font-weight: bold;
+     	     border-bottom: 1px solid black; }
+	div.note {
+		   position: relative;
+		   display: block;
+		   padding: 5pt;
+		   margin: 5pt; 
+		   white-space: -moz-pre-wrap; /* Mozilla */
+ 	      	   white-space: -pre-wrap;     /* Opera 4 - 6 */
+ 	      	   white-space: -o-pre-wrap;   /* Opera 7 */
+ 	      	   white-space: pre-wrap;      /* CSS3 */
+ 	      	   word-wrap: break-word;      /* IE 5.5+ */ }
+	</style></head><body><div class="note" id="I/O File"><a name="i/o file"></a><h1>I/O File</h1>
+<b>open()</b>
+	<span style="font-size:small"><span style="font-family:monospace">f = open("output.txt", "w")</span></span>
+This told Python to open output.txt in "w" mode ("w" stands for "write"). We stored the result of this operation in a file object, f.
+
+passing "r+" as a second argument to the <a style="color:#204A87" href="Function.html">function</a>, the file will allow you to read and write to it!
+
+<b>write()</b>
+We can write to a Python file like so:
+	<span style="font-size:small"><span style="font-family:monospace">my_file.write("Data to be written")</span></span>
+
+<b>close()</b>
+You must close the file by calling my_file.close(). If you don't close your file, Python won't write to it properly. From here on out, you gotta close your files!
+
+During the I/O process, data is buffered: this means that it is held in a temporary location before being written to the file.
+
+Python doesn't flush the buffer—that is, write data to the file—until it's sure you're done writing. One way to do this is to close the file. If you write to a file without closing, the data won't make it to the target file.
+
+<b>read()
+</b><span style="font-size:small"><span style="font-family:monospace">	my_file = open("output.txt", "r")
+	<a style="color:#204A87" href="Print.html">print</a></span></span><span style="font-size:small"><span style="font-family:monospace"> my_file.read()
+	my_file.close()
+</span></span>
+<b>readline()</b>
+Python includes a readline() <a style="color:#204A87" href="Function.html">function</a> that reads from a file line by line, rather than pulling the entire file in at once
+
+
+<b>The 'with' and 'as' Keywords</b>
+There's a way to get Python to automatically close our files for us.
+
+File objects contain a special pair of built-in methods: <b>__enter__()</b> and <b>__exit__()</b>. When a file object's __exit__() method is invoked, it automatically closes the file:
+<span style="font-size:small"><span style="font-family:monospace">	with open("file", "mode") as variable:
+	    # Read or write to the file
+</span></span>example:
+<span style="font-size:small"><span style="font-family:monospace">	with open("text.txt", "w") as textfile:
+		textfile.write("Success!")</span></span>
+
+<b>Case Closed?</b>
+Is a way to test whether a file we've opened is closed. Python file objects have a closed attribute which is True when the file is closed and False otherwise.
+<span style="font-size:small"><span style="font-family:monospace">	f = open("bg.txt")
+	f.closed  # False
+	f.close()
+	f.closed  # True</span></span></div></body></html>

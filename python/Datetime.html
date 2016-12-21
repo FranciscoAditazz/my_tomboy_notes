@@ -1,0 +1,36 @@
+<html xmlns:tomboy="http://beatniksoftware.com/tomboy" xmlns:link="http://beatniksoftware.com/tomboy/link" xmlns:size="http://beatniksoftware.com/tomboy/size"><head><META http-equiv="Content-Type" content="text/html; charset=utf-8"><title>Datetime</title><style type="text/css">
+        
+	body {  }
+	h1 { font-size: xx-large;
+     	     font-weight: bold;
+     	     border-bottom: 1px solid black; }
+	div.note {
+		   position: relative;
+		   display: block;
+		   padding: 5pt;
+		   margin: 5pt; 
+		   white-space: -moz-pre-wrap; /* Mozilla */
+ 	      	   white-space: -pre-wrap;     /* Opera 4 - 6 */
+ 	      	   white-space: -o-pre-wrap;   /* Opera 7 */
+ 	      	   white-space: pre-wrap;      /* CSS3 */
+ 	      	   word-wrap: break-word;      /* IE 5.5+ */ }
+	</style></head><body><div class="note" id="Datetime"><a name="datetime"></a><h1>Datetime</h1>
+<b>Example</b>
+The first line imports the datetime library so that we can use it. The third line will <a style="color:#204A87" href="Print.html">print</a> out the current date and time.
+
+from datetime <a style="color:#204A87" href="../Import.html">Import</a> datetime
+
+now = datetime.now()
+
+<a style="color:#204A87" href="Print.html">print</a> now
+
+<b>Extracting Information</b>
+from datetime <a style="color:#204A87" href="../Import.html">Import</a> datetime
+now = datetime.now()
+
+current_year = now.year
+current_month = now.month
+current_day = now.day
+<a style="color:#204A87" href="Print.html">print</a> now.hour
+<a style="color:#204A87" href="Print.html">print</a> now.minute
+<a style="color:#204A87" href="Print.html">print</a> now.second</div></body></html>

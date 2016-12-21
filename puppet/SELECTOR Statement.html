@@ -1,0 +1,42 @@
+<html xmlns:tomboy="http://beatniksoftware.com/tomboy" xmlns:link="http://beatniksoftware.com/tomboy/link" xmlns:size="http://beatniksoftware.com/tomboy/size"><head><META http-equiv="Content-Type" content="text/html; charset=utf-8"><title>SELECTOR Statement</title><style type="text/css">
+        
+	body {  }
+	h1 { font-size: xx-large;
+     	     font-weight: bold;
+     	     border-bottom: 1px solid black; }
+	div.note {
+		   position: relative;
+		   display: block;
+		   padding: 5pt;
+		   margin: 5pt; 
+		   white-space: -moz-pre-wrap; /* Mozilla */
+ 	      	   white-space: -pre-wrap;     /* Opera 4 - 6 */
+ 	      	   white-space: -o-pre-wrap;   /* Opera 7 */
+ 	      	   white-space: pre-wrap;      /* CSS3 */
+ 	      	   word-wrap: break-word;      /* IE 5.5+ */ }
+	</style></head><body><div class="note" id="SELECTOR Statement"><a name="selector statement"></a><h1>SELECTOR Statement</h1>
+Selector statements are very similar to case statements, but instead of executing a block of code, a selector assigns a value directly. A selector might look something like this:
+
+<span style="font-size:small"><span style="font-family:monospace">$rootgroup = $::osfamily ? {
+  'Solaris'  =&gt; 'wheel',
+  'Darwin'   =&gt; 'wheel',
+  'FreeBSD'  =&gt; 'wheel',
+  'default'  =&gt; 'root',
+}</span></span>
+
+Here, the value of the <span style="font-size:small"><span style="font-family:monospace">$rootgroup</span></span> is determined based on the control variable <span style="font-size:small"><span style="font-family:monospace">$osfamily.</span></span> Following the control variable is a ? (question mark) keyword. In the block surrounded by curly braces are series of possible values for the <span style="font-size:small"><span style="font-family:monospace">$::osfamily</span></span> fact, followed by the value that the selector should return if the value matches the control variable.
+
+Because a selector can only return a value and cannot execute a <a style="color:#204A87" href="../python/Function.html">function</a> like fail() or warn(), it is up to you to make sure your code handles unexpected conditions gracefully. You wouldn't want Puppet to forge ahead with with an inappropriate default value and encounter errors down the line.
+
+<b>Example</b>: Instead of having the selector return a value and saving it in a variable, as we did in the previous example with <span style="font-size:small"><span style="font-family:monospace">$rootgroup</span></span>, we use it to specify the value of the content attribute in-line.
+
+<span style="font-size:small"><span style="font-family:monospace">file { '/root/architecture.txt' :
+  ensure =&gt; file,
+  content =&gt; $::architecture ? {
+    'i386' =&gt; "This machine has a 32-bit architecture.\n",
+    'x86_64' =&gt; "This machine has a 64-bit architecture.\n",
+  }
+}</span></span>
+
+
+</div></body></html>

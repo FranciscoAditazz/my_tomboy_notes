@@ -1,0 +1,49 @@
+<html xmlns:tomboy="http://beatniksoftware.com/tomboy" xmlns:link="http://beatniksoftware.com/tomboy/link" xmlns:size="http://beatniksoftware.com/tomboy/size"><head><META http-equiv="Content-Type" content="text/html; charset=utf-8"><title>Print</title><style type="text/css">
+        
+	body {  }
+	h1 { font-size: xx-large;
+     	     font-weight: bold;
+     	     border-bottom: 1px solid black; }
+	div.note {
+		   position: relative;
+		   display: block;
+		   padding: 5pt;
+		   margin: 5pt; 
+		   white-space: -moz-pre-wrap; /* Mozilla */
+ 	      	   white-space: -pre-wrap;     /* Opera 4 - 6 */
+ 	      	   white-space: -o-pre-wrap;   /* Opera 7 */
+ 	      	   white-space: pre-wrap;      /* CSS3 */
+ 	      	   word-wrap: break-word;      /* IE 5.5+ */ }
+	</style></head><body><div class="note" id="Print"><a name="print"></a><h1>Print</h1>
+<b>Simple print</b>
+<span style="font-size:small"><span style="font-family:monospace">	caesar = "Graham"
+	print caesar</span></span>
+
+The , character after our print statement means that our next print statement keeps printing on the same line.<b>
+</b><span style="font-family:monospace">	<span style="font-size:small">for c in phrase:
+	    if c == 'A' or c == 'a':
+	        print 'X',
+	    else:
+	        print c,</span></span>
+
+<b>Formatting</b>
+<b>a)</b> Formats and prints a <a style="color:#204A87" href="String.html">string</a> to the console the value of total with exactly two numbers after the decimal:
+<span style="font-size:small"><span style="font-family:monospace">	print("%.2f" % total)</span></span>
+b) print "There are %d items in the suitcase." % (<a style="color:#204A87" href="List.html">list</a>_length)
+
+<b>Escaping characters</b>
+This code breaks because Python thinks the apostrophe in 'There's' ends the <a style="color:#204A87" href="String.html">string</a>. We can use the backslash to fix the problem, like this:
+<span style="font-size:small">	'There\'s a snake in my boot!'</span>
+
+<b>Printing a <a style="color:#204A87" href="List.html">List</a></b><b> of Lists</b>
+<span style="font-size:small">    board = []
+    
+    for int in <a style="color:#204A87" href="Range.html">range</a></span><span style="font-size:small">(5):
+        board.append(["O"] * 5)
+    
+    def print_board(myList):			<i># It will print the following lines</i></span><span style="font-size:small">
+        for int in <a style="color:#204A87" href="Range.html">range</a></span><span style="font-size:small">(len(myList)):	<i># 0 0 0 0 0</i></span><span style="font-size:small">
+            print " ".join(myList[int])		<i># 0 0 0 0 0</i></span><span style="font-size:small">
+    							<i># 0 0 0 0 0</i></span><span style="font-size:small">
+    print_board(board)</span>				<i><span style="font-size:small"># 0 0 0 0 0</span></i><i>
+							<span style="font-size:small"># 0 0 0 0 0</span></i></div></body></html>

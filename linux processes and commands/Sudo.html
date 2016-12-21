@@ -1,0 +1,31 @@
+<html xmlns:tomboy="http://beatniksoftware.com/tomboy" xmlns:link="http://beatniksoftware.com/tomboy/link" xmlns:size="http://beatniksoftware.com/tomboy/size"><head><META http-equiv="Content-Type" content="text/html; charset=utf-8"><title>Sudo</title><style type="text/css">
+        
+	body {  }
+	h1 { font-size: xx-large;
+     	     font-weight: bold;
+     	     border-bottom: 1px solid black; }
+	div.note {
+		   position: relative;
+		   display: block;
+		   padding: 5pt;
+		   margin: 5pt; 
+		   white-space: -moz-pre-wrap; /* Mozilla */
+ 	      	   white-space: -pre-wrap;     /* Opera 4 - 6 */
+ 	      	   white-space: -o-pre-wrap;   /* Opera 7 */
+ 	      	   white-space: pre-wrap;      /* CSS3 */
+ 	      	   word-wrap: break-word;      /* IE 5.5+ */ }
+	</style></head><body><div class="note" id="Sudo"><a name="sudo"></a><h1>Sudo</h1>
+<b>How to add user to sudoers</b>
+
+1)	Add the user to the sudo group:
+
+<span style="font-size:small"><span style="font-family:monospace">sudo adduser &lt;username&gt; sudo</span></span>	(on ubuntu)
+
+
+2)	Include user to <a style="color:#3465A4" href="/etc/sudoers">/etc/sudoers</a> file
+
+<span style="font-size:small"><span style="font-family:monospace"># Allow members of group sudo to execute any command
+%sudo    ALL=(ALL:ALL) ALL</span></span>
+<span style="font-size:small"><span style="font-family:monospace">oracle   ALL=(ALL)    ALL</span></span>
+
+3) you can use command <span style="font-size:small"><span style="font-family:monospace">visudo</span></span></div></body></html>

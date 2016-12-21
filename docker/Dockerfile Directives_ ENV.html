@@ -1,0 +1,45 @@
+<html xmlns:tomboy="http://beatniksoftware.com/tomboy" xmlns:link="http://beatniksoftware.com/tomboy/link" xmlns:size="http://beatniksoftware.com/tomboy/size"><head><META http-equiv="Content-Type" content="text/html; charset=utf-8"><title>Dockerfile Directives: ENV</title><style type="text/css">
+        
+	body {  }
+	h1 { font-size: xx-large;
+     	     font-weight: bold;
+     	     border-bottom: 1px solid black; }
+	div.note {
+		   position: relative;
+		   display: block;
+		   padding: 5pt;
+		   margin: 5pt; 
+		   white-space: -moz-pre-wrap; /* Mozilla */
+ 	      	   white-space: -pre-wrap;     /* Opera 4 - 6 */
+ 	      	   white-space: -o-pre-wrap;   /* Opera 7 */
+ 	      	   white-space: pre-wrap;      /* CSS3 */
+ 	      	   word-wrap: break-word;      /* IE 5.5+ */ }
+	</style></head><body><div class="note" id="Dockerfile Directives: ENV"><a name="dockerfile directives: env"></a><h1>Dockerfile Directives: ENV</h1>
+Existen dos formas de definir <a style="color:#204A87" href="../ruby/Variables.html">variables</a> de ambiente para un usuario dentro de un Dockerfile:
+
+a) Se definen como EXPORT dentro del .bashrc
+b) Se utiliza la directiva ENV
+
+Ejemplo:
+
+<span style="font-size:small"><span style="font-family:monospace"># Docker file based on the latest CentOS 7 image - non-privileged user entry
+FROM centos:latest
+MAINTAINER <a style="color:#3465A4" href="franciscoj.rodriguez@outlook.com">franciscoj.rodriguez@outlook.com</a></span></span><span style="font-size:small"><span style="font-family:monospace">
+
+RUN useradd -ms <a style="color:#3465A4" href="/bin/bash">/bin/bash</a></span></span><span style="font-size:small"><span style="font-family:monospace"> user
+
+RUN echo "EXPORT 192.68.0.0/24" &gt;&gt; <a style="color:#3465A4" href="/etc/exports.list">/etc/exports.list</a></span></span><span style="font-size:small"><span style="font-family:monospace">
+
+RUN yum update -y
+RUN yum install -y net-tools wget
+
+RUN cd ~ &amp;&amp; wget --no-cookies --no-check-certificate --header "Cookie: gpw_e24=http%3A%2F%2Fwww.oracle.com%2F; oraclelicense=accept-securebackup-cookie" "<a style="color:#3465A4" href="http://download.oracle.com/otn-pub/java/jdk/8u60-b27/jre-8u60-linux-x64.rpm&quot;">http://download.oracle.com/otn-pub/java/jdk/8u60-b27/jre-8u60-linux-x64.rpm"</a></span></span><span style="font-size:small"><span style="font-family:monospace">
+
+RUN yum localinstall -y <a style="color:#3465A4" href="~/jre-8u60-linux-x64.rpm">~/jre-8u60-linux-x64.rpm</a></span></span><span style="font-size:small"><span style="font-family:monospace">
+
+USER user
+
+<span style="background:yellow">RUN cd ~ &amp;&amp; echo "export <a style="color:#204A87" href="../installations/Java.html">JAVA</a></span></span></span><span style="font-size:small"><span style="font-family:monospace"><span style="background:yellow">_HOME=/usr/<a style="color:#204A87" href="../installations/Java.html">java</a></span></span></span><span style="font-size:small"><span style="font-family:monospace"><span style="background:yellow">/jdk1.8.0/jre" &gt;&gt; <a style="color:#3465A4" href="/home/user/.bashrc">/home/user/.bashrc</a></span></span></span><span style="font-size:small"><span style="font-family:monospace"><span style="background:yellow">
+
+ENV <a style="color:#204A87" href="../installations/Java.html">JAVA</a></span></span></span><span style="font-size:small"><span style="font-family:monospace"><span style="background:yellow">_BIN <a style="color:#3465A4" href="/usr/java/jdk1.8.0/jre/bin">/usr/java/jdk1.8.0/jre/bin</a></span></span></span><span style="font-size:small"><span style="font-family:monospace"><span style="background:yellow">
+</span></span></span></div></body></html>

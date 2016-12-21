@@ -1,0 +1,31 @@
+<html xmlns:tomboy="http://beatniksoftware.com/tomboy" xmlns:link="http://beatniksoftware.com/tomboy/link" xmlns:size="http://beatniksoftware.com/tomboy/size"><head><META http-equiv="Content-Type" content="text/html; charset=utf-8"><title>Warn Function</title><style type="text/css">
+        
+	body {  }
+	h1 { font-size: xx-large;
+     	     font-weight: bold;
+     	     border-bottom: 1px solid black; }
+	div.note {
+		   position: relative;
+		   display: block;
+		   padding: 5pt;
+		   margin: 5pt; 
+		   white-space: -moz-pre-wrap; /* Mozilla */
+ 	      	   white-space: -pre-wrap;     /* Opera 4 - 6 */
+ 	      	   white-space: -o-pre-wrap;   /* Opera 7 */
+ 	      	   white-space: pre-wrap;      /* CSS3 */
+ 	      	   word-wrap: break-word;      /* IE 5.5+ */ }
+	</style></head><body><div class="note" id="Warn Function"><a name="warn function"></a><h1>Warn Function</h1>
+The warn() <a style="color:#204A87" href="python/Function.html">function</a> will not affect the execution of the rest of the <a style="color:#204A87" href="puppet/Manifest.html">manifest</a>, but if you were running Puppet in the usual Master-Agent setup, it would log a message on the server at the 'warn' level.
+
+<span style="font-size:small"><span style="font-family:monospace">if $is_virtual == 'true' {
+  # Our NTP <a style="color:#204A87" href="puppet/Module.html">module</a></span></span><span style="font-size:small"><span style="font-family:monospace"> is not supported on virtual machines:
+  <span style="background:yellow">warn</span></span></span><span style="font-size:small"><span style="font-family:monospace">( 'Tried to include <a style="color:#204A87" href="python/Class.html">class</a></span></span><span style="font-size:small"><span style="font-family:monospace"> ntp on virtual machine.' )
+}
+elsif $operatingsystem == 'Darwin' {
+  # Our NTP <a style="color:#204A87" href="puppet/Module.html">module</a></span></span><span style="font-size:small"><span style="font-family:monospace"> is not supported on Darwin:
+  <span style="background:yellow">warn</span></span></span><span style="font-size:small"><span style="font-family:monospace">( 'This NTP <a style="color:#204A87" href="puppet/Module.html">module</a></span></span><span style="font-size:small"><span style="font-family:monospace"> does not yet work on Darwin.' )
+}
+else {
+  # Normal node, include the <a style="color:#204A87" href="python/Class.html">class</a></span></span><span style="font-size:small"><span style="font-family:monospace">.
+  include ntp
+}</span></span></div></body></html>

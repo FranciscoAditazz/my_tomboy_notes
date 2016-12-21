@@ -1,0 +1,62 @@
+<html xmlns:tomboy="http://beatniksoftware.com/tomboy" xmlns:link="http://beatniksoftware.com/tomboy/link" xmlns:size="http://beatniksoftware.com/tomboy/size"><head><META http-equiv="Content-Type" content="text/html; charset=utf-8"><title>Setting a service for automatic start</title><style type="text/css">
+        
+	body {  }
+	h1 { font-size: xx-large;
+     	     font-weight: bold;
+     	     border-bottom: 1px solid black; }
+	div.note {
+		   position: relative;
+		   display: block;
+		   padding: 5pt;
+		   margin: 5pt; 
+		   white-space: -moz-pre-wrap; /* Mozilla */
+ 	      	   white-space: -pre-wrap;     /* Opera 4 - 6 */
+ 	      	   white-space: -o-pre-wrap;   /* Opera 7 */
+ 	      	   white-space: pre-wrap;      /* CSS3 */
+ 	      	   word-wrap: break-word;      /* IE 5.5+ */ }
+	</style></head><body><div class="note" id="Setting a service for automatic start"><a name="setting a service for automatic start"></a><h1>Setting a service for automatic start</h1>
+
+<b>1. Create a file in <a style="color:#3465A4" href="/etc/init.d">/etc/init.d</a></b><b> directory with the name of your service:</b>
+<span style="font-size:small">#! <a style="color:#3465A4" href="/bin/sh">/bin/sh</a></span><span style="font-size:small">
+# <span style="color:#555753;text-decoration:underline">Script</span></span><span style="font-size:small"> ejemplo para arranque de servicios en <a style="color:#3465A4" href="/etc/init.d/">/etc/init.d/</a></span><span style="font-size:small">
+#
+case "$1" in
+start)
+echo "Iniciando servicio... "
+# Aquí comando a ejecutar para arrancar el servicio
+;;
+stop)
+echo "Deteniendo servicio..."
+# Aquí comando a ejecutar para detener el servicio
+;;
+*)
+echo "Modo de empleo: <a style="color:#3465A4" href="/etc/init.d/mi_script">/etc/init.d/mi_script</a></span><span style="font-size:small"> {start|stop}"
+exit 1
+;;
+esac
+exit 0</span>
+
+<b>2. Check the corresponding runlevel:</b>
+<span style="font-size:small">cat <a style="color:#3465A4" href="/etc/inittab">/etc/inittab</a></span>
+
+<b>3. Create a symbolic link where the fist letter is S (from start, K from Kill) and Number 98 which is the number of the process to be executed.
+</b><span style="font-size:small">ln -s  <a style="color:#3465A4" href="/etc/init.d/mi_script">/etc/init.d/mi_script</a></span><span style="font-size:small"> <a style="color:#3465A4" href="/etc/rc3.d/S98miscript">/etc/rc3.d/S98miscript</a></span><span style="font-size:small">
+</span>
+
+<b>4. Esto es todo, de este modo cada vez que arranquéis la máquina debería ejecutarse el <span style="color:#555753;text-decoration:underline">script</span></b><b> configurado.</b>
+
+
+<b>CENTOS</b>
+To auto start services in Centos or Redhat OS, you can use builtin chkconfig utility. It is located in /sbin directory. If you are a regular user (non-root), then /sbin may not be in your path. Therefore, you may have to use the full path to access the chkconfig utility.
+
+To auto start a new service:
+
+<b>1. </b>Find out the name of service’s <span style="color:#555753;text-decoration:underline">script</span> from <a style="color:#3465A4" href="/etc/init.d/">/etc/init.d/</a> directory e.g. mysqld or httpd
+<b>2. </b>Add it to chkconfig
+	<span style="font-size:small"><a style="color:#204A87" href="Sudo.html">sudo</a></span><span style="font-size:small"><span style="font-family:monospace"> <a style="color:#3465A4" href="/sbin/chkconfig">/sbin/chkconfig</a></span></span><span style="font-size:small"><span style="font-family:monospace"> --add mysqld
+</span></span><b>3. </b>Make sure it is in the chkconfig.
+	<span style="font-size:small"><a style="color:#204A87" href="Sudo.html">sudo</a></span><span style="font-size:small"><span style="font-family:monospace"> <a style="color:#3465A4" href="/sbin/chkconfig">/sbin/chkconfig</a></span></span><span style="font-size:small"><span style="font-family:monospace"> --<a style="color:#204A87" href="../python/List.html">list</a></span></span><span style="font-size:small"><span style="font-family:monospace"> mysqld
+</span></span><b>4. </b>Set it to autostart
+	<span style="font-size:small"><a style="color:#204A87" href="Sudo.html">sudo</a></span><span style="font-size:small"> <a style="color:#3465A4" href="/sbin/chkconfig">/sbin/chkconfig</a></span><span style="font-size:small"> mysqld on</span>
+
+</div></body></html>

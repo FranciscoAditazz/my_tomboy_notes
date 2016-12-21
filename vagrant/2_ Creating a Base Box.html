@@ -1,0 +1,74 @@
+<html xmlns:tomboy="http://beatniksoftware.com/tomboy" xmlns:link="http://beatniksoftware.com/tomboy/link" xmlns:size="http://beatniksoftware.com/tomboy/size"><head><META http-equiv="Content-Type" content="text/html; charset=utf-8"><title>2. Creating a Base Box</title><style type="text/css">
+        
+	body {  }
+	h1 { font-size: xx-large;
+     	     font-weight: bold;
+     	     border-bottom: 1px solid black; }
+	div.note {
+		   position: relative;
+		   display: block;
+		   padding: 5pt;
+		   margin: 5pt; 
+		   white-space: -moz-pre-wrap; /* Mozilla */
+ 	      	   white-space: -pre-wrap;     /* Opera 4 - 6 */
+ 	      	   white-space: -o-pre-wrap;   /* Opera 7 */
+ 	      	   white-space: pre-wrap;      /* CSS3 */
+ 	      	   word-wrap: break-word;      /* IE 5.5+ */ }
+	</style></head><body><div class="note" id="2. Creating a Base Box"><a name="2. creating a base box"></a><h1>2. Creating a Base Box</h1>
+There are a special category of boxes known as "base boxes." These boxes contain the bare minimum required for Vagrant to <a style="color:#204A87" href="../python/Function.html">function</a>, are generally not made by repackaging an existing Vagrant environment (hence the "base" in the "base box").
+
+<b>What's in a Base Box?</b>
+
+A base box typically consists of only a bare minimum set of software for Vagrant to <a style="color:#204A87" href="../python/Function.html">function</a>. As an example, a Linux box may contain only the following:
+
+<ul><li dir="ltr">    Package manager
+</li><li dir="ltr">    SSH
+</li><li dir="ltr">    SSH user so Vagrant can connect
+</li><li dir="ltr">    Perhaps Chef, Puppet, etc. but not strictly required.</li></ul>
+
+In addition to this, each provider may require additional software. For example, if you're making a base box for VirtualBox, you'll want to include the VirtualBox guest additions so that shared folders work properly. But if you're making an AWS base box, this is not required.
+
+<b>Creating a Base Box</b>
+Just about every aspect of Vagrant can be modified. However, Vagrant does expect some defaults which will cause your base box to "just work" out of the box. You should create these as defaults if you intent to publicly distribute your box.
+
+<ul><li dir="ltr">Disk Space.<b> </b>Make sure the user will have enough disk space to do interesting things, without being annoying. 
+</li><li dir="ltr">Memory.<b> </b>Finding the right balance of the default amount of memory is important. For most providers, the user can modify the memory with the <a style="color:#204A87" href="Vagrantfile.html">Vagrantfile</a>, so don't use too much by default. 
+</li><li dir="ltr">Peripherals (Audio, USB, etc.).<b> </b>Disable any non-necessary hardware in a base box such as audio and USB controllers. 
+</li><li dir="ltr">"vagrant" User. By default, Vagrant expects a "vagrant" user to SSH into the machine as. This user should be setup with the insecure keypair that Vagrant uses as a default to attempt to SSH.
+<ul><li dir="ltr"><span style="font-size:small">To configure SSH access with the insecure keypair, place the public key into the <a style="color:#3465A4" href="~/.ssh/authorized_keys">~/.ssh/authorized_keys</a></span><span style="font-size:small"> file for the "vagrant" user. Note that OpenSSH is very picky about file permissions. Therefore, make sure that <a style="color:#3465A4" href="~/.ssh">~/.ssh</a></span><span style="font-size:small"> has 0700 permissions and the authorized keys file has 0600 permissions.</span>
+</li></ul></li><li dir="ltr">Root Password: "vagrant". Publicly available base boxes usually use a root password of "vagrant" to keep things easy.
+</li><li dir="ltr">Password-less <a style="color:#204A87" href="../linux processes and commands/Sudo.html">Sudo</a>. Many aspects of Vagrant expect the default SSH user to have passwordless <a style="color:#204A87" href="../linux processes and commands/Sudo.html">sudo</a> configured. This lets Vagrant configure networks, mount <a style="color:#204A87" href="Synced Folders.html">synced folders</a>, install software, and more. (<span style="font-size:small"><span style="font-family:monospace">vagrant ALL=(ALL) NOPASSWD: ALL</span></span>)
+</li><li dir="ltr">SSH Tweaks. In order to keep SSH speedy even when your machine or the Vagrant machine is not connected to the internet, set the <span style="font-family:monospace">UseDNS</span> configuration to no in the SSH server configuration. 
+</li><li dir="ltr">Other Software. Feel free to install and configure any other software you want available by default for this base box.
+</li><li dir="ltr">Packaging the Box. Packaging the box into a box file is provider-specific.
+</li><li dir="ltr">Distributing the Box. You can upload both public and private boxes to Vagrant Cloud (<a style="color:#3465A4" href="https://vagrantcloud.com/">https://vagrantcloud.com/</a>) service.
+</li><li dir="ltr">Testing the Box. To test the box, pretend you're a new user of Vagrant and give it a shot. If you made a box for some other provider, be sure to specify the --provider option to <a style="color:#204A87" href="vagrant up.html">vagrant up</a>. :</li></ul>
+<span style="font-size:small"><span style="font-family:monospace">	$ <a style="color:#204A87" href="vagrant box.html">vagrant box</a></span></span><span style="font-size:small"><span style="font-family:monospace"> add my-box <a style="color:#3465A4" href="/path/to/the/new.box">/path/to/the/new.box</a></span></span><span style="font-size:small"><span style="font-family:monospace">
+	...
+	$ <a style="color:#204A87" href="vagrant init.html">vagrant init</a></span></span><span style="font-size:small"><span style="font-family:monospace"> my-box
+	...
+	$ <a style="color:#204A87" href="vagrant up.html">vagrant up</a></span></span><span style="font-size:small"><span style="font-family:monospace">
+	...</span></span>
+
+<b>Box File Format
+</b>With Vagrant supporting multiple providers and versioning now, box files are slightly complicated. There are two different components:
+
+<ul><li dir="ltr"> <b>Box File</b> - This is a compressed (tar, tar.gz, zip) file that is specific to a single provider and can contain anything. Vagrant core doesn't ever use the contents of this file. Instead, they are passed to the provider. Therefore, a VirtualBox box file has different contents from a VMware box file and so on.
+</li><li dir="ltr"> <b>Box <a style="color:#204A87" href="../puppet/Catalog.html">Catalog</a></b><b> Metadata</b> - This is a JSON document (typically exchanged during interactions with Vagrant Cloud) that specifies the name of the box, a description, available versions, available providers, and URLs to the actual box files (next component) for each provider and version. If this <a style="color:#204A87" href="../puppet/Catalog.html">catalog</a> metadata doesn't exist, a box file can still be added directly, but it will not support versioning and updating. It is a JSON document, structured in the following way:</li></ul>
+<span style="font-size:small"><span style="font-family:monospace">		{
+		"name": "hashicorp/precise64",
+		"description": "This box contains Ubuntu 12.04 LTS 64-bit.",
+		"versions": [{
+			"version": "0.1.0",
+			"providers": [{
+			"name": "virtualbox",
+			"url": "<a style="color:#3465A4" href="http://somewhere.com/precise64_010_virtualbox.box&quot;,">http://somewhere.com/precise64_010_virtualbox.box",</a></span></span><span style="font-size:small"><span style="font-family:monospace">
+			"checksum_type": "sha1",
+			"checksum": "foo"
+			}]
+		}]
+		}</span></span>
+
+
+
+</div></body></html>

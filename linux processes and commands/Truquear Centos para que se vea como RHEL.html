@@ -1,0 +1,39 @@
+<html xmlns:tomboy="http://beatniksoftware.com/tomboy" xmlns:link="http://beatniksoftware.com/tomboy/link" xmlns:size="http://beatniksoftware.com/tomboy/size"><head><META http-equiv="Content-Type" content="text/html; charset=utf-8"><title>Truquear Centos para que se vea como RHEL</title><style type="text/css">
+        
+	body {  }
+	h1 { font-size: xx-large;
+     	     font-weight: bold;
+     	     border-bottom: 1px solid black; }
+	div.note {
+		   position: relative;
+		   display: block;
+		   padding: 5pt;
+		   margin: 5pt; 
+		   white-space: -moz-pre-wrap; /* Mozilla */
+ 	      	   white-space: -pre-wrap;     /* Opera 4 - 6 */
+ 	      	   white-space: -o-pre-wrap;   /* Opera 7 */
+ 	      	   white-space: pre-wrap;      /* CSS3 */
+ 	      	   word-wrap: break-word;      /* IE 5.5+ */ }
+	</style></head><body><div class="note" id="Truquear Centos para que se vea como RHEL"><a name="truquear centos para que se vea como rhel"></a><h1>Truquear Centos para que se vea como RHEL</h1>
+<b>Se modifica el archivo <a style="color:#3465A4" href="/etc/redhat-release,">/etc/redhat-release,</a></b><b> ejemplo:</b>
+
+<span style="font-size:small"><span style="font-family:monospace">[root@dash01 ~]# cat <a style="color:#3465A4" href="/etc/redhat-release">/etc/redhat-release</a></span></span><span style="font-size:small"><span style="font-family:monospace">
+Red Hat Enterprise Linux Server release 6.6
+
+[root@dash01 ~]# cat <a style="color:#3465A4" href="/etc/redhat-release.centos">/etc/redhat-release.centos</a></span></span><span style="font-size:small"><span style="font-family:monospace"> 
+CentOS release 6.6 (Final)
+
+[root@dash01 ~]# ll <a style="color:#3465A4" href="/etc/*release">/etc/*release</a></span></span><span style="font-size:small"><span style="font-family:monospace">
+-rw-r--r--. 1 root root  44 Jun  5 08:25 <a style="color:#3465A4" href="/etc/centos-release">/etc/centos-release</a></span></span><span style="font-size:small"><span style="font-family:monospace">
+-rw-r--r--. 1 root root 152 May 16 04:47 <a style="color:#3465A4" href="/etc/lsb-release">/etc/lsb-release</a></span></span><span style="font-size:small"><span style="font-family:monospace">
+lrwxrwxrwx. 1 root root  14 May 15 23:43 <a style="color:#3465A4" href="/etc/redhat-release">/etc/redhat-release</a></span></span><span style="font-size:small"><span style="font-family:monospace"> -&gt; centos-release
+lrwxrwxrwx. 1 root root  14 May 15 23:43 <a style="color:#3465A4" href="/etc/system-release">/etc/system-release</a></span></span><span style="font-size:small"><span style="font-family:monospace"> -&gt; centos-release</span></span>
+
+<b>Para validar el release se utiliza el comando:
+<span style="font-size:small">&gt; lsb_release -a
+</span></b><span style="font-size:small">LSB Version:	:base-4.0-amd64:base-4.0-noarch:core-4.0-amd64:core-4.0-noarch:graphics-4.0-amd64:graphics-4.0-noarch:printing-4.0-amd64:printing-4.0-noarch
+Distributor ID:	RedHatEnterpriseServer
+Description:	Red Hat Enterprise Linux Server release 6.6
+Release:	6.6
+Codename:	n/a
+</span></div></body></html>

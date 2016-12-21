@@ -1,0 +1,38 @@
+<html xmlns:tomboy="http://beatniksoftware.com/tomboy" xmlns:link="http://beatniksoftware.com/tomboy/link" xmlns:size="http://beatniksoftware.com/tomboy/size"><head><META http-equiv="Content-Type" content="text/html; charset=utf-8"><title>Module</title><style type="text/css">
+        
+	body {  }
+	h1 { font-size: xx-large;
+     	     font-weight: bold;
+     	     border-bottom: 1px solid black; }
+	div.note {
+		   position: relative;
+		   display: block;
+		   padding: 5pt;
+		   margin: 5pt; 
+		   white-space: -moz-pre-wrap; /* Mozilla */
+ 	      	   white-space: -pre-wrap;     /* Opera 4 - 6 */
+ 	      	   white-space: -o-pre-wrap;   /* Opera 7 */
+ 	      	   white-space: pre-wrap;      /* CSS3 */
+ 	      	   word-wrap: break-word;      /* IE 5.5+ */ }
+	</style></head><body><div class="note" id="Module"><a name="module"></a><h1>Module</h1>
+A Puppet module is a self-contained bundle of code and data, organized around a particular purpose. The code would encompass manifests, the data would include all the source files, templates etc that you need to accomplish the purpose of the module.
+
+If resources and classes are the atoms and molecules of Puppet, we might consider modules our amoebas: the first self-contained organisms of the Puppet world. In actual practice, every <a style="color:#204A87" href="Manifest.html">manifest</a> should be contained within a module.
+
+Simple put, a Module is a directory with a specific structure - <span style="background:yellow">a means for us to package everything needed to achieve a certain goal</span>. Once we agree to stick to this standard way of doing this, a significant benefit is the ability to share our work, such that others who seek to achieve the same goal can re-use our work. The Forge is the central location where you can find modules that have been developed by others (<a style="color:#3465A4" href="https://forge.puppetlabs.com/">https://forge.puppetlabs.com/</a>). The vast majority of the necessary code had already been written, tested, documented, and published to the Puppet Forge.
+
+Modules provide a structure to make these collections of pre-written Puppet code, well, modular. In order to enable Puppet to access the classes and types defined in a module's manifests, modules give us a standard pattern for the organization of and naming of Puppet manifests and other resources.
+
+All modules are located in a directory specified by the modulepath variable in Puppet's configuration file. On the Learning VM, Puppet's configuration file can be found at <a style="color:#3465A4" href="/etc/puppetlabs/puppet/puppet.conf">/etc/puppetlabs/puppet/puppet.conf</a> .
+
+<b>Module Path</b>
+If you're ever wondering where your <span style="font-family:monospace">modulepath</span> is, you can find it by running the puppet agent command with the --<span style="font-family:monospace">configprint</span> flag and specifying <span style="font-family:monospace">modulepath</span>:
+
+	<span style="font-size:small"><span style="font-family:monospace">puppet agent --configprint modulepath</span></span>   
+	<span style="font-size:small"><span style="font-family:monospace">#  the command prints:  <a style="color:#3465A4" href="/etc/puppetlabs/puppet/modules:/opt/puppet/share/puppet/modules">/etc/puppetlabs/puppet/modules:/opt/puppet/share/puppet/modules</a></span></span>
+
+What the returned value tells us is that Puppet will look in the directories <a style="color:#3465A4" href="/etc/puppetlabs/puppet/modules">/etc/puppetlabs/puppet/modules</a> and then in <a style="color:#3465A4" href="/opt/puppet/share/puppet/modules">/opt/puppet/share/puppet/modules</a> to find the modules in use on the system. Classes and types defined by modules in these directories will be available to Puppet.
+
+
+
+</div></body></html>

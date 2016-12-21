@@ -1,0 +1,208 @@
+<html xmlns:tomboy="http://beatniksoftware.com/tomboy" xmlns:link="http://beatniksoftware.com/tomboy/link" xmlns:size="http://beatniksoftware.com/tomboy/size"><head><META http-equiv="Content-Type" content="text/html; charset=utf-8"><title>List</title><style type="text/css">
+        
+	body {  }
+	h1 { font-size: xx-large;
+     	     font-weight: bold;
+     	     border-bottom: 1px solid black; }
+	div.note {
+		   position: relative;
+		   display: block;
+		   padding: 5pt;
+		   margin: 5pt; 
+		   white-space: -moz-pre-wrap; /* Mozilla */
+ 	      	   white-space: -pre-wrap;     /* Opera 4 - 6 */
+ 	      	   white-space: -o-pre-wrap;   /* Opera 7 */
+ 	      	   white-space: pre-wrap;      /* CSS3 */
+ 	      	   word-wrap: break-word;      /* IE 5.5+ */ }
+	</style></head><body><div class="note" id="List"><a name="list"></a><h1>List</h1>
+Lists are a datatype you can use to store a collection of different pieces of information as a sequence under a single variable name. (Datatypes you've already learned about include strings, numbers, and booleans.)
+
+You can assign items to a list with an expression of the form
+
+<span style="font-size:small"><span style="font-family:monospace">	list_name = [item_1, item_2]</span></span>
+
+With the items in between brackets. A list can also be empty: 
+<span style="font-size:small"><span style="font-family:monospace">	empty_list = [].</span></span>
+
+A list doesn't have to have a fixed length. You can add items to the end of a list any time you like!
+
+<span style="font-size:small"><span style="font-family:monospace">	letters = ['a', 'b', 'c']
+	letters.append('d')
+	<a style="color:#204A87" href="Print.html">print</a></span></span><span style="font-size:small"><span style="font-family:monospace"> len(letters)
+	<a style="color:#204A87" href="Print.html">print</a></span></span><span style="font-size:small"><span style="font-family:monospace"> letters</span></span><span style="font-size:small">
+</span>
+<b>Remove duplicates</b>
+The following <a style="color:#204A87" href="Function.html">function</a> named remove_duplicates takes in a list and removes elements of the list that are the same.
+
+	<span style="font-size:small"><span style="font-family:monospace">def remove_duplicates(elements):
+	    newlist = []
+    
+	    for element in elements:
+	        if element <span style="background:yellow">not in</span></span></span><span style="font-size:small"><span style="font-family:monospace"> newlist:
+	            newlist.append(element)
+    
+	    return newlist</span></span>
+
+<b>List Slicing</b>
+List slicing allows us to access elements of a list in a concise manner. The syntax looks like this:
+	<span style="font-size:small"><span style="font-family:monospace">[start:end:stride]</span></span>
+Where <b><i>start</i></b> describes where the slice starts (inclusive), <b><i>end</i></b> is where it ends (exclusive), and <b><i>stride</i></b> describes the space between items in the sliced list. Example:
+<span style="font-size:small"><span style="font-family:monospace">	l = [i ** 2 for i in <a style="color:#204A87" href="Range.html">range</a></span></span><span style="font-size:small"><span style="font-family:monospace">(1, 11)]		# Should be [1, 4, 9, 16, 25, 36, 49, 64, 81, 100]
+	<a style="color:#204A87" href="Print.html">print</a></span></span><span style="font-size:small"><span style="font-family:monospace"> l[2:9:2]					# Prints [9, 25, 49, 81]</span></span>
+
+If you don't pass a particular index to the list slice, Python will pick a default.
+<span style="font-size:small"><span style="font-family:monospace">	to_five = ['A', 'B', 'C', 'D', '<a style="color:#204A87" href="../metrored pitfalls/Installation of Web GUI 7_4 64-bit package for Linux fails.html">Installation of Web GUI 7.4 64-bit package for Linux fails</a></span></span><span style="font-size:small"><span style="font-family:monospace">']
+	
+	<a style="color:#204A87" href="Print.html">print</a></span></span><span style="font-size:small"><span style="font-family:monospace"> to_five[3:]	# <i>prints ['D', '<a style="color:#204A87" href="../metrored pitfalls/Installation of Web GUI 7_4 64-bit package for Linux fails.html">Installation of Web GUI 7.4 64-bit package for Linux fails</a></i></span></span><span style="font-size:small"><span style="font-family:monospace"><i>'] </i></span></span><span style="font-size:small"><span style="font-family:monospace">
+	<a style="color:#204A87" href="Print.html">print</a></span></span><span style="font-size:small"><span style="font-family:monospace"> to_five[:2]	# <i>prints ['A', 'B']</i></span></span><span style="font-size:small"><span style="font-family:monospace">
+	<a style="color:#204A87" href="Print.html">print</a></span></span><span style="font-size:small"><span style="font-family:monospace"> to_five[::2]	#<i> prints ['A', 'C', '<a style="color:#204A87" href="../metrored pitfalls/Installation of Web GUI 7_4 64-bit package for Linux fails.html">Installation of Web GUI 7.4 64-bit package for Linux fails</a></i></span></span><span style="font-size:small"><span style="font-family:monospace"><i>']</i></span></span><span style="font-size:small"><span style="font-family:monospace">
+	<a style="color:#204A87" href="Print.html">print</a></span></span><span style="font-size:small"><span style="font-family:monospace"> letters[::-1]	# <i>prints ['<a style="color:#204A87" href="../metrored pitfalls/Installation of Web GUI 7_4 64-bit package for Linux fails.html">Installation of Web GUI 7.4 64-bit package for Linux fails</a></i></span></span><span style="font-size:small"><span style="font-family:monospace"><i>', 'D', 'C', 'B', 'A']</i></span></span><span style="font-size:small"><span style="font-family:monospace"> <b>Note:</b></span></span><span style="font-size:small"><span style="font-family:monospace"> A negative stride progresses through the list from right to left
+</span></span>
+<b>01.</b> The default starting index is 0.
+<b>02.</b> The default ending index is the end of the list.
+<b>03. </b>The default stride is 1. <b>Note: </b>A negative stride progresses through the list from right to left.
+
+Sometimes, you only want to access a portion of a list.
+<span style="font-size:small"><span style="font-family:monospace">	letters = ['a', 'b', 'c', 'd', '<a style="color:#204A87" href="../metrored pitfalls/Installation of Web GUI 7_4 64-bit package for Linux fails.html">Installation of Web GUI 7.4 64-bit package for Linux fails</a></span></span><span style="font-size:small"><span style="font-family:monospace">']
+	slice = letters[1:3]
+</span></span>Note: Remember that we start counting indices from 0 and that we stopped before index 3.
+
+If your list slice includes the very first or last item in a list (or a <a style="color:#204A87" href="String.html">string</a>), the index for that item doesn't have to be included. Example:
+<span style="font-size:small"><span style="font-family:monospace">	my_list = <a style="color:#204A87" href="Range.html">range</a></span></span><span style="font-size:small"><span style="font-family:monospace">(1, 11) # List of numbers 1 - 10
+
+	my_list[:2] 	# Grabs the first two items
+	my_list[3:]	# Grabs the fourth through last items
+	my_list[::2]	# Grabs every odd element of my_list from start to finish.
+</span></span>
+
+
+<b>List comprehension</b>
+List comprehensions are a powerful way to generate lists using the for/in and if keywords.
+<span style="font-size:small"><span style="font-family:monospace">	evens_to_50 =<span style="background:yellow"> [i for i in <a style="color:#204A87" href="Range.html">range</a></span></span></span><span style="font-size:small"><span style="font-family:monospace"><span style="background:yellow">(51) if i % 2 == 0]</span></span></span><span style="font-size:small"><span style="font-family:monospace">
+	<a style="color:#204A87" href="Print.html">print</a></span></span><span style="font-size:small"><span style="font-family:monospace"> evens_to_50
+
+</span></span>
+
+<span style="font-size:small"><span style="font-family:monospace">
+</span></span><b>Maintaining Order</b>
+Sometimes you need to <b><span style="background:yellow">search</span></b> for an item in a list. The method .index() returns the first index found in the list for that element:
+<span style="font-size:small"><span style="font-family:monospace">	animals = ["ant", "bat", "cat"]
+	<a style="color:#204A87" href="Print.html">print</a></span></span><span style="font-size:small"><span style="font-family:monospace"> animals.index("bat")
+
+	doubles = [x*2 for x in <a style="color:#204A87" href="Range.html">range</a></span></span><span style="font-size:small"><span style="font-family:monospace">(1,6)] 				# =&gt; [2, 4, 6, 8, 10]
+
+	doubles_by_3 = [x*2 for x in <a style="color:#204A87" href="Range.html">range</a></span></span><span style="font-size:small"><span style="font-family:monospace">(1,6) if (x*2)%3 == 0]	# =&gt; [6]
+
+	even_squares = [x ** 2 for x in <a style="color:#204A87" href="Range.html">range</a></span></span><span style="font-size:small"><span style="font-family:monospace">(1,12) if x % 2 == 0 ]	# =&gt; [4, 16, 36, 64, 100]
+
+</span></span>
+We can also <b><span style="background:yellow">insert</span></b> items into a list.
+<span style="font-size:small"><span style="font-family:monospace">	animals.insert(1, "dog")
+	<a style="color:#204A87" href="Print.html">print</a></span></span><span style="font-size:small"><span style="font-family:monospace"> animals</span></span>
+
+<b>Sorting the List</b>
+If your list is a jumbled mess, you may need to sort() it. Example:
+<span style="font-size:small"><span style="font-family:monospace">	start_list = [5, 3, 1, 2, 4]
+	square_list = []
+
+	for number in start_list:
+	    square_list.append(number ** 2)
+    
+	square_list.sort()
+	<a style="color:#204A87" href="Print.html">print</a></span></span><span style="font-size:small"><span style="font-family:monospace"> square_list
+</span></span>
+You can sort the sequence also using the sorted() <a style="color:#204A87" href="Function.html">function</a>, like so:
+<span style="font-size:small"><span style="font-family:monospace">	sorted([5, 2, 3, 1, 4])		# would return [1, 2, 3, 4, 5]
+</span></span>
+<b>Enumerate</b>
+Enumerate works by supplying a corresponding index to each element in the list that you pass it. Each time you go through the loop, index will be one greater, and item will be the next item in the sequence. It's very similar to using a normal for loop with a list, except this gives us an easy way to count how many items we've seen so far.
+<span style="font-size:small"><span style="font-family:monospace">	choices = ['pizza', 'pasta', 'salad', 'nachos']
+	
+	<a style="color:#204A87" href="Print.html">print</a></span></span><span style="font-size:small"><span style="font-family:monospace"> 'Your choices are:'
+	for index, item in enumerate(choices):
+		<a style="color:#204A87" href="Print.html">print</a></span></span><span style="font-size:small"><span style="font-family:monospace"> index, item</span></span>
+
+<b>Zip</b>
+It's also common to need to iterate over two lists at once. This is where the built-in zip <a style="color:#204A87" href="Function.html">function</a> comes in handy.  zip will create pairs of elements when passed two lists, and will stop at the end of the shorter list. zip can handle three or more lists as well!
+<span style="font-size:small"><span style="font-family:monospace">	list_a = [3, 9, 17, 15, 19]
+	list_b = [2, 4, 8, 10, 30, 40, 50, 60, 70, 80, 90]
+	
+	for a, b in zip(list_a, list_b):
+		# Add your code here!
+		if a &gt; b:
+			<a style="color:#204A87" href="Print.html">print</a></span></span><span style="font-size:small"><span style="font-family:monospace"> a
+		else:
+			<a style="color:#204A87" href="Print.html">print</a></span></span><span style="font-size:small"><span style="font-family:monospace"> b</span></span>
+
+<b>Delete Items</b>
+Sometimes you need to remove something from a list.
+
+<span style="font-size:small"><span style="font-family:monospace">	beatles = ["john","paul","george","ringo","stuart"]
+	beatles.remove("stuart")
+	<a style="color:#204A87" href="Print.html">print</a></span></span><span style="font-size:small"><span style="font-family:monospace"> beatles</span></span>
+
+
+<b>Removing elements from lists</b>
+
+<b>01.</b> n.pop(index) will remove the item at index from the list and return it to you:
+<span style="font-family:monospace">	<span style="font-size:small">n = [1, 3, 5]
+	n.pop(1)		# Returns 3 (the item at index 1)
+	<a style="color:#204A87" href="Print.html">print</a></span></span><span style="font-family:monospace"><span style="font-size:small"> n		# prints [1, 5]</span></span><span style="font-size:small">
+</span>
+<b>02. </b>n.remove(item) will remove the actual item if it finds it: The method remove() <span style="background:yellow">removes first obj from the lis</span>t.
+	<span style="font-size:small">n.remove(1)	# Removes 1 from the list,
+				# NOT the item at index 1
+	<a style="color:#204A87" href="Print.html">print</a></span><span style="font-size:small"> n		# prints [3, 5]</span>
+
+<b>03.</b> del(n[1]) is like .pop in that it will remove the item at the given index, but it won't return it:
+	<span style="font-size:small">del(n[1])		# Doesn't return anything
+	<a style="color:#204A87" href="Print.html">print</a></span><span style="font-size:small"> n		# prints [1, 5]
+</span>
+<b>Append elements to a list</b>
+
+<span style="font-size:small">	board = []
+
+	for int in <a style="color:#204A87" href="Range.html">range</a></span><span style="font-size:small">(5):
+	    board.append(["O"] * 5)
+							# It will <a style="color:#204A87" href="Print.html">print</a></span><span style="font-size:small"> the follow lines:
+	for int in <a style="color:#204A87" href="Range.html">range</a></span><span style="font-size:small">(len(board)):     	# ['O', 'O', 'O', 'O', 'O']
+	    <a style="color:#204A87" href="Print.html">print</a></span><span style="font-size:small"> board[int]			# ['O', 'O', 'O', 'O', 'O']
+							# ['O', 'O', 'O', 'O', 'O']
+							# ['O', 'O', 'O', 'O', 'O']
+							# ['O', 'O', 'O', 'O', 'O']
+							
+	<a style="color:#204A87" href="Print.html">print</a></span><span style="font-size:small"> board 		# It will <a style="color:#204A87" href="Print.html">print</a></span><span style="font-size:small"> the follow line:
+				# [['O', 'O', 'O', 'O', 'O'], ['O', 'O', 'O', 'O', 'O'], ['O', 'O', 'O', 'O', 'O'], ['O', 'O', 'O', 'O', 'O'], ['O', 'O', 'O', 'O', 'O']]
+		<span style="font-family:monospace">		</span></span><span style="font-size:small">	</span>	
+
+
+<b>Iterating over a list</b>
+We have two ways of iterating through a list.
+
+<b>Method 1.</b> for item in list:
+<span style="font-size:small"><span style="font-family:monospace">	for item in list:
+	    <a style="color:#204A87" href="Print.html">print</a></span></span><span style="font-size:small"><span style="font-family:monospace"> item</span></span>
+
+<b>Method 2.</b> iterate through indexes:
+<span style="font-size:small"><span style="font-family:monospace">	for i in <a style="color:#204A87" href="Range.html">range</a></span></span><span style="font-size:small"><span style="font-family:monospace">(len(list)):
+	    <a style="color:#204A87" href="Print.html">print</a></span></span><span style="font-size:small"><span style="font-family:monospace"> list[i]</span></span>
+
+<b>Method 1</b> is useful to loop through the list, but it's not possible to modify the list this way. <b>Method 2</b> uses indexes to loop through the list, making it possible to also modify the list if needed. Since we aren't modifying the list, feel free to use either one on this lesson!
+
+<b>Concatenate lists</b>
+The example bellow shows how to concatenate two lists:
+<span style="font-size:small"><span style="font-family:monospace">	a = [1, 2, 3]
+	b = [4, 5, 6]
+	<a style="color:#204A87" href="Print.html">print</a></span></span><span style="font-size:small"><span style="font-family:monospace"> a + b	<i># prints [1, 2, 3, 4, 5, 6]</i></span></span><span style="font-size:small"></span><span style="font-size:small">
+
+</span>Example: Create a <a style="color:#204A87" href="Function.html">function</a> called flatten that takes a single list and concatenates all the sublists that are part of it into a single list.<span style="font-size:small">
+<span style="font-family:monospace">	n = [[1, 2, 3], [4, 5, 6, 7, 8, 9]]	# Add your <a style="color:#204A87" href="Function.html">function</a></span></span><span style="font-size:small"><span style="font-family:monospace"> here
+	def flatten(lists):
+	    results = []
+	    for numbers in lists:
+	        for number in numbers:
+	            results.append(number)
+	    return results
+
+	<a style="color:#204A87" href="Print.html">print</a></span></span><span style="font-size:small"><span style="font-family:monospace"> flatten(n)		#Prints [1, 2, 3, 4, 5, 6, 7, 8, 9]</span></span><span style="font-size:small">
+</span></div></body></html>

@@ -1,0 +1,120 @@
+<html xmlns:tomboy="http://beatniksoftware.com/tomboy" xmlns:link="http://beatniksoftware.com/tomboy/link" xmlns:size="http://beatniksoftware.com/tomboy/size"><head><META http-equiv="Content-Type" content="text/html; charset=utf-8"><title>Docker Network: Create and Remove</title><style type="text/css">
+        
+	body {  }
+	h1 { font-size: xx-large;
+     	     font-weight: bold;
+     	     border-bottom: 1px solid black; }
+	div.note {
+		   position: relative;
+		   display: block;
+		   padding: 5pt;
+		   margin: 5pt; 
+		   white-space: -moz-pre-wrap; /* Mozilla */
+ 	      	   white-space: -pre-wrap;     /* Opera 4 - 6 */
+ 	      	   white-space: -o-pre-wrap;   /* Opera 7 */
+ 	      	   white-space: pre-wrap;      /* CSS3 */
+ 	      	   word-wrap: break-word;      /* IE 5.5+ */ }
+	</style></head><body><div class="note" id="Docker Network: Create and Remove"><a name="docker network: create and remove"></a><h1>Docker Network: Create and Remove</h1>
+man docker-network-create
+
+<span style="font-size:small"><span style="font-family:monospace">              
+xfrarod@Satellite-L955 <a style="color:#3465A4" href="~/Documents/2013_Cursos/Docker/Builds">~/Documents/2013_Cursos/Docker/Builds</a></span></span><span style="font-size:small"><span style="font-family:monospace"> $ <span style="background:yellow">docker network create --subnet 10.1.0.0/24 --gateway 10.1.0.1 mybridge01</span></span></span><span style="font-size:small"><span style="font-family:monospace">
+e5853109abdfbf7bd26804c37f8a54a4c5686d9eda7172f1a7010f00fd131fee
+xfrarod@Satellite-L955 <a style="color:#3465A4" href="~/Documents/2013_Cursos/Docker/Builds">~/Documents/2013_Cursos/Docker/Builds</a></span></span><span style="font-size:small"><span style="font-family:monospace"> $ <span style="background:yellow">docker network inspect mybridge01</span></span></span><span style="font-size:small"><span style="font-family:monospace"> 
+[
+    {
+        "Name": "mybridge01",
+        "Id": "e5853109abdfbf7bd26804c37f8a54a4c5686d9eda7172f1a7010f00fd131fee",
+        "Scope": "local",
+        "Driver": "bridge",
+        "EnableIPv6": false,
+        "IPAM": {
+            "Driver": "default",
+            "Options": {},
+            "Config": [
+                {
+                    "Subnet": "10.1.0.0/24",
+                    "Gateway": "10.1.0.1"
+                }
+            ]
+        },
+        "Internal": false,
+        "Containers": {},
+        "Options": {},
+        "Labels": {}
+    }
+]          
+xfrarod@Satellite-L955 <a style="color:#3465A4" href="~/Documents/2013_Cursos/Docker/Builds">~/Documents/2013_Cursos/Docker/Builds</a></span></span><span style="font-size:small"><span style="font-family:monospace"> $ ifconfig
+<span style="background:yellow">br-5e6834c3d1a0 Link encap:Ethernet  HWaddr 02:42:27:dc:1d:ee</span></span></span><span style="font-size:small"><span style="font-family:monospace">  
+          inet addr:10.1.0.1  Bcast:0.0.0.0  Mask:255.255.255.0
+          UP BROADCAST MULTICAST  MTU:1500  Metric:1
+          RX packets:0 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:0 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 txqueuelen:0 
+          RX bytes:0 (0.0 B)  TX bytes:0 (0.0 B)
+
+docker0   Link encap:Ethernet  HWaddr 02:42:bb:11:df:d2  
+          inet addr:172.17.0.1  Bcast:0.0.0.0  Mask:255.255.0.0
+          inet6 addr: fe80::42:bbff:fe11:dfd2/64 Scope:Link
+          UP BROADCAST MULTICAST  MTU:1500  Metric:1
+          RX packets:53302 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:114483 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 txqueuelen:0 
+          RX bytes:2852188 (2.8 MB)  TX bytes:166154988 (166.1 MB)
+
+eth0      Link encap:Ethernet  HWaddr 00:8c:fa:34:ab:36  
+          UP BROADCAST MULTICAST  MTU:1500  Metric:1
+          RX packets:0 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:0 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 txqueuelen:1000 
+          RX bytes:0 (0.0 B)  TX bytes:0 (0.0 B)
+          Interrupt:16 
+
+lo        Link encap:Local Loopback  
+          inet addr:127.0.0.1  Mask:255.0.0.0
+          inet6 addr: ::1/128 Scope:Host
+          UP LOOPBACK RUNNING  MTU:65536  Metric:1
+          RX packets:306254 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:306254 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 txqueuelen:0 
+          RX bytes:65118391 (65.1 MB)  TX bytes:65118391 (65.1 MB)
+
+xfrarod@Satellite-L955 <a style="color:#3465A4" href="~/Documents/2013_Cursos/Docker/Builds">~/Documents/2013_Cursos/Docker/Builds</a></span></span><span style="font-size:small"><span style="font-family:monospace"> $ docker network inspect mybridge01 
+[
+    {
+        "Name": "mybridge01",
+        "Id": "e5853109abdfbf7bd26804c37f8a54a4c5686d9eda7172f1a7010f00fd131fee",
+        "Scope": "local",
+        "Driver": "bridge",
+        "EnableIPv6": false,
+        "IPAM": {
+            "Driver": "default",
+            "Options": {},
+            "Config": [
+                {
+                    "Subnet": "10.1.0.0/24",
+                    "Gateway": "10.1.0.1"
+                }
+            ]
+        },
+        "Internal": false,
+        "Containers": {},
+        "Options": {},
+        "Labels": {}
+    }
+]
+xfrarod@Satellite-L955 <a style="color:#3465A4" href="~/Documents/2013_Cursos/Docker/Builds">~/Documents/2013_Cursos/Docker/Builds</a></span></span><span style="font-size:small"><span style="font-family:monospace"> $ docker network rm mybridge01 
+mybridge01
+xfrarod@Satellite-L955 <a style="color:#3465A4" href="~/Documents/2013_Cursos/Docker/Builds">~/Documents/2013_Cursos/Docker/Builds</a></span></span><span style="font-size:small"><span style="font-family:monospace"> $ docker network inspect mybridge01 
+[]
+Error: No such network: mybridge01
+xfrarod@Satellite-L955 <a style="color:#3465A4" href="~/Documents/2013_Cursos/Docker/Builds">~/Documents/2013_Cursos/Docker/Builds</a></span></span><span style="font-size:small"><span style="font-family:monospace"> $ docker network ls
+NETWORK ID          NAME                DRIVER              SCOPE
+7b7c4ba5a398        bridge              bridge              local               
+fc2f258355f6        host                host                local               
+2ce4506784a5        none                null                local               
+xfrarod@Satellite-L955 <a style="color:#3465A4" href="~/Documents/2013_Cursos/Docker/Builds">~/Documents/2013_Cursos/Docker/Builds</a></span></span><span style="font-size:small"><span style="font-family:monospace"> $ docker network inspect mybridge01 
+[]
+Error: No such network: mybridge01
+
+</span></span></div></body></html>

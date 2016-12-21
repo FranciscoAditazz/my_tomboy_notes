@@ -1,0 +1,66 @@
+<html xmlns:tomboy="http://beatniksoftware.com/tomboy" xmlns:link="http://beatniksoftware.com/tomboy/link" xmlns:size="http://beatniksoftware.com/tomboy/size"><head><META http-equiv="Content-Type" content="text/html; charset=utf-8"><title>vagrant box</title><style type="text/css">
+        
+	body {  }
+	h1 { font-size: xx-large;
+     	     font-weight: bold;
+     	     border-bottom: 1px solid black; }
+	div.note {
+		   position: relative;
+		   display: block;
+		   padding: 5pt;
+		   margin: 5pt; 
+		   white-space: -moz-pre-wrap; /* Mozilla */
+ 	      	   white-space: -pre-wrap;     /* Opera 4 - 6 */
+ 	      	   white-space: -o-pre-wrap;   /* Opera 7 */
+ 	      	   white-space: pre-wrap;      /* CSS3 */
+ 	      	   word-wrap: break-word;      /* IE 5.5+ */ }
+	</style></head><body><div class="note" id="vagrant box"><a name="vagrant box"></a><h1>vagrant box</h1>
+The vagrant box utility provides all the functionality for managing boxes. You can read the documentation on the vagrant box command for more information (<a style="color:#3465A4" href="https://docs.vagrantup.com/v2/cli/box.html">https://docs.vagrantup.com/v2/cli/box.html</a>).
+
+The easiest way to find boxes is to look on the public Vagrant box <a style="color:#204A87" href="../puppet/Catalog.html">catalog</a> (<a style="color:#3465A4" href="https://vagrantcloud.com/">https://vagrantcloud.com/</a>) for a box matching your use case.
+
+
+<b>vagrant box add</b>
+
+Boxes are added to Vagrant with vagrant box add. This stores the box under a specific name so that multiple Vagrant environments can re-use it. If you haven't added a box yet, you can do so now:
+
+<b><span style="font-size:small"><span style="font-family:monospace">vagrant box add USER/BOX</span></span></b>
+
+<span style="font-size:small"><span style="font-family:monospace">$ <span style="color:#555753;text-decoration:underline">vagrant box add</span></span></span><span style="font-size:small"><span style="font-family:monospace"> hashicorp/precise32</span></span>
+
+This will download the box named "hashicorp/precise32" from Vagrant Cloud (<a style="color:#3465A4" href="https://vagrantcloud.com/">https://vagrantcloud.com/</a>), a place where you can find and host boxes. <a style="color:#204A87" href="../python/While.html">While</a> it is easiest to download boxes from Vagrant Cloud you can also add boxes from a local file, custom URL, etc.
+
+Added boxes can be re-used by multiple projects. Each project uses a box as an initial image to clone from, and never modifies the actual base image. This means that if you have two projects both using the hashicorp/precise32 box we just added, adding files in one guest machine will have no effect on the other machine.
+
+You can also quickly initialize a Vagrant environment with
+<span style="font-size:small"><a style="color:#204A87" href="vagrant init.html">vagrant init</a></span><span style="font-size:small"><span style="font-family:monospace"> hashicorp/precise64.</span></span>
+
+
+<b>vagrant box <a style="color:#204A87" href="../python/List.html">list</a></b>
+
+vagrant box <a style="color:#204A87" href="../python/List.html">list</a> only shows installed versions of boxes.
+
+
+<b>vagrant box outdated</b>
+
+You can check if the box you're using is outdated with vagrant box outdated. This can check if the box in your current Vagrant environment is outdated as well as any other box installed on the system.
+
+
+<b>vagrant box update
+</b>
+Finally, you can update boxes with vagrant box update. This will download and install the new box. This will not magically update running Vagrant environments. If a Vagrant environment is already running, you'll have to destroy and recreate it to acquire the new updates in the box. The update command just downloads these updates locally.
+
+
+<b>Box Versionning
+</b>
+This allows the people who make boxes to push updates to the box, and the people who use the box have a simple workflow for checking for updates, updating their boxes, and seeing what has changed.
+
+Version Constraints. You can constrain a Vagrant environment to a specific version or versions of a box using the <a style="color:#204A87" href="Vagrantfile.html">Vagrantfile</a> by specifying the <span style="font-size:small"><span style="font-family:monospace">config.vm.box_version</span></span> option.
+Constraints can be any combination of the following: = X, &gt; X, &lt; X, &gt;= X, &lt;= X, ~&gt; X. You can combine multiple constraints by separating them with commas.
+
+
+<b>Automatic Update Checking</b>
+Using the <a style="color:#204A87" href="Vagrantfile.html">Vagrantfile</a>, you can also configure Vagrant to automatically check for updates during any <a style="color:#204A87" href="vagrant up.html">vagrant up</a>.  This is enabled by default, but can easily be disabled with <span style="font-size:small"><span style="font-family:monospace">config.vm.box_check_update = false </span></span>in your <a style="color:#204A87" href="Vagrantfile.html">Vagrantfile</a>.
+
+<b>Pruning Old Versions</b>
+Vagrant does not automatically prune old versions because it doesn't know if they might be in use by other Vagrant environments. Because boxes can be large, you may want to actively prune them once in awhile using vagrant box remove. You can see all the boxes that are installed using vagrant box <a style="color:#204A87" href="../python/List.html">list</a>.</div></body></html>

@@ -1,0 +1,41 @@
+<html xmlns:tomboy="http://beatniksoftware.com/tomboy" xmlns:link="http://beatniksoftware.com/tomboy/link" xmlns:size="http://beatniksoftware.com/tomboy/size"><head><META http-equiv="Content-Type" content="text/html; charset=utf-8"><title>How to fix a HD and damaged sectors</title><style type="text/css">
+        
+	body {  }
+	h1 { font-size: xx-large;
+     	     font-weight: bold;
+     	     border-bottom: 1px solid black; }
+	div.note {
+		   position: relative;
+		   display: block;
+		   padding: 5pt;
+		   margin: 5pt; 
+		   white-space: -moz-pre-wrap; /* Mozilla */
+ 	      	   white-space: -pre-wrap;     /* Opera 4 - 6 */
+ 	      	   white-space: -o-pre-wrap;   /* Opera 7 */
+ 	      	   white-space: pre-wrap;      /* CSS3 */
+ 	      	   word-wrap: break-word;      /* IE 5.5+ */ }
+	</style></head><body><div class="note" id="How to fix a HD and damaged sectors"><a name="how to fix a hd and damaged sectors"></a><h1>How to fix a HD and damaged sectors</h1>
+<b>1) Checar en que filesystem esta montado el disco</b>
+
+<span style="font-size:small"><a style="color:#204A87" href="Sudo.html">sudo</a></span><span style="font-size:small"><span style="font-family:monospace"> fdisk -l</span></span>
+
+Esto nos mostrará a <a style="color:#3465A4" href="/dev/sda,">/dev/sda,</a> su tamaño en GBs y sus particiones, igual a <a style="color:#3465A4" href="/dev/sdb">/dev/sdb</a> si existe, y así sdc y demás en dependencia de la cantidad de dispositivos de almacenamiento que tengan en su ordenador.
+
+Se puede utilizar tambien el siguiente comando:
+
+<span style="font-size:small"><a style="color:#204A87" href="Sudo.html">sudo</a></span><span style="font-size:small"><span style="font-family:monospace"> lshw -C disk</span></span>
+
+El cual lista el hardware disponible
+
+<b>2) Corregir los sectores del disco dañado</b>
+
+<span style="font-size:small"><span style="font-family:monospace">badblocks -s -v -n -f <a style="color:#3465A4" href="/dev/sdx">/dev/sdx</a></span></span><span style="font-size:small"><span style="font-family:monospace">
+</span></span> 
+Ojo, utilizar el disco correcto <a style="color:#3465A4" href="/dev/sdX">/dev/sdX</a> que se listo en el paso 1
+
+<b>-s </b>: indica que se mostrará el proceso con por cientos
+<b>-v</b> : modo verbose, lo cual significa que nos mostrará el número de errores
+<b>-n</b> : indica que se intentará usar un modo no destructivo, o sea, que se intentarán recuperar esos sectores pero también la información que estaba en ellos
+<b>-f </b>: fuerza la lectura y escritura en dispositivos que estén montados. Normalmente si el HDD estuviera montado badblocks no revisaría los sectores que se estén usando, pero, como ya les advertí y aconsejé que NO pueden tener el disco duro montado, usaremos el parámetro -f para forzar la recuperación de todos los sectores posibles
+
+Demorará bastante, y repito, bastante. Fácilmente podría durar horas o días en dependencia del tamaño </div></body></html>

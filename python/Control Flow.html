@@ -1,0 +1,91 @@
+<html xmlns:tomboy="http://beatniksoftware.com/tomboy" xmlns:link="http://beatniksoftware.com/tomboy/link" xmlns:size="http://beatniksoftware.com/tomboy/size"><head><META http-equiv="Content-Type" content="text/html; charset=utf-8"><title>Control Flow</title><style type="text/css">
+        
+	body {  }
+	h1 { font-size: xx-large;
+     	     font-weight: bold;
+     	     border-bottom: 1px solid black; }
+	div.note {
+		   position: relative;
+		   display: block;
+		   padding: 5pt;
+		   margin: 5pt; 
+		   white-space: -moz-pre-wrap; /* Mozilla */
+ 	      	   white-space: -pre-wrap;     /* Opera 4 - 6 */
+ 	      	   white-space: -o-pre-wrap;   /* Opera 7 */
+ 	      	   white-space: pre-wrap;      /* CSS3 */
+ 	      	   word-wrap: break-word;      /* IE 5.5+ */ }
+	</style></head><body><div class="note" id="Control Flow"><a name="control flow"></a><h1>Control Flow</h1>
+<b>Example 1:</b>
+<span style="font-size:small">	def clinic():
+	    <a style="color:#204A87" href="Print.html">print</a></span><span style="font-size:small"> "You've just entered the clinic!"
+	    <a style="color:#204A87" href="Print.html">print</a></span><span style="font-size:small"> "Do you take the door on the left or the right?"
+	    answer = raw_input("Type left or right and hit 'Enter'.").lower()
+	    if answer == "left" or answer == "l":
+	        <a style="color:#204A87" href="Print.html">print</a></span><span style="font-size:small"> "This is the Verbal Abuse Room, you heap of parrot droppings!"
+	    elif answer == "right" or answer == "r":
+	        <a style="color:#204A87" href="Print.html">print</a></span><span style="font-size:small"> "Of course this is the Argument Room, I've told you that already!"
+	    else:
+	        <a style="color:#204A87" href="Print.html">print</a></span><span style="font-size:small"> "You didn't pick left or right! Try again."
+        	clinic()
+
+	clinic()</span>
+
+<b>Example 2:</b>
+<span style="font-size:small">	def greater_less_equal_5(answer):
+	    if answer &gt; 5:
+	        return 1
+	    elif answer &lt; 5:          
+	        return -1
+	    else:
+	        return 0
+        
+	<a style="color:#204A87" href="Print.html">print</a></span><span style="font-size:small"> greater_less_equal_5(4)
+	<a style="color:#204A87" href="Print.html">print</a></span><span style="font-size:small"> greater_less_equal_5(5)
+	<a style="color:#204A87" href="Print.html">print</a></span><span style="font-size:small"> greater_less_equal_5(6)</span>
+
+<b>For One and All</b>
+If you want to do something with every item in the <a style="color:#204A87" href="List.html">list</a>, you can use a for loop. If you've learned about for loops in JavaScript, pay close attention! They're different in Python.
+<span style="font-size:small">	for variable in <a style="color:#204A87" href="List.html">list</a></span><span style="font-size:small">_name:
+	    # Do stuff!</span>
+
+A variable name follows the for keyword; it will be assigned the value of each <a style="color:#204A87" href="List.html">list</a> item in turn.
+
+Then in <a style="color:#204A87" href="List.html">list</a>_name designates <a style="color:#204A87" href="List.html">list</a>_name as the <a style="color:#204A87" href="List.html">list</a> the loop will work on. The line ends with a colon (:) and the indented code that follows it will be executed once per item in the <a style="color:#204A87" href="List.html">list</a>. Example:
+<span style="font-size:small">	my_<a style="color:#204A87" href="List.html">list</a></span><span style="font-size:small"> = [1,9,3,8,5,7]
+
+	for number in my_<a style="color:#204A87" href="List.html">list</a></span><span style="font-size:small">:
+	    <a style="color:#204A87" href="Print.html">print</a></span><span style="font-size:small"> 2 * number</span>
+
+You can also use a for loop on a <a style="color:#204A87" href="Dictionary.html">dictionary</a> to loop through its keys with the following:
+<span style="font-size:small">	d = {"foo" : "bar"}
+
+	for key in d: 
+	    <a style="color:#204A87" href="Print.html">print</a></span><span style="font-size:small"> d[key]  # prints "bar" </span>
+
+<b>For / else</b>
+Just like with <a style="color:#204A87" href="While.html">while</a>, for loops may have an else associated with them. In this case, the else statement is executed after the for, but only if the for ends normally—that is, not with a <a style="color:#204A87" href="Break.html">break</a>. This code will <a style="color:#204A87" href="Break.html">break</a> when it hits 'tomato', so the else block won't be executed.
+<span style="font-size:small"><span style="font-family:monospace">	fruits = ['banana', 'apple', 'orange', 'tomato', 'pear', 'grape']
+
+	<a style="color:#204A87" href="Print.html">print</a></span></span><span style="font-size:small"><span style="font-family:monospace"> 'You have...'
+	for f in fruits:
+		if f == 'tomato':
+			<a style="color:#204A87" href="Print.html">print</a></span></span><span style="font-size:small"><span style="font-family:monospace"> 'A tomato is not a fruit!' # (It actually is.)
+			<a style="color:#204A87" href="Break.html">break</a></span></span><span style="font-size:small"><span style="font-family:monospace">
+		<a style="color:#204A87" href="Print.html">print</a></span></span><span style="font-size:small"><span style="font-family:monospace"> 'A', f
+	else:
+		<a style="color:#204A87" href="Print.html">print</a></span></span><span style="font-size:small"><span style="font-family:monospace"> 'A fine selection of fruits!'</span></span>
+
+<b>Example</b>
+<a style="color:#204A87" href="String.html">String</a> manipulation is useful in for loops if you want to modify some content in a <a style="color:#204A87" href="String.html">string</a>. The , character after our <a style="color:#204A87" href="Print.html">print</a> statement means that our next <a style="color:#204A87" href="Print.html">print</a> statement keeps printing on the same line.
+
+	<span style="font-size:small">phrase = "A bird in the hand..."
+
+	# Add your for loop
+	for c in phrase:
+	    if c == 'A' or c == 'a':
+	        <a style="color:#204A87" href="Print.html">print</a></span><span style="font-size:small"> 'X',
+	    else:
+	        <a style="color:#204A87" href="Print.html">print</a></span><span style="font-size:small"> c,
+
+	#Don't delete this <a style="color:#204A87" href="Print.html">print</a></span><span style="font-size:small"> statement!
+	<a style="color:#204A87" href="Print.html">print</a></span></div></body></html>

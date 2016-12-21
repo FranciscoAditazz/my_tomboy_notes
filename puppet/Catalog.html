@@ -1,0 +1,42 @@
+<html xmlns:tomboy="http://beatniksoftware.com/tomboy" xmlns:link="http://beatniksoftware.com/tomboy/link" xmlns:size="http://beatniksoftware.com/tomboy/size"><head><META http-equiv="Content-Type" content="text/html; charset=utf-8"><title>Catalog</title><style type="text/css">
+        
+	body {  }
+	h1 { font-size: xx-large;
+     	     font-weight: bold;
+     	     border-bottom: 1px solid black; }
+	div.note {
+		   position: relative;
+		   display: block;
+		   padding: 5pt;
+		   margin: 5pt; 
+		   white-space: -moz-pre-wrap; /* Mozilla */
+ 	      	   white-space: -pre-wrap;     /* Opera 4 - 6 */
+ 	      	   white-space: -o-pre-wrap;   /* Opera 7 */
+ 	      	   white-space: pre-wrap;      /* CSS3 */
+ 	      	   word-wrap: break-word;      /* IE 5.5+ */ }
+	</style></head><body><div class="note" id="Catalog"><a name="catalog"></a><h1>Catalog</h1>
+The catalog is a compilation of all the resources that will be applied to a given system, and the relationships between those resources. In building the catalog, unless we explicitly specify the relationship between the resources, Puppet will manage them in its own order. 
+
+For the most part, Puppet specifies relationships between resources in the appropriate manner <a style="color:#204A87" href="../python/While.html">while</a> building the catalog. For example, if you say that user gigabyte should exist, and the directory <a style="color:#3465A4" href="/home/gigabyte/bin">/home/gigabyte/bin</a> should be present and be owned by user gigabyte, then Puppet will specify a relationship between the two - that the user should be managed before the directory. These are implicit (shall we call them obvious?) relationships. 
+
+When you need a group of resources to be managed in a specific order, you must explicitly state the dependency relationships between these resources within the <a style="color:#204A87" href="Resource.html">resource</a> declarations.
+
+<b>Relationship Metaparameters</b>
+A metaparamter is a <a style="color:#204A87" href="Resource.html">resource</a> attribute that can be specified for _any_ type of <a style="color:#204A87" href="Resource.html">resource</a>, rather than a specific type
+
+Metaparameters follow the familiar attribute =&gt; value syntax. There are four metaparameter attributes that you can include in your <a style="color:#204A87" href="Resource.html">resource</a> declaration to order relationships among resources.
+
+<ul><li dir="ltr"><span style="font-family:monospace">before</span> causes a <a style="color:#204A87" href="Resource.html">resource</a> to be applied <b>before</b> a specified <a style="color:#204A87" href="Resource.html">resource</a>
+</li><li dir="ltr"><span style="font-family:monospace">require</span> causes a <a style="color:#204A87" href="Resource.html">resource</a> to be applied <b>after</b> a specified <a style="color:#204A87" href="Resource.html">resource</a>
+</li><li dir="ltr"><span style="font-family:monospace">notify</span> causes a <a style="color:#204A87" href="Resource.html">resource</a> to be applied <b>before</b> the specified <a style="color:#204A87" href="Resource.html">resource</a>. Notify will generate a refresh even whenever the <a style="color:#204A87" href="Resource.html">resource</a> changes.
+</li><li dir="ltr"><span style="font-family:monospace">subscribe</span> causes a <a style="color:#204A87" href="Resource.html">resource</a> to be applied <b>after</b> the specified <a style="color:#204A87" href="Resource.html">resource</a>. The subscribing <a style="color:#204A87" href="Resource.html">resource</a> will be refreshed if the target <a style="color:#204A87" href="Resource.html">resource</a> changes.</li></ul>
+
+The <b>value</b> of the relationship metaparameter is the title or titles (in an array) of one or more target resources.
+
+
+<b>before, require, notify, and subscribe metaparameters</b>
+Puppet works through a problem as though it were give a <a style="color:#204A87" href="../python/List.html">list</a> of things to do, and it was left to decide the most efficient way to get those done.
+
+For the most part, Puppet specifies relationships between resources in the appropriate manner <a style="color:#204A87" href="../python/While.html">while</a> building the catalog. For example, if you say that user gigabyte should exist, and the directory <a style="color:#3465A4" href="/home/gigabyte/bin">/home/gigabyte/bin</a> should be present and be owned by user gigabyte, then Puppet will specify a relationship between the two - that the user should be managed before the directory. These are implicit (shall we call them obvious?) relationships. 
+
+When you need a group of resources to be managed in a specific order, you must explicitly state the dependency relationships between these resources within the <a style="color:#204A87" href="Resource.html">resource</a> declarations.</div></body></html>

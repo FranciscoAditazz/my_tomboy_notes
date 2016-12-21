@@ -1,0 +1,31 @@
+<html xmlns:tomboy="http://beatniksoftware.com/tomboy" xmlns:link="http://beatniksoftware.com/tomboy/link" xmlns:size="http://beatniksoftware.com/tomboy/size"><head><META http-equiv="Content-Type" content="text/html; charset=utf-8"><title>Copy of a GitHub repository</title><style type="text/css">
+        
+	body {  }
+	h1 { font-size: xx-large;
+     	     font-weight: bold;
+     	     border-bottom: 1px solid black; }
+	div.note {
+		   position: relative;
+		   display: block;
+		   padding: 5pt;
+		   margin: 5pt; 
+		   white-space: -moz-pre-wrap; /* Mozilla */
+ 	      	   white-space: -pre-wrap;     /* Opera 4 - 6 */
+ 	      	   white-space: -o-pre-wrap;   /* Opera 7 */
+ 	      	   white-space: pre-wrap;      /* CSS3 */
+ 	      	   word-wrap: break-word;      /* IE 5.5+ */ }
+	</style></head><body><div class="note" id="Copy of a GitHub repository"><a name="copy of a github repository"></a><h1>Copy of a GitHub repository</h1>
+The steps to copy a repository from another GitHub repository
+
+1) on a linux shell clone the repository to be copied:
+    <span style="font-size:small"><span style="font-family:monospace">$ git clone <a style="color:#3465A4" href="https://github.com/xfrarod/jpetstore">https://github.com/xfrarod/jpetstore</a></span></span>
+2) Change to the directory
+<span style="font-size:small"><span style="font-family:monospace">    $ cd jpetstore</span></span>
+3) Reinitialize the git repository
+<span style="font-size:small"><span style="font-family:monospace">    $ <a style="color:#204A87" href="GIT init.html">git init</a></span></span>
+4) On GitHub create a blank repository with the same name jpetstore (<a style="color:#3465A4" href="https://github.com/<Kim's">https://github.com/&lt;Kim's</a> repo&gt;/jpetstore)
+5) Change the origin repo
+    <span style="font-size:small"><span style="font-family:monospace">$ git remote set-url origin <a style="color:#3465A4" href="https://github.com/<Kim's">https://github.com/&lt;Kim's</a></span></span><span style="font-size:small"><span style="font-family:monospace"> repo&gt;/jpetstore</span></span>
+6) Push the information to the new repo
+<span style="font-size:small"><span style="font-family:monospace">    $ git push -u origin master</span></span>
+</div></body></html>

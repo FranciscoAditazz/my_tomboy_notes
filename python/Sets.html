@@ -1,0 +1,25 @@
+<html xmlns:tomboy="http://beatniksoftware.com/tomboy" xmlns:link="http://beatniksoftware.com/tomboy/link" xmlns:size="http://beatniksoftware.com/tomboy/size"><head><META http-equiv="Content-Type" content="text/html; charset=utf-8"><title>Sets</title><style type="text/css">
+        
+	body {  }
+	h1 { font-size: xx-large;
+     	     font-weight: bold;
+     	     border-bottom: 1px solid black; }
+	div.note {
+		   position: relative;
+		   display: block;
+		   padding: 5pt;
+		   margin: 5pt; 
+		   white-space: -moz-pre-wrap; /* Mozilla */
+ 	      	   white-space: -pre-wrap;     /* Opera 4 - 6 */
+ 	      	   white-space: -o-pre-wrap;   /* Opera 7 */
+ 	      	   white-space: pre-wrap;      /* CSS3 */
+ 	      	   word-wrap: break-word;      /* IE 5.5+ */ }
+	</style></head><body><div class="note" id="Sets"><a name="sets"></a><h1>Sets</h1>
+Sets are collections of unique but unordered items. It is possible to convert certain iterables to a set. Example:
+
+<span style="font-size:small"><span style="font-family:monospace">	new_set = {1, 2, 3, 4, 4, 4,'A', 'B', 'B', 'C'}
+	<a style="color:#204A87" href="Print.html">print</a></span></span><span style="font-size:small"><span style="font-family:monospace"> new_set		# <i>prints {'A', 1, 'C', 3, 4, 2, 'B'}</i></span></span><span style="font-size:small"><span style="font-family:monospace">
+
+	dup_<a style="color:#204A87" href="List.html">list</a></span></span><span style="font-size:small"><span style="font-family:monospace"> = [1,1,2,2,2,3,4,55,5,5,6,7,8,8]
+	set_from_<a style="color:#204A87" href="List.html">list</a></span></span><span style="font-size:small"><span style="font-family:monospace"> = set(dup_<a style="color:#204A87" href="List.html">list</a></span></span><span style="font-size:small"><span style="font-family:monospace">)
+	<a style="color:#204A87" href="Print.html">print</a></span></span><span style="font-size:small"><span style="font-family:monospace"> set_from_<a style="color:#204A87" href="List.html">list</a></span></span><span style="font-size:small"><span style="font-family:monospace">	# <i>prints {1, 2, 3, 4, 5, 6, 7, 8, 55}</i></span></span></div></body></html>

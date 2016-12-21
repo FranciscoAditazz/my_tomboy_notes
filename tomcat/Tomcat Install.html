@@ -1,0 +1,84 @@
+<html xmlns:tomboy="http://beatniksoftware.com/tomboy" xmlns:link="http://beatniksoftware.com/tomboy/link" xmlns:size="http://beatniksoftware.com/tomboy/size"><head><META http-equiv="Content-Type" content="text/html; charset=utf-8"><title>Tomcat Install</title><style type="text/css">
+        
+	body {  }
+	h1 { font-size: xx-large;
+     	     font-weight: bold;
+     	     border-bottom: 1px solid black; }
+	div.note {
+		   position: relative;
+		   display: block;
+		   padding: 5pt;
+		   margin: 5pt; 
+		   white-space: -moz-pre-wrap; /* Mozilla */
+ 	      	   white-space: -pre-wrap;     /* Opera 4 - 6 */
+ 	      	   white-space: -o-pre-wrap;   /* Opera 7 */
+ 	      	   white-space: pre-wrap;      /* CSS3 */
+ 	      	   word-wrap: break-word;      /* IE 5.5+ */ }
+	</style></head><body><div class="note" id="Tomcat Install"><a name="tomcat install"></a><h1>Tomcat Install</h1>
+Reference: <a style="color:#3465A4" href="https://www.howtoforge.com/how-to-install-tomcat-on-centos-7">https://www.howtoforge.com/how-to-install-tomcat-on-centos-7</a>
+
+<b>1)</b>	To start the installation of Tomcat we need to first install <a style="color:#204A87" href="../installations/Java.html">java</a>-1.7.0-openjdk.x86_64, we will install it as follows:
+
+<span style="font-size:small"><span style="font-family:monospace">yum install <a style="color:#204A87" href="../installations/Java.html">java</a></span></span><span style="font-size:small"><span style="font-family:monospace">-1.7.0-openjdk.x86_64</span></span>
+
+<b>2)</b>	Check the version of <a style="color:#204A87" href="../installations/Java.html">java</a> as follows:
+<span style="font-size:small"><a style="color:#204A87" href="../installations/Java.html">java</a></span><span style="font-size:small"><span style="font-family:monospace"> -version
+
+[root@server1 ~]# <a style="color:#204A87" href="../installations/Java.html">java</a></span></span><span style="font-size:small"><span style="font-family:monospace"> -version
+<a style="color:#204A87" href="../installations/Java.html">java</a></span></span><span style="font-size:small"><span style="font-family:monospace"> version "1.7.0_65"
+OpenJDK Runtime Environment (rhel-2.5.1.2.el7_0-x86_64 u65-b17)
+OpenJDK 64-Bit Server VM (build 24.65-b04, mixed mode)</span></span>
+
+<b>3)</b>	Proceeding further we need some essential packages. CentOS don't come with ifconfig command, so we will install net-tools and other packages as follows:
+<span style="font-size:small"><span style="font-family:monospace">yum install net-tools unzip wget</span></span>
+
+<b>4)</b>	Now we will download the latest Tomcat version from its home page and install it as:
+<span style="font-size:small"><span style="font-family:monospace">cd /opt
+wget <a style="color:#3465A4" href="http://ftp.nluug.nl/internet/apache/tomcat/tomcat-8/v8.0.9/bin/apache-tomcat-8.0.9.zip">http://ftp.nluug.nl/internet/apache/tomcat/tomcat-8/v8.0.9/bin/apache-tomcat-8.0.9.zip</a></span></span><span style="font-size:small"><span style="font-family:monospace">
+unzip apache-tomcat-8.0.9.zip
+mv apache-tomcat-8.0.9 tomcat</span></span>
+
+<b>5)</b>	Unzip it and set the environment <a style="color:#204A87" href="../ruby/Variables.html">variables</a> by creating a file <span style="color:#555753;text-decoration:underline">script</span>.sh in <a style="color:#3465A4" href="/etc/profile.d/">/etc/profile.d/</a> as:
+<span style="font-size:small"><span style="font-family:monospace">vi <a style="color:#3465A4" href="/etc/profile.d/script.sh">/etc/profile.d/script.sh</a></span></span>
+
+<span style="font-size:small"><span style="font-family:monospace">	#!/bin/bash
+	CATALINA_HOME=/opt/tomcat
+	PATH=$CATALINA_HOME/bin:$PATH
+	export PATH CATALINA_HOME
+	export CLASSPATH=.</span></span>
+
+<b>6)</b>	Now we will give execute permissions to the files:
+<span style="font-size:small"><span style="font-family:monospace">chmod +x <a style="color:#3465A4" href="/etc/profile.d/script.sh">/etc/profile.d/script.sh</a></span></span><span style="font-size:small"><span style="font-family:monospace">
+chmod +x $CATALINA_HOME/bin/startup.sh
+chmod +x $CATALINA_HOME/bin/shutdown.sh
+chmod +x $CATALINA_HOME/bin/catalina.sh</span></span>
+
+<b>7)</b>	Further we will make the environment <a style="color:#204A87" href="../ruby/Variables.html">variables</a> permanent as by running:
+<span style="font-size:small"><span style="font-family:monospace">source <a style="color:#3465A4" href="/etc/profile.d/script.sh">/etc/profile.d/script.sh</a></span></span>
+
+<b>8)</b>	Now we need to start Tomcat service by using:
+<span style="font-size:small">$CATALINA_HOME/bin/startup.sh
+
+[root@server1 ~]# $CATALINA_HOME/bin/startup.sh
+Using CATALINA_BASE:   <a style="color:#3465A4" href="/opt/tomcat">/opt/tomcat</a></span><span style="font-size:small">
+Using CATALINA_HOME:   <a style="color:#3465A4" href="/opt/tomcat">/opt/tomcat</a></span><span style="font-size:small">
+Using CATALINA_TMPDIR: <a style="color:#3465A4" href="/opt/tomcat/temp">/opt/tomcat/temp</a></span><span style="font-size:small">
+Using JRE_HOME:        /usr
+Using CLASSPATH:       <a style="color:#3465A4" href="/opt/tomcat/bin/bootstrap.jar:/opt/tomcat/bin/tomcat-juli.jar">/opt/tomcat/bin/bootstrap.jar:/opt/tomcat/bin/tomcat-juli.jar</a></span><span style="font-size:small">
+Tomcat started.
+[root@server1 ~]#</span>
+
+<b>9)</b>	It will start the Tomcat server, we can also check by using:
+<span style="font-size:small"><span style="color:#555753;text-decoration:underline">netstat</span></span><span style="font-size:small"><span style="font-family:monospace"> -an | grep 8080
+
+[root@server1 ~]# <span style="color:#555753;text-decoration:underline">netstat</span></span></span><span style="font-size:small"><span style="font-family:monospace"> -an | grep 8080
+tcp6       0      0 :::8080                 :::*                    LISTEN     
+[root@server1 ~]#
+</span></span>
+<b>10)</b>	In CentOS 7.0 we have different policy for the <a style="color:#204A87" href="../linux processes and commands/Firewall.html">firewall</a>-cmd, we will override it by using:
+<span style="font-size:small"><a style="color:#204A87" href="../linux processes and commands/Firewall.html">firewall</a></span><span style="font-size:small"><span style="font-family:monospace">-cmd --zone=public --add-port=8080/tcp --permanent
+<a style="color:#204A87" href="../linux processes and commands/Firewall.html">firewall</a></span></span><span style="font-size:small"><span style="font-family:monospace">-cmd --reload
+</span></span>
+
+<b>11)</b>	Finally we need to create user accounts to secure and access admin/manager pages. Edit conf/tomcat-users.xml file in your editor and paste inside
+</div></body></html>

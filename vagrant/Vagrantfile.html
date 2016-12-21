@@ -1,0 +1,144 @@
+<html xmlns:tomboy="http://beatniksoftware.com/tomboy" xmlns:link="http://beatniksoftware.com/tomboy/link" xmlns:size="http://beatniksoftware.com/tomboy/size"><head><META http-equiv="Content-Type" content="text/html; charset=utf-8"><title>Vagrantfile</title><style type="text/css">
+        
+	body {  }
+	h1 { font-size: xx-large;
+     	     font-weight: bold;
+     	     border-bottom: 1px solid black; }
+	div.note {
+		   position: relative;
+		   display: block;
+		   padding: 5pt;
+		   margin: 5pt; 
+		   white-space: -moz-pre-wrap; /* Mozilla */
+ 	      	   white-space: -pre-wrap;     /* Opera 4 - 6 */
+ 	      	   white-space: -o-pre-wrap;   /* Opera 7 */
+ 	      	   white-space: pre-wrap;      /* CSS3 */
+ 	      	   word-wrap: break-word;      /* IE 5.5+ */ }
+	</style></head><body><div class="note" id="Vagrantfile"><a name="vagrantfile"></a><h1>Vagrantfile</h1>
+The Vagrantfile is meant to be committed to version control with your project, if you use version control. This way, every person working with that project can benefit from Vagrant without any upfront work.
+
+The Vagrantfile has the following structure:
+
+<span style="font-size:small"><span style="font-family:monospace"># -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+# Vagrantfile API/syntax version. Don't touch unless you know what you're doing!
+<b>VAGRANTFILE_API_VERSION</b></span></span><span style="font-size:small"><span style="font-family:monospace"> = "2"
+
+Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
+  # All Vagrant configuration is done here. The most common configuration
+  # options are documented and commented below. For a complete reference,
+  # please see the online documentation at vagrantup.com.
+
+  # Every Vagrant virtual environment requires a box to build off of.
+  <b>config.vm.box</b></span></span><span style="font-size:small"><span style="font-family:monospace"> = "base"
+
+  # Disable automatic box update checking. If you disable this, then
+  # boxes will only be checked for updates when the user runs
+  # `<a style="color:#204A87" href="vagrant box.html">vagrant box</a></span></span><span style="font-size:small"><span style="font-family:monospace"> outdated`. This is not recommended.
+  # <b>config.vm.box_check_update</b></span></span><span style="font-size:small"><span style="font-family:monospace"> = false
+
+  # Create a forwarded port mapping which allows access to a specific port
+  # within the machine from a port on the host machine. In the example below,
+  # accessing "localhost:8080" will access port 80 on the guest machine.
+  # <b>config.vm.network "forwarded_port", guest</b></span></span><span style="font-size:small"><span style="font-family:monospace">: 80, host: 8080
+
+  # Create a private network, which allows host-only access to the machine
+  # using a specific IP.
+  # <b>config.vm.network "private_network", ip</b></span></span><span style="font-size:small"><span style="font-family:monospace">: "192.168.33.10"
+
+  # Create a public network, which generally matched to bridged network.
+  # Bridged networks make the machine appear as another physical device on
+  # your network.
+  # <b>config.vm.network "public_network"</b></span></span><span style="font-size:small"><span style="font-family:monospace">
+
+  # If true, then any SSH connections made will enable agent forwarding.
+  # Default value: false
+  # <b>config.ssh.forward_agent</b></span></span><span style="font-size:small"><span style="font-family:monospace"> = true
+
+  # Share an additional folder to the guest VM. The first argument is
+  # the path on the host to the actual folder. The second argument is
+  # the path on the guest to mount the folder. And the optional third
+  # argument is a set of non-required options.
+  # <b>config.vm.synced_folder</b></span></span><span style="font-size:small"><span style="font-family:monospace"> "../data", "/vagrant_data"
+
+  # Provider-specific configuration so you can fine-tune various
+  # backing providers for Vagrant. These expose provider-specific options.
+  # Example for VirtualBox:
+  #
+  # <b>config.vm.provider</b></span></span><span style="font-size:small"><span style="font-family:monospace"> "virtualbox" do |vb|
+  #   # Don't boot with headless mode
+  #   <b>vb.gui</b></span></span><span style="font-size:small"><span style="font-family:monospace"> = true
+  #
+  #   # Use VBoxManage to customize the VM. For example to change memory:
+  #   <b>vb.customize</b></span></span><span style="font-size:small"><span style="font-family:monospace"> ["modifyvm", :id, "--memory", "1024"]
+  # end
+  #
+  # View the documentation for the provider you're using for more
+  # information on available options.
+
+  # Enable provisioning with CFEngine. CFEngine Community packages are
+  # automatically installed. For example, configure the host as a
+  # policy server and optionally a policy file to run:
+  #
+  # <b>config.vm.provision</b></span></span><span style="font-size:small"><span style="font-family:monospace"> "cfengine" do |cf|
+  #   cf.am_policy_hub = true
+  #   # cf.run_file = "motd.cf"
+  # end
+  #
+  # You can also configure and bootstrap a client to an existing
+  # policy server:
+  #
+  # <b>config.vm.provision</b></span></span><span style="font-size:small"><span style="font-family:monospace"> "cfengine" do |cf|
+  #   cf.policy_server_address = "10.0.2.15"
+  # end
+
+  # Enable provisioning with Puppet stand alone</span></span><span style="font-size:small"><span style="font-family:monospace">.  Puppet manifests
+  # are contained in a directory path relative to this Vagrantfile.
+  # You will need to create the manifests directory and a <a style="color:#204A87" href="../puppet/Manifest.html">manifest</a></span></span><span style="font-size:small"><span style="font-family:monospace"> in
+  # the file default.pp in the manifests_path directory.
+  #
+  # <b>config.vm.provision</b></span></span><span style="font-size:small"><span style="font-family:monospace"> "puppet" do |puppet|
+  #   puppet.manifests_path = "manifests"
+  #   puppet.<a style="color:#204A87" href="../puppet/Manifest.html">manifest</a></span></span><span style="font-size:small"><span style="font-family:monospace">_file  = "site.pp"
+  # end
+
+  # Enable provisioning with chef solo</span></span><span style="font-size:small"><span style="font-family:monospace">, specifying a cookbooks path, roles
+  # path, and data_bags path (all relative to this Vagrantfile), and adding
+  # some recipes and/or roles.
+  #
+  # <b>config.vm.provision</b></span></span><span style="font-size:small"><span style="font-family:monospace"> "chef_solo" do |chef|
+  #   chef.cookbooks_path = "../my-recipes/cookbooks"
+  #   chef.roles_path = "../my-recipes/roles"
+  #   chef.data_bags_path = "../my-recipes/data_bags"
+  #   chef.add_recipe "mysql"
+  #   chef.add_role "web"
+  #
+  #   # You may also specify custom JSON attributes:
+  #   chef.json = { mysql_password: "foo" }
+  # end
+
+  # Enable provisioning with chef server, specifying the chef server URL,
+  # and the path to the validation key (relative to this Vagrantfile).
+  #
+  # The Opscode Platform uses HTTPS. Substitute your organization for
+  # ORGNAME in the URL and validation key.
+  #
+  # If you have your own Chef Server, use the appropriate URL, which may be
+  # HTTP instead of HTTPS depending on your configuration. Also change the
+  # validation key to validation.pem.
+  #
+  # config.vm.provision "chef_client" do |chef|
+  #   chef.chef_server_url = "<a style="color:#3465A4" href="https://api.opscode.com/organizations/ORGNAME&quot;">https://api.opscode.com/organizations/ORGNAME"</a></span></span><span style="font-size:small"><span style="font-family:monospace">
+  #   chef.validation_key_path = "ORGNAME-validator.pem"
+  # end
+  #
+  # If you're using the Opscode platform, your validator client is
+  # ORGNAME-validator, replacing ORGNAME with your organization name.
+  #
+  # If you have your own Chef Server, the default validation client name is
+  # chef-validator, unless you changed the configuration.
+  #
+  #   chef.validation_client_name = "ORGNAME-validator"
+end</span></span>
+</div></body></html>

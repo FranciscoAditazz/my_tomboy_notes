@@ -1,0 +1,53 @@
+<html xmlns:tomboy="http://beatniksoftware.com/tomboy" xmlns:link="http://beatniksoftware.com/tomboy/link" xmlns:size="http://beatniksoftware.com/tomboy/size"><head><META http-equiv="Content-Type" content="text/html; charset=utf-8"><title>Previous Container Management</title><style type="text/css">
+        
+	body {  }
+	h1 { font-size: xx-large;
+     	     font-weight: bold;
+     	     border-bottom: 1px solid black; }
+	div.note {
+		   position: relative;
+		   display: block;
+		   padding: 5pt;
+		   margin: 5pt; 
+		   white-space: -moz-pre-wrap; /* Mozilla */
+ 	      	   white-space: -pre-wrap;     /* Opera 4 - 6 */
+ 	      	   white-space: -o-pre-wrap;   /* Opera 7 */
+ 	      	   white-space: pre-wrap;      /* CSS3 */
+ 	      	   word-wrap: break-word;      /* IE 5.5+ */ }
+	</style></head><body><div class="note" id="Previous Container Management"><a name="previous container management"></a><h1>Previous Container Management</h1>
+<b>1) Para ver todos los containers, incluso los que ya no estan activos:</b>
+<span style="font-size:small"><span style="font-family:monospace">&gt; <a style="color:#204A87" href="../linux processes and commands/Sudo.html">sudo</a></span></span><span style="font-size:small"><span style="font-family:monospace"> <a style="color:#204A87" href="docker ps.html">docker ps</a></span></span><span style="font-size:small"><span style="font-family:monospace"> -a
+&gt; <a style="color:#204A87" href="../linux processes and commands/Sudo.html">sudo</a></span></span><span style="font-size:small"><span style="font-family:monospace"> <a style="color:#204A87" href="docker ps.html">docker ps</a></span></span><span style="font-size:small"><span style="font-family:monospace"> -a -d 	#Para ver solo los IDs
+</span></span>
+<b>2) Para remover un container:</b>
+<span style="font-size:small"><span style="font-family:monospace">&gt; <a style="color:#204A87" href="../linux processes and commands/Sudo.html">sudo</a></span></span><span style="font-size:small"><span style="font-family:monospace"> docker rm &lt;name/id&gt;</span></span>
+
+<b>3) Para remover todos los containers:</b>
+<span style="font-size:small"><span style="font-family:monospace">&gt; <a style="color:#204A87" href="../linux processes and commands/Sudo.html">sudo</a></span></span><span style="font-size:small"><span style="font-family:monospace"> docker rm `<a style="color:#204A87" href="../linux processes and commands/Sudo.html">sudo</a></span></span><span style="font-size:small"><span style="font-family:monospace"> <a style="color:#204A87" href="docker ps.html">docker ps</a></span></span><span style="font-size:small"><span style="font-family:monospace"> -a -d`</span></span>
+
+Ejemplo:
+<span style="font-size:small"><span style="font-family:monospace">
+xfrarod@Satellite-L955 <a style="color:#3465A4" href="~/Documents/2013_Cursos/Docker/Builds">~/Documents/2013_Cursos/Docker/Builds</a></span></span><span style="font-size:small"><span style="font-family:monospace"> $ <b>docker rm `<a style="color:#204A87" href="docker ps.html">docker ps</a></b></span></span><span style="font-size:small"><span style="font-family:monospace"><b> -a --format '{{.Names}}'`</b></span></span><span style="font-size:small"><span style="font-family:monospace">
+nettest1
+voltest2
+voltest1
+grave_austin
+elegant_gates
+desperate_swartz
+nauseous_hodgkin
+sick_jang
+determined_kare
+amazing_almeida
+nostalgic_fermi
+serene_nobel
+modest_spence
+infallible_aryabhata
+xfrarod@Satellite-L955 <a style="color:#3465A4" href="~/Documents/2013_Cursos/Docker/Builds">~/Documents/2013_Cursos/Docker/Builds</a></span></span><span style="font-size:small"><span style="font-family:monospace"> $ <a style="color:#204A87" href="docker ps.html">docker ps</a></span></span><span style="font-size:small"><span style="font-family:monospace"> -a
+CONTAINER ID        IMAGE               COMMAND             CREATED             STATUS              PORTS               NAMES
+</span></span>
+<b>4) Para remover un container desde el CLI de linux</b>
+	a) Se detiene docker
+<span style="font-size:small"><span style="font-family:monospace">	systemctl stop docker</span></span>
+	b) En el directorio <span style="font-size:small"><a style="color:#3465A4" href="/var/lib/docker/containers">/var/lib/docker/containers</a></span> se borra el directorio del contenedor que se quiere remover
+	c) Se reinicia docker<span style="font-size:small"><span style="font-family:monospace">
+	systemctl start docker</span></span></div></body></html>

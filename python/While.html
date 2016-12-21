@@ -1,0 +1,59 @@
+<html xmlns:tomboy="http://beatniksoftware.com/tomboy" xmlns:link="http://beatniksoftware.com/tomboy/link" xmlns:size="http://beatniksoftware.com/tomboy/size"><head><META http-equiv="Content-Type" content="text/html; charset=utf-8"><title>While</title><style type="text/css">
+        
+	body {  }
+	h1 { font-size: xx-large;
+     	     font-weight: bold;
+     	     border-bottom: 1px solid black; }
+	div.note {
+		   position: relative;
+		   display: block;
+		   padding: 5pt;
+		   margin: 5pt; 
+		   white-space: -moz-pre-wrap; /* Mozilla */
+ 	      	   white-space: -pre-wrap;     /* Opera 4 - 6 */
+ 	      	   white-space: -o-pre-wrap;   /* Opera 7 */
+ 	      	   white-space: pre-wrap;      /* CSS3 */
+ 	      	   word-wrap: break-word;      /* IE 5.5+ */ }
+	</style></head><body><div class="note" id="While"><a name="while"></a><h1>While</h1>
+The while loop is similar to an <a style="color:#204A87" href="../puppet/IF Statement.html">if statement</a>: it executes the code inside of it if some condition is true. The difference is that the while loop will continue to execute as long as the condition is true. In other words, instead of executing if something is true, it executes while that thing is true.
+
+Simple example
+	<span style="font-size:small">while count &lt;= 9:
+	    <a style="color:#204A87" href="Print.html">print</a></span><span style="font-size:small"> "Hello, I am a while and count is", count
+	    count += 1</span>
+
+<b>Condition</b>
+The condition is the expression that decides whether the loop is going to be executed or not. There are 5 steps to this program:
+
+<b>01. </b>The loop_condition variable is set to True
+
+<b>02. </b>The while loop checks to see if loop_condition is True. It is, so the loop is entered.
+
+<b>03. </b>The <a style="color:#204A87" href="Print.html">print</a> statement is executed.
+
+<b>04. </b>The variable loop_condition is set to False.
+
+<b>05. </b>The while loop again checks to see if loop_condition is True. It is not, so the loop is not executed a second time.
+
+
+<b>While / else</b>
+Something completely different about Python is the while/else construction. while/else is similar to if/else, but there is a difference: the else block will execute anytime the loop condition is evaluated to False. This means that it will execute if the loop is never entered or if the loop exits normally. If the loop exits as the result of a <a style="color:#204A87" href="Break.html">break</a>, the else will not be executed.
+
+In this example, the loop will <a style="color:#204A87" href="Break.html">break</a> if a 5 is generated, and the else will not execute. Otherwise, after 3 numbers are generated, the loop condition will become false and the else will execute.
+
+<span style="font-size:small"><a style="color:#204A87" href="../Import.html">import</a></span><span style="font-size:small"> <a style="color:#204A87" href="Random.html">random</a></span><span style="font-size:small">
+
+<a style="color:#204A87" href="Print.html">print</a></span><span style="font-size:small"> "Lucky Numbers! 3 numbers will be generated."
+<a style="color:#204A87" href="Print.html">print</a></span><span style="font-size:small"> "If one of them is a '5', you lose!"
+
+count = 0
+while count &lt; 3:
+    num = <a style="color:#204A87" href="Random.html">random</a></span><span style="font-size:small">.randint(1, 6)
+    <a style="color:#204A87" href="Print.html">print</a></span><span style="font-size:small"> num
+    if num == 5:
+        <a style="color:#204A87" href="Print.html">print</a></span><span style="font-size:small"> "Sorry, you lose!"
+        <a style="color:#204A87" href="Break.html">break</a></span><span style="font-size:small">
+    count += 1
+else:
+    <a style="color:#204A87" href="Print.html">print</a></span><span style="font-size:small"> "You win!"</span>
+</div></body></html>

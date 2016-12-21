@@ -1,0 +1,33 @@
+<html xmlns:tomboy="http://beatniksoftware.com/tomboy" xmlns:link="http://beatniksoftware.com/tomboy/link" xmlns:size="http://beatniksoftware.com/tomboy/size"><head><META http-equiv="Content-Type" content="text/html; charset=utf-8"><title>Java</title><style type="text/css">
+        
+	body {  }
+	h1 { font-size: xx-large;
+     	     font-weight: bold;
+     	     border-bottom: 1px solid black; }
+	div.note {
+		   position: relative;
+		   display: block;
+		   padding: 5pt;
+		   margin: 5pt; 
+		   white-space: -moz-pre-wrap; /* Mozilla */
+ 	      	   white-space: -pre-wrap;     /* Opera 4 - 6 */
+ 	      	   white-space: -o-pre-wrap;   /* Opera 7 */
+ 	      	   white-space: pre-wrap;      /* CSS3 */
+ 	      	   word-wrap: break-word;      /* IE 5.5+ */ }
+	</style></head><body><div class="note" id="Java"><a name="java"></a><h1>Java</h1>
+<b>1.</b>	Locate the java package on the following directory
+	<span style="font-size:small"><a style="color:#3465A4" href="/opt/">/opt/</a></span>
+
+<b>2.</b>	Unzip the package
+	<span style="font-size:small"><span style="font-family:monospace">&gt; tar -xvf jdk-7u65-linux-x64.tar</span></span>
+
+<b>3.</b>	Install the new version of java as the default alternative
+	<span style="font-size:small"><span style="font-family:monospace">&gt; <a style="color:#204A87" href="../linux processes and commands/Sudo.html">sudo</a></span></span><span style="font-size:small"><span style="font-family:monospace"> update-alternatives --install <a style="color:#3465A4" href="/usr/bin/java">/usr/bin/java</a></span></span><span style="font-size:small"><span style="font-family:monospace"> java <a style="color:#3465A4" href="/opt/jdk1.7.0_65/bin/java">/opt/jdk1.7.0_65/bin/java</a></span></span><span style="font-size:small"><span style="font-family:monospace"> 1</span></span>
+	<span style="font-size:small"><span style="font-family:monospace">&gt; <a style="color:#204A87" href="../linux processes and commands/Sudo.html">sudo</a></span></span><span style="font-size:small"><span style="font-family:monospace"> update-alternatives --config java</span></span>
+
+<b>4.</b>	Validate the Java version
+<span style="font-size:small"><span style="font-family:monospace">	&gt; java -version
+	java version "1.7.0_65"
+	Java(TM) SE Runtime Environment (build 1.7.0_65-b17)
+	Java HotSpot(TM) 64-Bit Server VM (build 24.65-b04, mixed mode)
+</span></span></div></body></html>

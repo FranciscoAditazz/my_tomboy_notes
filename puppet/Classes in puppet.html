@@ -1,0 +1,137 @@
+<html xmlns:tomboy="http://beatniksoftware.com/tomboy" xmlns:link="http://beatniksoftware.com/tomboy/link" xmlns:size="http://beatniksoftware.com/tomboy/size"><head><META http-equiv="Content-Type" content="text/html; charset=utf-8"><title>Classes in puppet</title><style type="text/css">
+        
+	body {  }
+	h1 { font-size: xx-large;
+     	     font-weight: bold;
+     	     border-bottom: 1px solid black; }
+	div.note {
+		   position: relative;
+		   display: block;
+		   padding: 5pt;
+		   margin: 5pt; 
+		   white-space: -moz-pre-wrap; /* Mozilla */
+ 	      	   white-space: -pre-wrap;     /* Opera 4 - 6 */
+ 	      	   white-space: -o-pre-wrap;   /* Opera 7 */
+ 	      	   white-space: pre-wrap;      /* CSS3 */
+ 	      	   word-wrap: break-word;      /* IE 5.5+ */ }
+	</style></head><body><div class="note" id="Classes in puppet"><a name="classes in puppet"></a><h1>Classes in puppet</h1>
+Classes within a Puppet <a style="color:#204A87" href="Manifest.html">manifest</a> are used to group <a style="color:#204A87" href="Resource.html">resource</a> declarations into reusable blocks of Puppet code.
+
+<b>Defining Classes</b>
+In Puppet's language classes are named blocks of Puppet code. Once you have defined a <a style="color:#204A87" href="../python/Class.html">class</a>, you can invoke it by name. Puppet will manage all the resources that are contained in the <a style="color:#204A87" href="../python/Class.html">class</a> definition once the <a style="color:#204A87" href="../python/Class.html">class</a> is invoked. Please remember that classes in Puppet are not related to classes in Object Oriented Programming. In Puppet, classes serve as named containers for blocks of Puppet code.
+
+<span style="font-size:small"><a style="color:#204A87" href="../python/Class.html">class</a></span><span style="font-size:small"><span style="font-family:monospace"> ntp {
+  case $operatingsystem {
+    centos, redhat: {
+      $service_name = 'ntpd'
+      $conf_file    = 'ntp.conf.el'
+    }
+    debian, ubuntu: {
+      $service_name = 'ntp'
+      $conf_file    = 'ntp.conf.debian'
+    }
+  }
+
+  package { 'ntp':
+    ensure =&gt; installed,
+  }
+
+  file { 'ntp.conf':
+    path    =&gt; '/etc/ntp.conf',
+    ensure  =&gt; file,
+    require =&gt; Package['ntp'],
+    source  =&gt; "/root/examples/answers/${conf_file}"
+  }
+
+  service { 'ntp':
+    name      =&gt; $service_name,
+    ensure    =&gt; running,
+    enable    =&gt; true,
+    subscribe =&gt; File['ntp.conf'],
+  }
+}</span></span>
+
+That's a <a style="color:#204A87" href="../python/Class.html">class</a> definition. As you can see, there is a <a style="color:#204A87" href="CASE Statement.html">case statement</a>, and three resources, all contained within the following pair of curly braces:
+
+<span style="font-size:small"><a style="color:#204A87" href="../python/Class.html">class</a></span><span style="font-size:small"><span style="font-family:monospace"> ntp {
+
+}</span></span>
+
+The <a style="color:#204A87" href="../python/Conditional.html">conditional</a> (<a style="color:#204A87" href="CASE Statement.html">case statement</a>) <a style="color:#204A87" href="../python/Sets.html">sets</a> up the value for the $service_name and $conf_file <a style="color:#204A87" href="../ruby/Variables.html">variables</a> appropriately for a set of operating systems. Three resources - a package, a file, and a service are defined, which use the <a style="color:#204A87" href="../ruby/Variables.html">variables</a> to provide flexibility.
+
+
+<b>Declaring Classes</b>
+The simplest way to direct Puppet to <a style="color:#204A87" href="Apply.html">apply</a> a <a style="color:#204A87" href="../python/Class.html">class</a> definition on a system is by using the include directive. For example, to invoke <a style="color:#204A87" href="../python/Class.html">class</a> ntp in a Puppet <a style="color:#204A87" href="Manifest.html">Manifest</a>, and <a style="color:#204A87" href="Apply.html">apply</a> that <a style="color:#204A87" href="Manifest.html">manifest</a>.  you would have to say:
+<span style="font-size:small"><span style="font-family:monospace">
+include ntp</span></span>
+
+
+<b><a style="color:#204A87" href="../python/Class.html">class</a></b><b> lvmguide</b>
+
+<span style="font-size:small"><a style="color:#204A87" href="../python/Class.html">class</a></span><span style="font-size:small"><span style="font-family:monospace"> lvmguide ( 
+  $document_root = '/var/www/html/lvmguide',
+  $port = '80',
+){
+ <a style="color:#204A87" href="../python/Class.html">class</a></span></span><span style="font-size:small"><span style="font-family:monospace"> { 'apache':
+   default_vhost =&gt; false,
+ }
+ apache::vhost { 'learning.puppetlabs.vm':
+   port    =&gt; $port,
+   docroot =&gt; $document_root,
+ }
+ file { '/var/www/html/lvmguide':
+   ensure  =&gt; directory,
+   owner   =&gt; $::apache::params::user,    
+   group   =&gt; $::apache::params::group,    
+   source  =&gt; 'puppet:///<a style="color:#204A87" href="Module.html">Module</a></span></span><span style="font-size:small"><span style="font-family:monospace">/lvmguide/html', 
+   recurse =&gt; true,    
+   require =&gt; <a style="color:#204A87" href="../python/Class.html">Class</a></span></span><span style="font-size:small"><span style="font-family:monospace">['apache'],
+  }
+}</span></span>
+
+<b>1. </b>	The first line of the <a style="color:#204A87" href="../python/Class.html">class</a> definition begins with the word <a style="color:#204A87" href="../python/Class.html">class</a>, followed by the name of the <a style="color:#204A87" href="../python/Class.html">class</a> we're defining: in this case, lvmguide.
+
+<span style="font-size:small"><a style="color:#204A87" href="../python/Class.html">class</a></span><span style="font-size:small"><span style="font-family:monospace"> lvmguide (
+</span></span>
+<b>2.</b>	Instead of the usual curly bracket, there is an open parenthesis at the end of this first line, and it isn't until after the closing parenthesis that we see the opening curly bracket. The variable declarations contained in these parentheses are called <a style="color:#204A87" href="../python/Class.html">class</a> parameters.
+
+<span style="font-size:small"><a style="color:#204A87" href="../python/Class.html">class</a></span><span style="font-size:small"><span style="font-family:monospace"> lvmguide (  
+  $document_root = '/var/www/html/lvmguide',
+  $port = '80',
+){</span></span>
+
+<a style="color:#204A87" href="../python/Class.html">Class</a> parameters allow you to pass a set of parameters to a <a style="color:#204A87" href="../python/Class.html">class</a>. In this case, the parameters are $document_root and $port. The values assigned to these parameters in the <a style="color:#204A87" href="../python/Class.html">class</a> definition are the default values, which will be used whenever values for the parameters are not passed in.<b>
+</b>
+<b>3.</b>	The first item you see inside the curly braces is... another <a style="color:#204A87" href="../python/Class.html">class</a>! One of the advantages of keeping your classes modular is that you can easily pull together all the classes you need to achieve a particular purpose.
+
+<span style="font-size:small"><span style="font-family:monospace">  <a style="color:#204A87" href="../python/Class.html">class</a></span></span><span style="font-size:small"><span style="font-family:monospace"> { 'apache':
+    default_vhost =&gt; false,
+  }</span></span>
+
+Notice how the code looks similar to how you might describe a user, file or package <a style="color:#204A87" href="Resource.html">resource</a>. It looks like a declaration. It is, indeed, a <a style="color:#204A87" href="../python/Class.html">class</a> declaration. This is the an alternative to using include to invoke existing <a style="color:#204A87" href="../python/Class.html">class</a> definitions. In this case, we wanted to set up an apache server to host our Quest Guide content as a website. Instead of trying to reinvent the wheel, we are able to pull in the existing apache <a style="color:#204A87" href="../python/Class.html">class</a> from the apache <a style="color:#204A87" href="Module.html">module</a> we downloaded from the Forge.
+
+If we had wanted to include the apache <a style="color:#204A87" href="../python/Class.html">class</a> with its default parameter settings, we could have used the include apache syntax. Turns out that just like the lvmguide <a style="color:#204A87" href="../python/Class.html">class</a>, the apache <a style="color:#204A87" href="../python/Class.html">class</a> is defined to accept parameters. Since we wanted to set the default_vhost parameter, we used the <a style="color:#204A87" href="Resource.html">resource</a>-like <a style="color:#204A87" href="../python/Class.html">class</a> declaration syntax. This allows us to set default_vhost to false.
+
+<b>4.</b>	The final two code blocks in the <a style="color:#204A87" href="../python/Class.html">class</a> definition are <a style="color:#204A87" href="Resource.html">resource</a> declarations:
+
+<span style="font-size:small"><span style="font-family:monospace">  apache::vhost { 'learning.puppetlabs.vm':
+    port    =&gt; $port,
+    docroot =&gt; $document_root,
+  }
+
+  file { '/var/www/html/lvmguide':
+    ensure  =&gt; directory,
+    owner   =&gt; $::apache::params::user,
+    group   =&gt; $::apache::params::group,
+    source  =&gt; 'puppet:///<a style="color:#204A87" href="Module.html">Module</a></span></span><span style="font-size:small"><span style="font-family:monospace">/lvmguide/html',
+    recurse =&gt; true,
+    require =&gt; <a style="color:#204A87" href="../python/Class.html">Class</a></span></span><span style="font-size:small"><span style="font-family:monospace">['apache'],
+  }</span></span>
+
+First, we declare a apache::vhost <a style="color:#204A87" href="Resource.html">resource</a> type, and pass along values from our <a style="color:#204A87" href="../python/Class.html">class</a> parameters to its port and docroot attributes.
+
+As in the above example, <a style="color:#204A87" href="../python/Class.html">class</a> definitions give you a concise way to group other classes and <a style="color:#204A87" href="Resource.html">resource</a> declarations into re-usable blocks of Puppet code. You can then selectively assign these classes to different machines across your Puppetized network in order to easily configure those machines to fulfill the defined <a style="color:#204A87" href="../python/Function.html">function</a>. Now that the lvmguide <a style="color:#204A87" href="../python/Class.html">class</a> is defined, enabling the Quest Guide website on other machines would be as easy as assigning that <a style="color:#204A87" href="../python/Class.html">class</a> in the PE Console.
+
+<b>5.</b>    How does Puppet know where to find the definition for the <a style="color:#204A87" href="../python/Class.html">class</a>, in order to ensure that the specified configuration is realized? 
+The answer is, we agree to put the <a style="color:#204A87" href="../python/Class.html">class</a> definitions in a standard location on the file system, by placing the <a style="color:#204A87" href="Manifest.html">manifest</a> containing the <a style="color:#204A87" href="../python/Class.html">class</a> definition in a specific directory in a <a style="color:#204A87" href="Module.html">module</a>
+</div></body></html>

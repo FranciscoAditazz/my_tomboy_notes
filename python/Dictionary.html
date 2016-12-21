@@ -1,0 +1,89 @@
+<html xmlns:tomboy="http://beatniksoftware.com/tomboy" xmlns:link="http://beatniksoftware.com/tomboy/link" xmlns:size="http://beatniksoftware.com/tomboy/size"><head><META http-equiv="Content-Type" content="text/html; charset=utf-8"><title>Dictionary</title><style type="text/css">
+        
+	body {  }
+	h1 { font-size: xx-large;
+     	     font-weight: bold;
+     	     border-bottom: 1px solid black; }
+	div.note {
+		   position: relative;
+		   display: block;
+		   padding: 5pt;
+		   margin: 5pt; 
+		   white-space: -moz-pre-wrap; /* Mozilla */
+ 	      	   white-space: -pre-wrap;     /* Opera 4 - 6 */
+ 	      	   white-space: -o-pre-wrap;   /* Opera 7 */
+ 	      	   white-space: pre-wrap;      /* CSS3 */
+ 	      	   word-wrap: break-word;      /* IE 5.5+ */ }
+	</style></head><body><div class="note" id="Dictionary"><a name="dictionary"></a><h1>Dictionary</h1>
+Dictionary is similar to a <a style="color:#204A87" href="List.html">list</a>, but you access values by looking up a key instead of an index. A key can be any <a style="color:#204A87" href="String.html">string</a> or number. Dictionaries are enclosed in curly braces, like so:
+
+<span style="font-size:small"><span style="font-family:monospace">	d = {'key1' : 1, 'key2' : 2, 'key3' : 3}</span></span>
+
+This is a dictionary called d with three key-value pairs. The key 'key1' points to the value 1, 'key2' to 2, and so on.
+
+Dictionaries are great for things like phone books (pairing a name with a phone number), login pages (pairing an <a style="color:#204A87" href="../metrored pitfalls/Installation of Web GUI 7_4 64-bit package for Linux fails.html">Installation of Web GUI 7.4 64-bit package for Linux fails</a>-mail address with a user name), and more!
+
+<b>Adding key-value pairs</b>
+Like Lists, Dictionaries are "mutable". This means they can be changed after they are created. One advantage of this is that we can add new key/value pairs to the dictionary after it is created like so:
+
+<span style="font-size:small"><span style="font-family:monospace">	dict_name[new_key] = new_value</span></span>
+
+The length len() of a dictionary is the number of key-value pairs it has. Each pair counts only once, even if the value is a <a style="color:#204A87" href="List.html">list</a>. (That's right: <span style="background:yellow">you can put lists inside dictionaries!</span>)
+
+<span style="font-size:small"><span style="font-family:monospace">	menu = {} 	# Empty dictionary
+	menu['Chicken Alfredo'] = 14.50 # Adding new key-value pair
+	menu['Caesar Salad'] = 15.00 # Adding new key-value pair
+	menu['Calzoni'] = 17.30 # Adding new key-value pair
+	menu['Pepperoni Pizza'] = 20.00 # Adding new key-value pair
+
+	<a style="color:#204A87" href="Print.html">print</a></span></span><span style="font-size:small"><span style="font-family:monospace"> "There are " + str(len(menu)) + " items on the menu."
+	<a style="color:#204A87" href="Print.html">print</a></span></span><span style="font-size:small"><span style="font-family:monospace"> menu</span></span>
+
+<b>Deleting key-value pairs</b>
+Items can be removed from a dictionary with the del command:
+<span style="font-size:small"><span style="font-family:monospace">	del dict_name[key_name]</span></span>
+will remove the key key_name and its associated value from the dictionary.
+
+<b>Enumerate</b>
+Enumerate works by supplying a corresponding index to each element in the <a style="color:#204A87" href="List.html">list</a> that you pass it. Each time you go through the loop, index will be one greater, and item will be the next item in the sequence. It's very similar to using a normal for loop with a <a style="color:#204A87" href="List.html">list</a>, except this gives us an easy way to count how many items we've seen so far.
+
+<span style="font-size:small"><span style="font-family:monospace">choices = ['pizza', 'pasta', 'salad', 'nachos']
+
+<a style="color:#204A87" href="Print.html">print</a></span></span><span style="font-size:small"><span style="font-family:monospace"> 'Your choices are:'
+for index, item in enumerate(choices):
+    <a style="color:#204A87" href="Print.html">print</a></span></span><span style="font-size:small"><span style="font-family:monospace"> index, item</span></span>
+
+<b>Last Notes</b>
+Let's go over a few last notes about dictionaries. In the example below, we created a dictionary that <span style="background:yellow">holds many types of values</span>. The key 'fish" has a <a style="color:#204A87" href="List.html">list</a>, the key "cash" has an int, and the key "luck" has a <a style="color:#204A87" href="String.html">string</a>.
+<span style="font-size:small"><span style="font-family:monospace">	my_dict = {
+	    "fish": ["c", "a", "r", "p"],
+	    "cash": -4483,
+	    "luck": "good"
+	}
+	<a style="color:#204A87" href="Print.html">print</a></span></span><span style="font-size:small"><span style="font-family:monospace"> my_dict["fish"][0]</span></span>
+
+<b>Methods on dictionaries</b>
+<b>keys()</b>
+The keys() <a style="color:#204A87" href="Function.html">function</a> returns an array of the dictionary's keys, and
+<span style="font-size:small"><span style="font-family:monospace">my_dict = { "camila":"14", "eugenia":"11", "aurora":"4" }
+<a style="color:#204A87" href="Print.html">print</a></span></span><span style="font-size:small"><span style="font-family:monospace"> my_dict.keys()		# prints ['eugenia', 'aurora', 'camila']
+</span></span>
+<b>values()</b>
+The values() <a style="color:#204A87" href="Function.html">function</a> returns an array of the dictionary's values.
+<span style="font-size:small"><span style="font-family:monospace">my_dict = { "camila":"14", "eugenia":"11", "aurora":"4" }
+<a style="color:#204A87" href="Print.html">print</a></span></span><span style="font-size:small"><span style="font-family:monospace"> my_dict.values()		# prints ['11', '4', '14']</span></span>
+
+
+<b>The 'in' Operator</b>
+First we create and iterate through a <a style="color:#204A87" href="Range.html">range</a>, printing out 0 1 2 3 4
+<span style="font-size:small"><span style="font-family:monospace">for number in <a style="color:#204A87" href="Range.html">range</a></span></span><span style="font-size:small"><span style="font-family:monospace">(5):
+    <a style="color:#204A87" href="Print.html">print</a></span></span><span style="font-size:small"><span style="font-family:monospace"> number,</span></span>
+
+Create a dictionary and iterate through, printing out age 26 name Eric. Dictionaries have no specific order.
+<span style="font-size:small"><span style="font-family:monospace">d = { "name": "Eric", "age": 26 }
+for key in d:
+    <a style="color:#204A87" href="Print.html">print</a></span></span><span style="font-size:small"><span style="font-family:monospace"> key, d[key],</span></span>
+
+Iterate through the letters of a <a style="color:#204A87" href="String.html">string</a>, printing out <a style="color:#204A87" href="../metrored pitfalls/Installation of Web GUI 7_4 64-bit package for Linux fails.html">Installation of Web GUI 7.4 64-bit package for Linux fails</a> r i c
+<span style="font-size:small"><span style="font-family:monospace">for letter in "Eric":
+    <a style="color:#204A87" href="Print.html">print</a></span></span><span style="font-size:small"><span style="font-family:monospace"> letter,  # note the comma!</span></span></div></body></html>

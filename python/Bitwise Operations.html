@@ -1,0 +1,45 @@
+<html xmlns:tomboy="http://beatniksoftware.com/tomboy" xmlns:link="http://beatniksoftware.com/tomboy/link" xmlns:size="http://beatniksoftware.com/tomboy/size"><head><META http-equiv="Content-Type" content="text/html; charset=utf-8"><title>Bitwise Operations</title><style type="text/css">
+        
+	body {  }
+	h1 { font-size: xx-large;
+     	     font-weight: bold;
+     	     border-bottom: 1px solid black; }
+	div.note {
+		   position: relative;
+		   display: block;
+		   padding: 5pt;
+		   margin: 5pt; 
+		   white-space: -moz-pre-wrap; /* Mozilla */
+ 	      	   white-space: -pre-wrap;     /* Opera 4 - 6 */
+ 	      	   white-space: -o-pre-wrap;   /* Opera 7 */
+ 	      	   white-space: pre-wrap;      /* CSS3 */
+ 	      	   word-wrap: break-word;      /* IE 5.5+ */ }
+	</style></head><body><div class="note" id="Bitwise Operations"><a name="bitwise operations"></a><h1>Bitwise Operations</h1>
+Bitwise operations are operations that directly manipulate bits. In all computers, numbers are represented with bits, a series of zeros and ones.
+<span style="font-size:small"><span style="font-family:monospace">
+	<a style="color:#204A87" href="Print.html">print</a></span></span><span style="font-size:small"><span style="font-family:monospace"> 5 &gt;&gt; 1  	# Right Shift	<i> prints <b>2</b></i></span></span><span style="font-size:small"><span style="font-family:monospace"></span></span><span style="font-size:small"><span style="font-family:monospace">	0b101 &gt;&gt; 1 = 0b10
+	<a style="color:#204A87" href="Print.html">print</a></span></span><span style="font-size:small"><span style="font-family:monospace"> 5 &lt;&lt; 1  	# Left Shift	<i> prints <b>10</b></i></span></span><span style="font-size:small"><span style="font-family:monospace"></span></span><span style="font-size:small"><span style="font-family:monospace">	0b101 &lt;&lt; 1 = 0b1010
+	<a style="color:#204A87" href="Print.html">print</a></span></span><span style="font-size:small"><span style="font-family:monospace"> 8 &amp; 5   	# Bitwise AND	<i> prints <b>0</b></i></span></span><span style="font-size:small"><span style="font-family:monospace"></span></span><span style="font-size:small"><span style="font-family:monospace">	0b1000 &amp; 0b101 = 0b0
+	<a style="color:#204A87" href="Print.html">print</a></span></span><span style="font-size:small"><span style="font-family:monospace"> 9 | 4   	# Bitwise OR	<i> prints <b>13</b></i></span></span><span style="font-size:small"><span style="font-family:monospace"></span></span><span style="font-size:small"><span style="font-family:monospace">	0b1001 | 0b100 = 0b1101
+	<a style="color:#204A87" href="Print.html">print</a></span></span><span style="font-size:small"><span style="font-family:monospace"> 12 ^ 42 	# Bitwise XOR	<i> prints <b>38</b></i></span></span><span style="font-size:small"><span style="font-family:monospace"></span></span><span style="font-size:small"><span style="font-family:monospace">	0b1100 ^ 0b1100 = 0b100110
+	<a style="color:#204A87" href="Print.html">print</a></span></span><span style="font-size:small"><span style="font-family:monospace"> ~88     	# Bitwise NOT	<i> prints <b>-89</b></i></span></span><span style="font-size:small"><span style="font-family:monospace"></span></span><span style="font-size:small"><span style="font-family:monospace">	~0b1011000 = -0b1011001
+</span></span>
+
+<b>bin()</b>
+bin() takes an integer as input and returns the binary representation of that integer in a <a style="color:#204A87" href="String.html">string</a>. (Keep in mind that after using the bin <a style="color:#204A87" href="Function.html">function</a>, you can no longer operate on the value like a number.)
+
+Using the XOR (^) operator is very useful for flipping bits. Using ^ on a bit with the number one will return a result where that bit is flipped. Example:
+<span style="font-size:small"><span style="font-family:monospace">	a    = 0b11101110		# 0b<i>11101110</i></span></span><span style="font-size:small"><span style="font-family:monospace">
+	mask = 0b11111111		# 0b<i>11111111</i></span></span><span style="font-size:small"><span style="font-family:monospace">
+	desired = a ^ mask
+	<a style="color:#204A87" href="Print.html">print</a></span></span><span style="font-size:small"><span style="font-family:monospace"> bin(desired)		<i># 0b   10001</i></span></span>
+
+<b>Slip and Slide</b>
+The following <a style="color:#204A87" href="Function.html">function</a> is an example of how the nth bit can be flipped (with the ones bit being the first bit)
+<span style="font-size:small"><span style="font-family:monospace">def flip_bit(number, n):	# 0b11011 &lt;= Original number
+    mask = 0b1 &lt;&lt; n-1
+    <a style="color:#204A87" href="Print.html">print</a></span></span><span style="font-size:small"><span style="font-family:monospace"> bin(mask)		# 0b 1000 &lt;= Mask
+    result = number ^ mask	# 0b10011 &lt;= Result
+    return bin(result)
+        
+<a style="color:#204A87" href="Print.html">print</a></span></span><span style="font-size:small"><span style="font-family:monospace"> flip_bit(0b11011, 4)</span></span></div></body></html>

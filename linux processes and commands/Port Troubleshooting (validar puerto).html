@@ -1,0 +1,43 @@
+<html xmlns:tomboy="http://beatniksoftware.com/tomboy" xmlns:link="http://beatniksoftware.com/tomboy/link" xmlns:size="http://beatniksoftware.com/tomboy/size"><head><META http-equiv="Content-Type" content="text/html; charset=utf-8"><title>Port Troubleshooting (validar puerto)</title><style type="text/css">
+        
+	body {  }
+	h1 { font-size: xx-large;
+     	     font-weight: bold;
+     	     border-bottom: 1px solid black; }
+	div.note {
+		   position: relative;
+		   display: block;
+		   padding: 5pt;
+		   margin: 5pt; 
+		   white-space: -moz-pre-wrap; /* Mozilla */
+ 	      	   white-space: -pre-wrap;     /* Opera 4 - 6 */
+ 	      	   white-space: -o-pre-wrap;   /* Opera 7 */
+ 	      	   white-space: pre-wrap;      /* CSS3 */
+ 	      	   word-wrap: break-word;      /* IE 5.5+ */ }
+	</style></head><body><div class="note" id="Port Troubleshooting (validar puerto)"><a name="port troubleshooting (validar puerto)"></a><h1>Port Troubleshooting (validar puerto)</h1>
+<b>Para checar que puertos existen abiertos actualmente
+</b><span style="font-size:small"><a style="color:#204A87" href="Sudo.html">sudo</a></span><span style="font-size:small"><span style="font-family:monospace"> lsof -n -i -P
+</span></span>
+<b>Para saber si el puerto esta escuchando
+</b><span style="font-size:small"><span style="color:#555753;text-decoration:underline">netstat</span></span><span style="font-size:small"><span style="font-family:monospace"> -an | grep -i &lt;Port Number&gt;</span></span>
+
+Ejemplo:
+<span style="font-size:small"><span style="color:#555753;text-decoration:underline">netstat</span></span><span style="font-size:small"><span style="font-family:monospace"> -an | grep -i 60000</span></span>
+
+<b>Para conocer los recursos TCPIP en la máquina
+</b><span style="font-size:small"><span style="font-family:monospace">pctt -r
+   TCPIP Resources...
+   +--------------------------------------------+
+   | HostName   : NMU-GST-PERF-DM               |
+   | HostAddress: NMU-GST-PERF-DM               |
+   | IPAddress  : 10.10.3.196                   |
+   +--------------------------------------------+
+</span></span>
+<b>Para saber si el puerto no esta bloqueado por iptables</b>
+<span style="font-size:small"><span style="font-family:monospace">iptables -L</span></span>
+
+<b>Para poder abrir algun puerto en iptables se usan los sig. comandos:</b>
+<span style="font-size:small"><a style="color:#204A87" href="Sudo.html">sudo</a></span><span style="font-size:small"><span style="font-family:monospace"> iptables -I INPUT -p tcp --dport 22 -j ACCEPT
+<a style="color:#204A87" href="Sudo.html">sudo</a></span></span><span style="font-size:small"><span style="font-family:monospace"> <a style="color:#3465A4" href="/sbin/service">/sbin/service</a></span></span><span style="font-size:small"><span style="font-family:monospace"> iptables save</span></span>
+
+</div></body></html>

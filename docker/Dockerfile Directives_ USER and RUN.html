@@ -1,0 +1,80 @@
+<html xmlns:tomboy="http://beatniksoftware.com/tomboy" xmlns:link="http://beatniksoftware.com/tomboy/link" xmlns:size="http://beatniksoftware.com/tomboy/size"><head><META http-equiv="Content-Type" content="text/html; charset=utf-8"><title>Dockerfile Directives: USER and RUN</title><style type="text/css">
+        
+	body {  }
+	h1 { font-size: xx-large;
+     	     font-weight: bold;
+     	     border-bottom: 1px solid black; }
+	div.note {
+		   position: relative;
+		   display: block;
+		   padding: 5pt;
+		   margin: 5pt; 
+		   white-space: -moz-pre-wrap; /* Mozilla */
+ 	      	   white-space: -pre-wrap;     /* Opera 4 - 6 */
+ 	      	   white-space: -o-pre-wrap;   /* Opera 7 */
+ 	      	   white-space: pre-wrap;      /* CSS3 */
+ 	      	   word-wrap: break-word;      /* IE 5.5+ */ }
+	</style></head><body><div class="note" id="Dockerfile Directives: USER and RUN"><a name="dockerfile directives: user and run"></a><h1>Dockerfile Directives: USER and RUN</h1>
+USER 	creates an entry point for a non-root user
+RUN 	runs a command on the container
+
+Example of  a container based on Centos7 that creates a user as an entry point
+
+<b>1) Create a Dockerfile</b>
+
+<span style="font-size:small"><span style="font-family:monospace"># Docker file based on the latest CentOS 7 image - non-privileged user entry
+FROM centos:latest
+MAINTAINER <a style="color:#3465A4" href="franciscoj.rodriguez@outlook.com">franciscoj.rodriguez@outlook.com</a></span></span><span style="font-size:small"><span style="font-family:monospace">
+
+RUN useradd -ms <a style="color:#3465A4" href="/bin/bash">/bin/bash</a></span></span><span style="font-size:small"><span style="font-family:monospace"> user
+USER user
+</span></span>
+<b>2) Build the container</b>
+
+<span style="font-size:small"><span style="font-family:monospace">$ docker build -t centos7/nonroot:v1 .
+Sending build context to Docker daemon 6.656 kB
+Step 1 : FROM centos:latest
+ ---&gt; 980e0e4c79ec
+Step 2 : MAINTAINER <a style="color:#3465A4" href="franciscoj.rodriguez@outlook.com">franciscoj.rodriguez@outlook.com</a></span></span><span style="font-size:small"><span style="font-family:monospace">
+ ---&gt; Running in cfd59120326f
+ ---&gt; ce1b661fa565
+Removing intermediate container cfd59120326f
+Step 3 : USER user
+ ---&gt; Running in 48a7b6021a67
+ ---&gt; 7498cf067baa
+Removing intermediate container 48a7b6021a67
+Successfully built 7498cf067baa
+</span></span>
+<b>3) Run an instance of the container</b>
+
+<span style="font-size:small"><span style="font-family:monospace">$ <a style="color:#204A87" href="docker run.html">docker run</a></span></span><span style="font-size:small"><span style="font-family:monospace"> -it centos7/nonroot:v1 <a style="color:#3465A4" href="/bin/bash">/bin/bash</a></span></span><span style="font-size:small"><span style="font-family:monospace">
+[<span style="background:yellow">user</span></span></span><span style="font-size:small"><span style="font-family:monospace">@d3fc10e43864 /]$ whiami
+bash: whiami: command not found
+[user@d3fc10e43864 /]$ whoami
+user
+[user@d3fc10e43864 /]$ exit
+exit
+
+$ <a style="color:#204A87" href="docker ps.html">docker ps</a></span></span><span style="font-size:small"><span style="font-family:monospace"> -a
+CONTAINER ID        IMAGE                COMMAND             CREATED             STATUS                     PORTS               NAMES
+d3fc10e43864        centos7/nonroot:v1   "/bin/bash"         16 seconds ago      Exited (0) 5 seconds ago                       infallible_aryabhata
+$ docker start infallible_aryabhata
+infallible_aryabhata
+
+$ <a style="color:#204A87" href="docker ps.html">docker ps</a></span></span><span style="font-size:small"><span style="font-family:monospace">
+CONTAINER ID        IMAGE                COMMAND             CREATED              STATUS              PORTS               NAMES
+d3fc10e43864        centos7/nonroot:v1   "/bin/bash"         About a minute ago   Up 11 seconds                           infallible_aryabhata
+
+</span></span><b>4) Get in the container as root user</b><span style="font-size:small"><span style="font-family:monospace">
+
+$ docker exec -u 0 -it infallible_aryabhata <a style="color:#3465A4" href="/bin/bash">/bin/bash</a></span></span><span style="font-size:small"><span style="font-family:monospace">
+[<span style="background:yellow">root</span></span></span><span style="font-size:small"><span style="font-family:monospace">@d3fc10e43864 /]# 
+[root@d3fc10e43864 /]# ps aux
+USER       PID %CPU %MEM    VSZ   RSS TTY      STAT START   TIME COMMAND
+user         1  0.0  0.0  11776  1660 ?        Ss+  19:45   0:00 <a style="color:#3465A4" href="/bin/bash">/bin/bash</a></span></span><span style="font-size:small"><span style="font-family:monospace">
+root        19  0.0  0.0  11776  1868 ?        Ss   19:46   0:00 <a style="color:#3465A4" href="/bin/bash">/bin/bash</a></span></span><span style="font-size:small"><span style="font-family:monospace">
+root        33  0.0  0.0  47424  1672 ?        R+   19:47   0:00 ps aux
+[root@d3fc10e43864 /]# exit
+exit</span></span>
+
+</div></body></html>

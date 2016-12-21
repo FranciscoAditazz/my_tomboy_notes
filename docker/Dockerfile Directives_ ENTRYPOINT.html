@@ -1,0 +1,80 @@
+<html xmlns:tomboy="http://beatniksoftware.com/tomboy" xmlns:link="http://beatniksoftware.com/tomboy/link" xmlns:size="http://beatniksoftware.com/tomboy/size"><head><META http-equiv="Content-Type" content="text/html; charset=utf-8"><title>Dockerfile Directives: ENTRYPOINT</title><style type="text/css">
+        
+	body {  }
+	h1 { font-size: xx-large;
+     	     font-weight: bold;
+     	     border-bottom: 1px solid black; }
+	div.note {
+		   position: relative;
+		   display: block;
+		   padding: 5pt;
+		   margin: 5pt; 
+		   white-space: -moz-pre-wrap; /* Mozilla */
+ 	      	   white-space: -pre-wrap;     /* Opera 4 - 6 */
+ 	      	   white-space: -o-pre-wrap;   /* Opera 7 */
+ 	      	   white-space: pre-wrap;      /* CSS3 */
+ 	      	   word-wrap: break-word;      /* IE 5.5+ */ }
+	</style></head><body><div class="note" id="Dockerfile Directives: ENTRYPOINT"><a name="dockerfile directives: entrypoint"></a><h1>Dockerfile Directives: ENTRYPOINT</h1>
+ENTRYPOINT	Es una instrucción que siempre se ejecuta cuando se instancia un container
+
+<b>Ejemplo: En el siguiente ejemplo se muestra como se ejecuta siempre la directiva especificada en el entrypoint, se compara con la directiva CMD donde es posible cambiar el comportamiento</b>
+
+<span style="font-size:small"><span style="font-family:monospace">xfrarod@Satellite-L955 <a style="color:#3465A4" href="~/Documents/2013_Cursos/Docker/Builds/Entry">~/Documents/2013_Cursos/Docker/Builds/Entry</a></span></span><span style="font-size:small"><span style="font-family:monospace"> $ cat Dockerfile 
+# Docker file based on the latest CentOS 7 image - non-privileged user entry
+FROM centos:latest
+MAINTAINER <a style="color:#3465A4" href="franciscoj.rodriguez@outlook.com">franciscoj.rodriguez@outlook.com</a></span></span><span style="font-size:small"><span style="font-family:monospace">
+
+RUN useradd -ms <a style="color:#3465A4" href="/bin/bash">/bin/bash</a></span></span><span style="font-size:small"><span style="font-family:monospace"> user
+
+ENTRYPOINT echo "This command will display this message on EVERY container that is run from it"
+
+USER user
+
+xfrarod@Satellite-L955 <a style="color:#3465A4" href="~/Documents/2013_Cursos/Docker/Builds/Entry">~/Documents/2013_Cursos/Docker/Builds/Entry</a></span></span><span style="font-size:small"><span style="font-family:monospace"> $ docker build -t centos7/entry:v1 .
+Sending build context to Docker daemon  2.56 kB
+Step 1 : FROM centos:latest
+ ---&gt; 980e0e4c79ec
+Step 2 : MAINTAINER <a style="color:#3465A4" href="franciscoj.rodriguez@outlook.com">franciscoj.rodriguez@outlook.com</a></span></span><span style="font-size:small"><span style="font-family:monospace">
+ ---&gt; Using cache
+ ---&gt; ce1b661fa565
+Step 3 : RUN useradd -ms <a style="color:#3465A4" href="/bin/bash">/bin/bash</a></span></span><span style="font-size:small"><span style="font-family:monospace"> user
+ ---&gt; Using cache
+ ---&gt; d5bfea6f1707
+Step 4 : ENTRYPOINT echo "This command will display this message on EVERY container that is run from it"
+ ---&gt; Running in fe04d8acc0ec
+ ---&gt; 866ac420348b
+Removing intermediate container fe04d8acc0ec
+Step 5 : USER user
+ ---&gt; Running in 7b1abb899f4c
+ ---&gt; 5ab5b3b7194c
+Removing intermediate container 7b1abb899f4c
+Successfully built 5ab5b3b7194c
+xfrarod@Satellite-L955 <a style="color:#3465A4" href="~/Documents/2013_Cursos/Docker/Builds/Entry">~/Documents/2013_Cursos/Docker/Builds/Entry</a></span></span><span style="font-size:small"><span style="font-family:monospace"> $ <a style="color:#204A87" href="docker images.html">docker images</a></span></span><span style="font-size:small"><span style="font-family:monospace">
+REPOSITORY          TAG                 IMAGE ID            CREATED             SIZE
+centos7/entry       v1                  5ab5b3b7194c        16 seconds ago      196.8 MB
+centos7/echo        v1                  31af935aadd1        36 minutes ago      196.8 MB
+centos7/java8       v2                  0be5471e0763        7 hours ago         634 MB
+centos7/java8       v1                  ba9d3a261aef        7 hours ago         634 MB
+centos7/config      v1                  7e646d71f1a7        8 hours ago         196.8 MB
+centos7/nonroot     v1                  d4192be59345        8 hours ago         196.8 MB
+&lt;none&gt;              &lt;none&gt;              7498cf067baa        9 hours ago         196.8 MB
+nginx               latest              e43d811ce2f4        9 days ago          181.5 MB
+ubuntu              xenial              c73a085dc378        4 weeks ago         127.1 MB
+centos              latest              980e0e4c79ec        7 weeks ago         196.8 MB
+xfrarod@Satellite-L955 <a style="color:#3465A4" href="~/Documents/2013_Cursos/Docker/Builds/Entry">~/Documents/2013_Cursos/Docker/Builds/Entry</a></span></span><span style="font-size:small"><span style="font-family:monospace"> $ <span style="background:yellow"><a style="color:#204A87" href="docker run.html">docker run</a></span></span></span><span style="font-size:small"><span style="font-family:monospace"><span style="background:yellow"> centos7/entry:v1</span></span></span><span style="font-size:small"><span style="font-family:monospace">
+<span style="background:yellow">This command will display this message on EVERY container that is run from it</span></span></span><span style="font-size:small"><span style="font-family:monospace">
+xfrarod@Satellite-L955 <a style="color:#3465A4" href="~/Documents/2013_Cursos/Docker/Builds/Entry">~/Documents/2013_Cursos/Docker/Builds/Entry</a></span></span><span style="font-size:small"><span style="font-family:monospace"> $ 
+xfrarod@Satellite-L955 <a style="color:#3465A4" href="~/Documents/2013_Cursos/Docker/Builds/Entry">~/Documents/2013_Cursos/Docker/Builds/Entry</a></span></span><span style="font-size:small"><span style="font-family:monospace"> $ 
+xfrarod@Satellite-L955 <a style="color:#3465A4" href="~/Documents/2013_Cursos/Docker/Builds/Entry">~/Documents/2013_Cursos/Docker/Builds/Entry</a></span></span><span style="font-size:small"><span style="font-family:monospace"> $ <span style="background:yellow"><a style="color:#204A87" href="docker run.html">docker run</a></span></span></span><span style="font-size:small"><span style="font-family:monospace"><span style="background:yellow"> centos7/echo:v1</span></span></span><span style="font-size:small"><span style="font-family:monospace">
+<span style="background:yellow">This is a custom container message for our LinuxAcademy Students</span></span></span><span style="font-size:small"><span style="font-family:monospace">
+xfrarod@Satellite-L955 <a style="color:#3465A4" href="~/Documents/2013_Cursos/Docker/Builds/Entry">~/Documents/2013_Cursos/Docker/Builds/Entry</a></span></span><span style="font-size:small"><span style="font-family:monospace"> $ <span style="background:yellow"><a style="color:#204A87" href="docker run.html">docker run</a></span></span></span><span style="font-size:small"><span style="font-family:monospace"><span style="background:yellow"> centos7/echo:v1 <a style="color:#3465A4" href="/bin/echo">/bin/echo</a></span></span></span><span style="font-size:small"><span style="font-family:monospace"><span style="background:yellow"> "Hello from the lab"</span></span></span><span style="font-size:small"><span style="font-family:monospace">
+<span style="background:yellow">Hello from the lab</span></span></span><span style="font-size:small"><span style="font-family:monospace">
+xfrarod@Satellite-L955 <a style="color:#3465A4" href="~/Documents/2013_Cursos/Docker/Builds/Entry">~/Documents/2013_Cursos/Docker/Builds/Entry</a></span></span><span style="font-size:small"><span style="font-family:monospace"> $ <span style="background:yellow"><a style="color:#204A87" href="docker run.html">docker run</a></span></span></span><span style="font-size:small"><span style="font-family:monospace"><span style="background:yellow"> centos7/echo:v1 <a style="color:#3465A4" href="/bin/echo">/bin/echo</a></span></span></span><span style="font-size:small"><span style="font-family:monospace"><span style="background:yellow"> </span></span></span><span style="font-size:small"><span style="font-family:monospace">
+
+xfrarod@Satellite-L955 <a style="color:#3465A4" href="~/Documents/2013_Cursos/Docker/Builds/Entry">~/Documents/2013_Cursos/Docker/Builds/Entry</a></span></span><span style="font-size:small"><span style="font-family:monospace"> $ <span style="background:yellow"><a style="color:#204A87" href="docker run.html">docker run</a></span></span></span><span style="font-size:small"><span style="font-family:monospace"><span style="background:yellow"> centos7/entry:v1 <a style="color:#3465A4" href="/bin/bash">/bin/bash</a></span></span></span><span style="font-size:small"><span style="font-family:monospace"></span></span><span style="font-size:small"><span style="font-family:monospace">
+<span style="background:yellow">This command will display this message on EVERY container that is run from it</span></span></span><span style="font-size:small"><span style="font-family:monospace">
+xfrarod@Satellite-L955 <a style="color:#3465A4" href="~/Documents/2013_Cursos/Docker/Builds/Entry">~/Documents/2013_Cursos/Docker/Builds/Entry</a></span></span><span style="font-size:small"><span style="font-family:monospace"> $ <span style="background:yellow"><a style="color:#204A87" href="docker run.html">docker run</a></span></span></span><span style="font-size:small"><span style="font-family:monospace"><span style="background:yellow"> centos7/entry:v1 <a style="color:#3465A4" href="/bin/echo">/bin/echo</a></span></span></span><span style="font-size:small"><span style="font-family:monospace"><span style="background:yellow"> "Will you see me?"</span></span></span><span style="font-size:small"><span style="font-family:monospace">
+<span style="background:yellow">This command will display this message on EVERY container that is run from it</span></span></span><span style="font-size:small"><span style="font-family:monospace">
+xfrarod@Satellite-L955 <a style="color:#3465A4" href="~/Documents/2013_Cursos/Docker/Builds/Entry">~/Documents/2013_Cursos/Docker/Builds/Entry</a></span></span><span style="font-size:small"><span style="font-family:monospace"> $ exit
+<a style="color:#204A87" href="../script.html">Script</a></span></span><span style="font-size:small"><span style="font-family:monospace"> done, file is Entry.log
+xfrarod@Satellite-L955 <a style="color:#3465A4" href="~/Documents/2013_Cursos/Docker/Builds/Entry">~/Documents/2013_Cursos/Docker/Builds/Entry</a></span></span><span style="font-size:small"><span style="font-family:monospace"> $ <a style="color:#204A87" href="docker run.html">docker run</a></span></span><span style="font-size:small"><span style="font-family:monospace"> -it --name voltest1 -v /mydata centos:latest <a style="color:#3465A4" href="/bin/bash">/bin/bash</a></span></span></div></body></html>

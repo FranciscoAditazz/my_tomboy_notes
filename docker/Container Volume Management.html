@@ -1,0 +1,265 @@
+<html xmlns:tomboy="http://beatniksoftware.com/tomboy" xmlns:link="http://beatniksoftware.com/tomboy/link" xmlns:size="http://beatniksoftware.com/tomboy/size"><head><META http-equiv="Content-Type" content="text/html; charset=utf-8"><title>Container Volume Management</title><style type="text/css">
+        
+	body {  }
+	h1 { font-size: xx-large;
+     	     font-weight: bold;
+     	     border-bottom: 1px solid black; }
+	div.note {
+		   position: relative;
+		   display: block;
+		   padding: 5pt;
+		   margin: 5pt; 
+		   white-space: -moz-pre-wrap; /* Mozilla */
+ 	      	   white-space: -pre-wrap;     /* Opera 4 - 6 */
+ 	      	   white-space: -o-pre-wrap;   /* Opera 7 */
+ 	      	   white-space: pre-wrap;      /* CSS3 */
+ 	      	   word-wrap: break-word;      /* IE 5.5+ */ }
+	</style></head><body><div class="note" id="Container Volume Management"><a name="container volume management"></a><h1>Container Volume Management</h1>
+Examples:
+
+<b>1)	Se mapea el disco y se ve como el disco mapeado puede ser actualizado tanto desde el contenedor como desde el host</b>
+
+<span style="font-size:small"><span style="font-family:monospace">xfrarod@Satellite-L955 <a style="color:#3465A4" href="~/Documents/2013_Cursos/Docker/Builds/Entry">~/Documents/2013_Cursos/Docker/Builds/Entry</a></span></span><span style="font-size:small"><span style="font-family:monospace"> $ <span style="background:yellow"><a style="color:#204A87" href="docker run.html">docker run</a></span></span></span><span style="font-size:small"><span style="font-family:monospace"><span style="background:yellow"> -it --name voltest1 -v /mydata centos:latest <a style="color:#3465A4" href="/bin/bash">/bin/bash</a></span></span></span><span style="font-size:small"><span style="font-family:monospace"></span></span><span style="font-size:small"><span style="font-family:monospace">
+[root@a9a73051a77f /]# df -h
+Filesystem      Size  Used Avail Use% Mounted on
+none             94G  8.9G   81G  10% /
+tmpfs           4.9G     0  4.9G   0% /dev
+tmpfs           4.9G     0  4.9G   0% <a style="color:#3465A4" href="/sys/fs/cgroup">/sys/fs/cgroup</a></span></span><span style="font-size:small"><span style="font-family:monospace">
+<span style="background:yellow"><a style="color:#3465A4" href="/dev/sda2">/dev/sda2</a></span></span></span><span style="font-size:small"><span style="font-family:monospace"><span style="background:yellow">        94G  8.9G   81G  10% /mydata</span></span></span><span style="font-size:small"><span style="font-family:monospace">
+shm              64M     0   64M   0% <a style="color:#3465A4" href="/dev/shm">/dev/shm</a></span></span><span style="font-size:small"><span style="font-family:monospace">
+[root@a9a73051a77f /]# 
+[root@a9a73051a77f /]# 
+[root@a9a73051a77f /]# cd <a style="color:#3465A4" href="/mydata/">/mydata/</a></span></span><span style="font-size:small"><span style="font-family:monospace">
+[root@a9a73051a77f mydata]# echo "this is my test data" &gt; test_data-txt
+[root@a9a73051a77f mydata]# 
+[root@a9a73051a77f mydata]# exit
+exit
+xfrarod@Satellite-L955 <a style="color:#3465A4" href="~/Documents/2013_Cursos/Docker/Builds/Entry">~/Documents/2013_Cursos/Docker/Builds/Entry</a></span></span><span style="font-size:small"><span style="font-family:monospace"> $ <span style="background:yellow"><a style="color:#204A87" href="docker inspect.html">docker inspect</a></span></span></span><span style="font-size:small"><span style="font-family:monospace"><span style="background:yellow"> voltest1</span></span></span><span style="font-size:small"><span style="font-family:monospace">
+[
+    {
+        "Id": "a9a73051a77fb662ea50a309b749325b35d1f9df08b8a939f1cd1db6cbdd910f",
+        "Created": "2016-11-01T04:19:20.90787274Z",
+        "Path": "/bin/bash",
+        "Args": [],
+        "State": {
+            "Status": "exited",
+            "Running": false,
+            "Paused": false,
+            "Restarting": false,
+            "OOMKilled": false,
+            "Dead": false,
+            "Pid": 0,
+            "ExitCode": 127,
+            "Error": "",
+            "StartedAt": "2016-11-01T04:19:22.083156835Z",
+            "FinishedAt": "2016-11-01T04:21:38.314227125Z"
+        },
+        "Image": "sha256:980e0e4c79ec933406e467a296ce3b86685e6b42eed2f873745e6a91d718e37a",
+        "ResolvConfPath": "/var/lib/docker/containers/a9a73051a77fb662ea50a309b749325b35d1f9df08b8a939f1cd1db6cbdd910f/resolv.conf",
+        "HostnamePath": "/var/lib/docker/containers/a9a73051a77fb662ea50a309b749325b35d1f9df08b8a939f1cd1db6cbdd910f/hostname",
+        "HostsPath": "/var/lib/docker/containers/a9a73051a77fb662ea50a309b749325b35d1f9df08b8a939f1cd1db6cbdd910f/hosts",
+        "LogPath": "/var/lib/docker/containers/a9a73051a77fb662ea50a309b749325b35d1f9df08b8a939f1cd1db6cbdd910f/a9a73051a77fb662ea50a309b749325b35d1f9df08b8a939f1cd1db6cbdd910f-json.log",
+        "Name": "/voltest1",
+        "RestartCount": 0,
+        "Driver": "aufs",
+        "MountLabel": "",
+        "ProcessLabel": "",
+        "AppArmorProfile": "",
+        "ExecIDs": null,
+        "HostConfig": {
+            "Binds": null,
+            "ContainerIDFile": "",
+            "LogConfig": {
+                "Type": "json-file",
+                "Config": {}
+            },
+            "NetworkMode": "default",
+            "PortBindings": {},
+            "RestartPolicy": {
+                "Name": "no",
+                "MaximumRetryCount": 0
+            },
+            "AutoRemove": false,
+            "VolumeDriver": "",
+            "VolumesFrom": null,
+            "CapAdd": null,
+            "CapDrop": null,
+            "Dns": [],
+            "DnsOptions": [],
+            "DnsSearch": [],
+            "ExtraHosts": null,
+            "GroupAdd": null,
+            "IpcMode": "",
+            "Cgroup": "",
+            "Links": null,
+            "OomScoreAdj": 0,
+            "PidMode": "",
+            "Privileged": false,
+            "PublishAllPorts": false,
+            "ReadonlyRootfs": false,
+            "SecurityOpt": null,
+            "UTSMode": "",
+            "UsernsMode": "",
+            "ShmSize": 67108864,
+            "Runtime": "runc",
+            "ConsoleSize": [
+                0,
+                0
+            ],
+            "Isolation": "",
+            "CpuShares": 0,
+            "Memory": 0,
+            "CgroupParent": "",
+            "BlkioWeight": 0,
+            "BlkioWeightDevice": null,
+            "BlkioDeviceReadBps": null,
+            "BlkioDeviceWriteBps": null,
+            "BlkioDeviceReadIOps": null,
+            "BlkioDeviceWriteIOps": null,
+            "CpuPeriod": 0,
+            "CpuQuota": 0,
+            "CpusetCpus": "",
+            "CpusetMems": "",
+            "Devices": [],
+            "DiskQuota": 0,
+            "KernelMemory": 0,
+            "MemoryReservation": 0,
+            "MemorySwap": 0,
+            "MemorySwappiness": -1,
+            "OomKillDisable": false,
+            "PidsLimit": 0,
+            "Ulimits": null,
+            "CpuCount": 0,
+            "CpuPercent": 0,
+            "IOMaximumIOps": 0,
+            "IOMaximumBandwidth": 0
+        },
+        "GraphDriver": {
+            "Name": "aufs",
+            "Data": null
+        },
+        "<span style="background:yellow">Mounts</span></span></span><span style="font-size:small"><span style="font-family:monospace">": [
+            {
+                "Name": "5d83dd3f03c78f0be02c88d8cb39120a0cb22dabbb13362eaae9ac6864c85a73",
+                "Source": "<span style="background:yellow">/var/lib/docker/volumes/5d83dd3f03c78f0be02c88d8cb39120a0cb22dabbb13362eaae9ac6864c85a73/_data</span></span></span><span style="font-size:small"><span style="font-family:monospace">",
+                "Destination": "/mydata",
+                "Driver": "local",
+                "Mode": "",
+                "RW": true,
+                "Propagation": ""
+            }
+        ],
+        "Config": {
+            "Hostname": "a9a73051a77f",
+            "Domainname": "",
+            "User": "",
+            "AttachStdin": true,
+            "AttachStdout": true,
+            "AttachStderr": true,
+            "Tty": true,
+            "OpenStdin": true,
+            "StdinOnce": true,
+            "Env": [
+                "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
+            ],
+            "Cmd": [
+                "/bin/bash"
+            ],
+            "Image": "centos:latest",
+            "Volumes": {
+                "/mydata": {}
+            },
+            "WorkingDir": "",
+            "Entrypoint": null,
+            "OnBuild": null,
+            "Labels": {
+                "build-date": "20160906",
+                "license": "GPLv2",
+                "name": "CentOS Base Image",
+                "vendor": "CentOS"
+            }
+        },
+        "NetworkSettings": {
+            "Bridge": "",
+            "SandboxID": "979ddea0159ab8fcd455d94bb54d0d790131b2b4726b47991f10b25fd939c9d9",
+            "HairpinMode": false,
+            "LinkLocalIPv6Address": "",
+            "LinkLocalIPv6PrefixLen": 0,
+            "Ports": null,
+            "SandboxKey": "/var/run/docker/netns/979ddea0159a",
+            "SecondaryIPAddresses": null,
+            "SecondaryIPv6Addresses": null,
+            "EndpointID": "",
+            "Gateway": "",
+            "GlobalIPv6Address": "",
+            "GlobalIPv6PrefixLen": 0,
+            "IPAddress": "",
+            "IPPrefixLen": 0,
+            "IPv6Gateway": "",
+            "MacAddress": "",
+            "Networks": {
+                "bridge": {
+                    "IPAMConfig": null,
+                    "Links": null,
+                    "Aliases": null,
+                    "NetworkID": "7b7c4ba5a39805007cfae2d0680adaa9d7d413ff06caeca747fe07d209f5f107",
+                    "EndpointID": "",
+                    "Gateway": "",
+                    "IPAddress": "",
+                    "IPPrefixLen": 0,
+                    "IPv6Gateway": "",
+                    "GlobalIPv6Address": "",
+                    "GlobalIPv6PrefixLen": 0,
+                    "MacAddress": ""
+                }
+            }
+        }
+    }
+]
+<span style="background:yellow">Satellite-L955 Entry # cd <a style="color:#3465A4" href="/var/lib/docker/volumes/5d83dd3f03c78f0be02c88d8cb39120a0cb22dabbb13362eaae9ac6864c85a73/_data">/var/lib/docker/volumes/5d83dd3f03c78f0be02c88d8cb39120a0cb22dabbb13362eaae9ac6864c85a73/_data</a></span></span></span><span style="font-size:small"><span style="font-family:monospace"></span></span><span style="font-size:small"><span style="font-family:monospace">
+Satellite-L955 _data # ll
+total 12
+drwxr-xr-x 2 root root 4096 Oct 31 22:20 .
+drwxr-xr-x 3 root root 4096 Oct 31 22:19 ..
+<span style="background:yellow">-rw-r--r-- 1 root root   21 Oct 31 22:20 test_data.txt</span></span></span><span style="font-size:small"><span style="font-family:monospace">
+Satellite-L955 _data # cat test_data.txt 
+this is my test data
+Satellite-L955 _data # <span style="background:yellow">echo "this is from your friendly neighborhood host" &gt; host.txt</span></span></span><span style="font-size:small"><span style="font-family:monospace">
+Satellite-L955 _data # ll
+total 16
+drwxr-xr-x 2 root root 4096 Oct 31 22:23 .
+drwxr-xr-x 3 root root 4096 Oct 31 22:19 ..
+-rw-r--r-- 1 root root   45 Oct 31 22:23 <span style="background:yellow">host.txt</span></span></span><span style="font-size:small"><span style="font-family:monospace">
+-rw-r--r-- 1 root root   21 Oct 31 22:20 <span style="background:yellow">test_data.txt</span></span></span><span style="font-size:small"><span style="font-family:monospace">
+xfrarod@Satellite-L955 <a style="color:#3465A4" href="~/Documents/2013_Cursos/Docker/Builds/Entry">~/Documents/2013_Cursos/Docker/Builds/Entry</a></span></span><span style="font-size:small"><span style="font-family:monospace"> $ <span style="background:yellow">docker start voltest1</span></span></span><span style="font-size:small"><span style="font-family:monospace"> 
+voltest1
+xfrarod@Satellite-L955 <a style="color:#3465A4" href="~/Documents/2013_Cursos/Docker/Builds/Entry">~/Documents/2013_Cursos/Docker/Builds/Entry</a></span></span><span style="font-size:small"><span style="font-family:monospace"> $ 
+xfrarod@Satellite-L955 <a style="color:#3465A4" href="~/Documents/2013_Cursos/Docker/Builds/Entry">~/Documents/2013_Cursos/Docker/Builds/Entry</a></span></span><span style="font-size:small"><span style="font-family:monospace"> $ <span style="background:yellow">docker exec -it voltest1 <a style="color:#3465A4" href="/bin/bash">/bin/bash</a></span></span></span><span style="font-size:small"><span style="font-family:monospace"></span></span><span style="font-size:small"><span style="font-family:monospace">
+[root@a9a73051a77f /]# <span style="background:yellow">cd <a style="color:#3465A4" href="/mydata/">/mydata/</a></span></span></span><span style="font-size:small"><span style="font-family:monospace"></span></span><span style="font-size:small"><span style="font-family:monospace">
+[root@a9a73051a77f mydata]# ll
+total 8
+-rw-r--r-- 1 root root 45 Nov  1 04:23 <span style="background:yellow">host.txt</span></span></span><span style="font-size:small"><span style="font-family:monospace">
+-rw-r--r-- 1 root root 21 Nov  1 04:20 <span style="background:yellow">test_data.txt</span></span></span><span style="font-size:small"><span style="font-family:monospace">
+[root@a9a73051a77f mydata]# exit
+exit
+xfrarod@Satellite-L955 <a style="color:#3465A4" href="~/Documents/2013_Cursos/Docker/Builds/Entry">~/Documents/2013_Cursos/Docker/Builds/Entry</a></span></span><span style="font-size:small"><span style="font-family:monospace"> $ <a style="color:#204A87" href="docker ps.html">docker ps</a></span></span><span style="font-size:small"><span style="font-family:monospace">
+CONTAINER ID        IMAGE               COMMAND             CREATED             STATUS              PORTS               NAMES
+a9a73051a77f        centos:latest       "/bin/bash"         8 minutes ago       Up 31 seconds                           voltest1</span></span>
+
+
+2)	Ejemplo de como se mapea un volumen específico
+
+<span style="font-size:small"><span style="font-family:monospace">xfrarod@Satellite-L955 <a style="color:#3465A4" href="~/Documents/2013_Cursos/Docker/Builds/Entry">~/Documents/2013_Cursos/Docker/Builds/Entry</a></span></span><span style="font-size:small"><span style="font-family:monospace"> $ ll
+total 20
+drwxr-xr-x 2 xfrarod xfrarod 4096 Oct 30 22:39 .
+drwxr-xr-x 7 xfrarod xfrarod 4096 Oct 30 22:36 ..
+-rw-r--r-- 1 xfrarod xfrarod  281 Oct 30 22:39 <span style="background:yellow">Dockerfile</span></span></span><span style="font-size:small"><span style="font-family:monospace">
+-rw-r--r-- 1 xfrarod xfrarod 4703 Oct 30 22:46 <span style="background:yellow">Entry.log</span></span></span><span style="font-size:small"><span style="font-family:monospace">
+xfrarod@Satellite-L955 <a style="color:#3465A4" href="~/Documents/2013_Cursos/Docker/Builds/Entry">~/Documents/2013_Cursos/Docker/Builds/Entry</a></span></span><span style="font-size:small"><span style="font-family:monospace"> $</span></span>
+<span style="font-size:small"><span style="font-family:monospace">xfrarod@Satellite-L955 <a style="color:#3465A4" href="~/Documents/2013_Cursos/Docker/Builds/Entry">~/Documents/2013_Cursos/Docker/Builds/Entry</a></span></span><span style="font-size:small"><span style="font-family:monospace"> $ <span style="background:yellow"><a style="color:#204A87" href="docker run.html">docker run</a></span></span></span><span style="font-size:small"><span style="font-family:monospace"><span style="background:yellow"> -it --name voltest2 -v <a style="color:#3465A4" href="~/Documents/2013_Cursos/Docker/Builds/Entry:/mydata">~/Documents/2013_Cursos/Docker/Builds/Entry:/mydata</a></span></span></span><span style="font-size:small"><span style="font-family:monospace"><span style="background:yellow"> centos:latest <a style="color:#3465A4" href="/bin/bash">/bin/bash</a></span></span></span><span style="font-size:small"><span style="font-family:monospace"></span></span><span style="font-size:small"><span style="font-family:monospace">
+[root@a0a5acc7a411 /]# cd <a style="color:#3465A4" href="/mydata/">/mydata/</a></span></span><span style="font-size:small"><span style="font-family:monospace">
+[root@a0a5acc7a411 mydata]# ll
+total 12
+-rw-r--r-- 1 1000 1000  281 Oct 31 04:39 <span style="background:yellow">Dockerfile</span></span></span><span style="font-size:small"><span style="font-family:monospace">
+-rw-r--r-- 1 1000 1000 4703 Oct 31 04:46 <span style="background:yellow">Entry.log</span></span></span><span style="font-size:small"><span style="font-family:monospace">
+[root@a0a5acc7a411 mydata]# </span></span></div></body></html>

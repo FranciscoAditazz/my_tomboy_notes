@@ -1,0 +1,44 @@
+<html xmlns:tomboy="http://beatniksoftware.com/tomboy" xmlns:link="http://beatniksoftware.com/tomboy/link" xmlns:size="http://beatniksoftware.com/tomboy/size"><head><META http-equiv="Content-Type" content="text/html; charset=utf-8"><title>VirtualBox Guest Additions on Centos</title><style type="text/css">
+        
+	body {  }
+	h1 { font-size: xx-large;
+     	     font-weight: bold;
+     	     border-bottom: 1px solid black; }
+	div.note {
+		   position: relative;
+		   display: block;
+		   padding: 5pt;
+		   margin: 5pt; 
+		   white-space: -moz-pre-wrap; /* Mozilla */
+ 	      	   white-space: -pre-wrap;     /* Opera 4 - 6 */
+ 	      	   white-space: -o-pre-wrap;   /* Opera 7 */
+ 	      	   white-space: pre-wrap;      /* CSS3 */
+ 	      	   word-wrap: break-word;      /* IE 5.5+ */ }
+	</style></head><body><div class="note" id="VirtualBox Guest Additions on Centos"><a name="virtualbox guest additions on centos"></a><h1>VirtualBox Guest Additions on Centos</h1>
+Para poder corregir el error que marca cuando se intenta correr el vBoxGuestAdditions se hace lo siguiente:
+
+<b>a) Se carga el repositorio y se instalan las librerías que se indican:
+</b>
+<span style="font-size:small"><span style="font-family:monospace">rpm -Uvh <a style="color:#3465A4" href="http://dl.fedoraproject.org/pub/epel/7/x86_64/e/epel-release-X-X.noarch.rpm">http://dl.fedoraproject.org/pub/epel/7/x86_64/e/epel-release-X-X.noarch.rpm</a></span></span><span style="font-size:small"><span style="font-family:monospace">
+
+yum install htop
+
+yum install dkms
+</span></span>
+<b>b) Dependiendo lo que indique el error en el log: se instala la recomendación del kernel-devel: 
+</b>
+<span style="font-size:small">cat <a style="color:#3465A4" href="/var/log/vboxadd-install.log">/var/log/vboxadd-install.log</a></span><span style="font-size:small">
+
+yum install kernel-devel-3.10.0-123.13.2.el7.x86_64
+</span>
+<b>c) Se corrige el link virtual del archivo build:
+</b>
+cd <a style="color:#3465A4" href="/lib/modules/3.10.0-123.13.2.el7.x86_64/">/lib/modules/3.10.0-123.13.2.el7.x86_64/</a>
+
+<span style="font-size:small"><span style="font-family:monospace">rm build
+
+ln -s <a style="color:#3465A4" href="/usr/src/kernels/3.10.0-229.4.2.el7.x86_64/">/usr/src/kernels/3.10.0-229.4.2.el7.x86_64/</a></span></span><span style="font-size:small"><span style="font-family:monospace"> build
+</span></span>
+<b>d) Se corre el Guest Additions
+</b>
+<span style="font-size:small"><span style="font-family:monospace">./VBoxLinuxAdditions.run </span></span></div></body></html>

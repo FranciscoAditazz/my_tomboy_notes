@@ -1,0 +1,35 @@
+<html xmlns:tomboy="http://beatniksoftware.com/tomboy" xmlns:link="http://beatniksoftware.com/tomboy/link" xmlns:size="http://beatniksoftware.com/tomboy/size"><head><META http-equiv="Content-Type" content="text/html; charset=utf-8"><title>Quoting</title><style type="text/css">
+        
+	body {  }
+	h1 { font-size: xx-large;
+     	     font-weight: bold;
+     	     border-bottom: 1px solid black; }
+	div.note {
+		   position: relative;
+		   display: block;
+		   padding: 5pt;
+		   margin: 5pt; 
+		   white-space: -moz-pre-wrap; /* Mozilla */
+ 	      	   white-space: -pre-wrap;     /* Opera 4 - 6 */
+ 	      	   white-space: -o-pre-wrap;   /* Opera 7 */
+ 	      	   white-space: pre-wrap;      /* CSS3 */
+ 	      	   word-wrap: break-word;      /* IE 5.5+ */ }
+	</style></head><body><div class="note" id="Quoting"><a name="quoting"></a><h1>Quoting</h1>
+<b>Double quote</b>
+<ul><li dir="ltr">Substitutes the value of <a style="color:#204A87" href="../ruby/Variables.html">variables</a> and commands</li></ul>
+<i>Example</i>: echo “Username is $USER"
+The above will <a style="color:#204A87" href="../python/Print.html">print</a> what the current username
+	
+<b>Single quote</b>
+<ul><li dir="ltr">This preserves the literal meaning of each character of a given <a style="color:#204A87" href="../python/String.html">string</a>
+</li><li dir="ltr">This will turn off the (special) meanings of all characters</li></ul>
+
+<i>Example</i>: echo ‘Username is $USER’
+The above example will <a style="color:#204A87" href="../python/Print.html">print</a>/echo the literal Username of	$USER	
+
+
+<span style="font-size:small"><span style="font-family:monospace">xfrarod@Satellite-L955 <a style="color:#3465A4" href="/var/log">/var/log</a></span></span><span style="font-size:small"><span style="font-family:monospace"> $ echo "the name is $USER"
+the name is xfrarod
+xfrarod@Satellite-L955 <a style="color:#3465A4" href="/var/log">/var/log</a></span></span><span style="font-size:small"><span style="font-family:monospace"> $ echo 'the name is $USER'
+the name is $USER</span></span>
+</div></body></html>

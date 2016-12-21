@@ -1,0 +1,22 @@
+<html xmlns:tomboy="http://beatniksoftware.com/tomboy" xmlns:link="http://beatniksoftware.com/tomboy/link" xmlns:size="http://beatniksoftware.com/tomboy/size"><head><META http-equiv="Content-Type" content="text/html; charset=utf-8"><title>Resource Abstraction Layer</title><style type="text/css">
+        
+	body {  }
+	h1 { font-size: xx-large;
+     	     font-weight: bold;
+     	     border-bottom: 1px solid black; }
+	div.note {
+		   position: relative;
+		   display: block;
+		   padding: 5pt;
+		   margin: 5pt; 
+		   white-space: -moz-pre-wrap; /* Mozilla */
+ 	      	   white-space: -pre-wrap;     /* Opera 4 - 6 */
+ 	      	   white-space: -o-pre-wrap;   /* Opera 7 */
+ 	      	   white-space: pre-wrap;      /* CSS3 */
+ 	      	   word-wrap: break-word;      /* IE 5.5+ */ }
+	</style></head><body><div class="note" id="Resource Abstraction Layer"><a name="resource abstraction layer"></a><a style="color:#204A87" href="Resource.html">Resource</a><h1> Abstraction Layer</h1>
+Puppet takes the descriptions expressed by <a style="color:#204A87" href="Resource.html">resource</a> declarations and uses providers that are specific to the Operating System to realize them. These Providers abstract away the complexity of managing diverse implementations of <a style="color:#204A87" href="Resource.html">resource</a> types on different systems. As a whole, this system of <a style="color:#204A87" href="Resource.html">resource</a> types and the providers that implement them is called the <a style="color:#204A87" href="Resource.html">Resource</a> Abstraction Layer, or RAL.
+
+You can describe the ideal state of a user <a style="color:#204A87" href="Resource.html">resource</a>. Puppet will choose a suitable provider to realize your definition - in the case of users, Puppet can use providers to manage user records in <a style="color:#3465A4" href="/etc/passwd">/etc/passwd</a> files or <b>NetInfo</b> , or <b>LDAP</b> . Similarly, when you wish to install a package, you can stand back and watch Puppet figure out whether to use yum or apt for package management. This lets you ignore the implementation details with managing the resources, such as the names of the commands (is it adduser or useradd ?) the arguments for the commands, file formats etc and lets you focus on the more important job of modeling the desired state for your systems.
+
+By harnessing the power of the <b>RAL</b>, you can be confident of the potency of your Puppet skills wherever your journey takes you.</div></body></html>

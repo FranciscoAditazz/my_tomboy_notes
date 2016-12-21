@@ -1,0 +1,43 @@
+<html xmlns:tomboy="http://beatniksoftware.com/tomboy" xmlns:link="http://beatniksoftware.com/tomboy/link" xmlns:size="http://beatniksoftware.com/tomboy/size"><head><META http-equiv="Content-Type" content="text/html; charset=utf-8"><title>Automated provisioning</title><style type="text/css">
+        
+	body {  }
+	h1 { font-size: xx-large;
+     	     font-weight: bold;
+     	     border-bottom: 1px solid black; }
+	div.note {
+		   position: relative;
+		   display: block;
+		   padding: 5pt;
+		   margin: 5pt; 
+		   white-space: -moz-pre-wrap; /* Mozilla */
+ 	      	   white-space: -pre-wrap;     /* Opera 4 - 6 */
+ 	      	   white-space: -o-pre-wrap;   /* Opera 7 */
+ 	      	   white-space: pre-wrap;      /* CSS3 */
+ 	      	   word-wrap: break-word;      /* IE 5.5+ */ }
+	</style></head><body><div class="note" id="Automated provisioning"><a name="automated provisioning"></a><h1>Automated provisioning</h1>
+Using this feature, Vagrant will automatically install software when you <a style="color:#204A87" href="vagrant up.html">vagrant up</a> so that the guest machine can be repeatably created and ready-to-use.
+
+<b>Example installing Apache</b>
+
+<b>1.</b>  Create the following shell <span style="color:#555753;text-decoration:underline">script</span> and save it as <i>bootstrap.sh</i> in the same directory as your <a style="color:#204A87" href="Vagrantfile.html">Vagrantfile</a>
+<span style="font-size:small">
+<span style="font-family:monospace">#!/usr/bin/env bash
+
+apt-get update
+apt-get install -y apache2
+rm -rf <a style="color:#3465A4" href="/var/www">/var/www</a></span></span><span style="font-size:small"><span style="font-family:monospace">
+ln -fs /vagrant <a style="color:#3465A4" href="/var/www">/var/www</a></span></span>
+
+<b>2. </b> Configure Vagrant to run this shell <span style="color:#555753;text-decoration:underline">script</span> when setting up our machine. We do this by editing the <a style="color:#204A87" href="Vagrantfile.html">Vagrantfile</a>, which should now look like this:
+
+<span style="font-size:small"><span style="font-family:monospace">Vagrant.configure("2") do |config|
+  config.vm.box = "hashicorp/precise32"
+  config.vm.provision :shell, path: "bootstrap.sh"
+end</span></span>
+
+The "provision" line is new, and tells Vagrant to use the shell provisioner to setup the machine, with the bootstrap.sh file. The file path is relative to the location of the project root (where the <a style="color:#204A87" href="Vagrantfile.html">Vagrantfile</a> is).
+
+<b>3.  </b>After everything is configured, just run <a style="color:#204A87" href="vagrant up.html">vagrant up</a> to create your machine and Vagrant will automatically provision it. You should see the output from the shell <span style="color:#555753;text-decoration:underline">script</span> appear in your terminal.
+
+<b>4.  </b>After Vagrant completes running, the web server will be up and running. You can't see the website from your own browser (yet), but you can verify that the provisioning works by loading a file from SSH within the machine
+</div></body></html>

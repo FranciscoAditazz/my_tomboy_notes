@@ -1,0 +1,175 @@
+<html xmlns:tomboy="http://beatniksoftware.com/tomboy" xmlns:link="http://beatniksoftware.com/tomboy/link" xmlns:size="http://beatniksoftware.com/tomboy/size"><head><META http-equiv="Content-Type" content="text/html; charset=utf-8"><title>DB Oracle 11g</title><style type="text/css">
+        
+	body {  }
+	h1 { font-size: xx-large;
+     	     font-weight: bold;
+     	     border-bottom: 1px solid black; }
+	div.note {
+		   position: relative;
+		   display: block;
+		   padding: 5pt;
+		   margin: 5pt; 
+		   white-space: -moz-pre-wrap; /* Mozilla */
+ 	      	   white-space: -pre-wrap;     /* Opera 4 - 6 */
+ 	      	   white-space: -o-pre-wrap;   /* Opera 7 */
+ 	      	   white-space: pre-wrap;      /* CSS3 */
+ 	      	   word-wrap: break-word;      /* IE 5.5+ */ }
+	</style></head><body><div class="note" id="DB Oracle 11g"><a name="db oracle 11g"></a><h1>DB Oracle 11g</h1>
+Server Name: Automic
+Hostname: automic.txmdomain
+
+User: root
+Password: automic123
+
+User: oracle
+Password: oracle123
+
+global database name: orcl.txm
+administrative password: admin123
+
+<b>Steps for installing the Database</b>
+
+a)	Open the command shell console
+
+<span style="font-size:small"><span style="font-family:monospace">ssh -X root@arquimides</span></span>
+
+b)	Download and verify the appropriate Oracle Linux GPG Key that best matches the RHEL/CentOS compatible OS release.
+
+<span style="font-size:small"><span style="font-family:monospace">cd <a style="color:#3465A4" href="/etc/yum.repos.d">/etc/yum.repos.d</a></span></span>
+<span style="font-size:small"><span style="font-family:monospace">wget <a style="color:#3465A4" href="https://public-yum.oracle.com/RPM-GPG-KEY-oracle-ol6">https://public-yum.oracle.com/RPM-GPG-KEY-oracle-ol6</a></span></span><span style="font-size:small"><span style="font-family:monospace"> -O <a style="color:#3465A4" href="/etc/pki/rpm-gpg/RPM-GPG-KEY-oracle">/etc/pki/rpm-gpg/RPM-GPG-KEY-oracle</a></span></span><span style="font-size:small"><span style="font-family:monospace"> --no-check-certificate
+</span></span>
+c)	<a style="color:#204A87" href="../python/While.html">While</a> importing GPG key, you might get “GPG key retrieval failed” error as shown below. Here, you need to <a style="color:#204A87" href="../Import.html">import</a> proper GPG key for your OS release. Download appropriate yum configuration file under <a style="color:#3465A4" href="/etc/yum.repos.d/">/etc/yum.repos.d/</a> directory as root user:<span style="font-size:large">
+</span>
+<span style="font-size:small"><span style="font-family:monospace">wget <a style="color:#3465A4" href="https://public-yum.oracle.com/public-yum-ol6.repo">https://public-yum.oracle.com/public-yum-ol6.repo</a></span></span><span style="font-size:small"><span style="font-family:monospace"> --no-check-certificate</span></span>
+
+d)	Perform the ‘yum’ command to install all the necessary prerequisites automatically.
+
+<span style="font-size:small"><span style="font-family:monospace">yum install oracle-rdbms-server-11gR2-preinstall</span></span>
+
+<a style="color:#204A87" href="../metrored pitfalls/Installation of Web GUI 7_4 64-bit package for Linux fails.html">Installation of Web GUI 7.4 64-bit package for Linux fails</a>)	Add the entry to file “/etc/security/limits.d/90-nproc.conf” as described below
+        <b>for CentOS 7</b> the file should be "<b><i>/etc/security/limits.d/20-nproc.conf</i></b>"
+
+<span style="font-size:small"><span style="font-family:monospace">vi <a style="color:#3465A4" href="/etc/security/limits.d/90-nproc.conf">/etc/security/limits.d/90-nproc.conf</a></span></span>
+<span style="font-size:small"><span style="font-family:monospace">
+	# Default limit for number of user's processes to prevent
+	# accidental fork bombs.
+	# See rhbz #432903 for reasoning.
+	*          soft    nproc     1024
+	root       soft    nproc     unlimited
+	*          -       nproc     16384
+
+</span></span>f)	Add the following lines to the <a style="color:#3465A4" href="/etc/security/limits.conf">/etc/security/limits.conf</a> file:<span style="font-size:small"><span style="font-family:monospace">
+
+vi <a style="color:#3465A4" href="/etc/security/limits.conf">/etc/security/limits.conf</a></span></span><span style="font-size:small"><span style="font-family:monospace">
+	oracle     soft    nproc     2047
+	oracle     hard    nproc     16384
+	oracle     soft    nofile    1024
+	oracle     hard    nofile    65536
+</span></span>
+g)	Set SELinux to “permissive” mode by editing the file “/etc/selinux/config”
+
+<span style="font-size:small"><span style="font-family:monospace">vi <a style="color:#3465A4" href="/etc/selinux/config">/etc/selinux/config</a></span></span>
+
+<span style="font-size:small"><span style="font-family:monospace">	SELINUX=permissive</span></span>
+
+h)	Restart the server to reflect new changes.
+
+<span style="font-size:small"><span style="font-family:monospace">reboot</span></span>
+
+i)	Login as Oracle user and open file “.bash_profile“, which is available on oracle user’s home directory, make an entries as described below.
+
+<span style="font-size:small"><span style="font-family:monospace">&gt; su oracle
+&gt; vi .bash_profile
+
+# Oracle Settings
+TMP=/tmp; export TMP
+TMPDIR=$TMP; export TMPDIR
+
+ORACLE_HOSTNAME=automic.txmdomain; export ORACLE_HOSTNAME
+ORACLE_UNQNAME=orcl.txm; export ORACLE_UNQNAME
+ORACLE_BASE=/u01/app/oracle; export ORACLE_BASE
+ORACLE_HOME=$ORACLE_BASE/product/11.2.0/dbhome_1; export ORACLE_HOME
+ORACLE_SID=orcl.txm; export ORACLE_SID
+PATH=/usr/sbin:$PATH; export PATH
+PATH=$ORACLE_HOME/bin:$PATH; export PATH
+
+LD_LIBRARY_PATH=$ORACLE_HOME/lib:/lib:/usr/lib; export LD_LIBRARY_PATH
+CLASSPATH=$ORACLE_HOME/jlib:$ORACLE_HOME/rdbms/jlib; export CLASSPATH export PATH
+
+</span></span>j)	Include Oracle user to sudoers file
+<span style="font-size:small"><span style="font-family:monospace">
+vi <a style="color:#3465A4" href="/etc/sudoers">/etc/sudoers</a></span></span><span style="font-size:small"><span style="font-family:monospace">
+
+	# Allow members of group <a style="color:#204A87" href="../linux processes and commands/Sudo.html">sudo</a></span></span><span style="font-size:small"><span style="font-family:monospace"> to execute any command
+	root	 ALL=(ALL)    ALL
+	oracle   ALL=(ALL)    ALL
+</span></span>
+k) 	Create the directories and set the appropriate permissions in which the Oracle software will be installed. 
+
+<span style="font-size:small"><a style="color:#204A87" href="../linux processes and commands/Sudo.html">sudo</a></span><span style="font-size:small"><span style="font-family:monospace"> mkdir -p <a style="color:#3465A4" href="/u01/app/oracle/product/11.2.0/dbhome_1">/u01/app/oracle/product/11.2.0/dbhome_1</a></span></span><span style="font-size:small"><span style="font-family:monospace">
+<a style="color:#204A87" href="../linux processes and commands/Sudo.html">sudo</a></span></span><span style="font-size:small"><span style="font-family:monospace"> chown -R oracle:oinstall /u01
+<a style="color:#204A87" href="../linux processes and commands/Sudo.html">sudo</a></span></span><span style="font-size:small"><span style="font-family:monospace"> chmod -R 775 /u01
+</span></span>
+l)	Sign-up and Download the Oracle software using the following link.
+<span style="font-size:small"><a style="color:#3465A4" href="http://www.oracle.com/technetwork/database/enterprise-edition/downloads/112010-linx8664soft-100572.html">http://www.oracle.com/technetwork/database/enterprise-edition/downloads/112010-linx8664soft-100572.html</a></span>
+<span style="font-size:small">	<i>linux.x64_11gR2_database_1of2.zip</i></span><span style="font-size:small"> (1,239,269,270 bytes) (cksum - 3152418844)
+	<i>linux.x64_11gR2_database_2of2.zip</i></span><span style="font-size:small"> (1,111,416,131 bytes) (cksum - 3669256139)
+</span>
+
+m)	Install the following libraries in case they are not installed:
+<span style="font-size:small"><span style="font-family:monospace">yum -y install compat-gcc-44.x86_64
+yum -y install compat-gcc-44-c++.x86_64
+yum -y install libaio.x86_64
+yum -y install elfutils.x86_64
+yum -y install compat-glibc.x86_64
+yum -y install compat-libstdc++-33.x86_64
+yum -y install elfutils-devel.x86_64
+yum -y install elfutils-devel-static.x86_64
+yum -y install freeradius-unixODBC.x86_64
+yum -y install gcc.x86_64
+yum -y install gcc-c++.x86_64
+yum -y install gcc-plugin-devel.x86_64
+yum -y install libaio-devel.x86_64
+yum -y install libstdc++-devel.x86_64
+yum -y install libstdc++-static.x86_64
+yum -y install unixODBC-devel.x86_64
+yum -y install unixODBC-kde.x86_64</span></span>
+
+n) check that the following kernel parameters have the correct values:
+
+<b><span style="font-size:small"><span style="font-family:monospace"># Modified for Oracle install</span></span></b><span style="font-size:small"><span style="font-family:monospace">
+kernel.sem = 250 32000 100 128
+fs.file-max = 6815744
+net.ipv4.ip_local_port_<a style="color:#204A87" href="../python/Range.html">range</a></span></span><span style="font-size:small"><span style="font-family:monospace"> = 9000 65500
+net.core.rmem_default=262144
+net.core.wmem_default=262144
+net.core.rmem_max=4194304
+net.core.wmem_max=1048576
+fs.aio-max-nr=1048576</span></span>
+
+o)	Install the software following the Installer GUI
+	<span style="font-size:small"><span style="font-family:monospace">database/runInstaller</span></span>
+
+p)   If you need to modify the kernel parameters, edit <a style="color:#3465A4" href="/etc/sysctl.conf,">/etc/sysctl.conf,</a> then save and run <a style="color:#3465A4" href="/sbin/sysctl">/sbin/sysctl</a> -p and it will load what is in that file. As follows:
+
+<span style="font-size:small"><span style="font-family:monospace">vi <a style="color:#3465A4" href="/etc/sysctl.conf">/etc/sysctl.conf</a></span></span><span style="font-size:small"><span style="font-family:monospace"> 
+<a style="color:#3465A4" href="/sbin/sysctl">/sbin/sysctl</a></span></span><span style="font-size:small"><span style="font-family:monospace"> -p
+</span></span>
+q)	Once the installation is finished, stop <a style="color:#204A87" href="../linux processes and commands/Firewall.html">firewall</a> in order to let users to connect to the server
+
+	<span style="font-size:small"><span style="font-family:monospace">service iptables stop
+</span></span>
+<span style="font-size:small"><span style="font-family:monospace">	<a style="color:#3465A4" href="https://Arquimides:1158/em">https://Arquimides:1158/em</a></span></span><span style="font-family:monospace"></span><span style="font-family:monospace">
+	
+<span style="font-size:small">	<b>usr</b></span></span><span style="font-family:monospace"><span style="font-size:small">: sys	<b>pwd</b></span></span><span style="font-family:monospace"><span style="font-size:small">: admin
+	<b>usr</b></span></span><span style="font-family:monospace"><span style="font-size:small">: system	<b>pwd</b></span></span><span style="font-family:monospace"><span style="font-size:small">: admin</span></span>
+
+r) For starting up the database run the following commands:
+<span style="font-size:small"><span style="font-family:monospace">sqlplus system/admin as sysdba
+sqlplus&gt; startup
+cat $ORACLE_HOME/network/admin/listener.ora
+$ORACLE_HOME/bin/lsnrctl start
+$ORACLE_HOME/bin/emctl start dbconsole</span></span>
+
+
+Reference: <a style="color:#3465A4" href="http://oracle-base.com/articles/11g/oracle-db-11gr2-installation-on-fedora-18.php">http://oracle-base.com/articles/11g/oracle-db-11gr2-installation-on-fedora-18.php</a></div></body></html>

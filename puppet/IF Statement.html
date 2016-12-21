@@ -1,0 +1,40 @@
+<html xmlns:tomboy="http://beatniksoftware.com/tomboy" xmlns:link="http://beatniksoftware.com/tomboy/link" xmlns:size="http://beatniksoftware.com/tomboy/size"><head><META http-equiv="Content-Type" content="text/html; charset=utf-8"><title>IF Statement</title><style type="text/css">
+        
+	body {  }
+	h1 { font-size: xx-large;
+     	     font-weight: bold;
+     	     border-bottom: 1px solid black; }
+	div.note {
+		   position: relative;
+		   display: block;
+		   padding: 5pt;
+		   margin: 5pt; 
+		   white-space: -moz-pre-wrap; /* Mozilla */
+ 	      	   white-space: -pre-wrap;     /* Opera 4 - 6 */
+ 	      	   white-space: -o-pre-wrap;   /* Opera 7 */
+ 	      	   white-space: pre-wrap;      /* CSS3 */
+ 	      	   word-wrap: break-word;      /* IE 5.5+ */ }
+	</style></head><body><div class="note" id="IF Statement"><a name="if statement"></a><h1>IF Statement</h1>
+Puppet’s if statements behave much like those in many other programming and scripting languages.
+
+An if statement includes a condition followed by a block of Puppet code that will only be executed if that condition evaluates as true. Optionally, an if statement can also include any number of elsif clauses and an else clause. Here are some rules:
+
+<ul><li dir="ltr">    If the if condition fails, Puppet moves on to the elsif condition (if one exists)
+</li><li dir="ltr">    If both the if and elsif conditions fail, Puppet will execute the code in the else clause (if one exists)
+</li><li dir="ltr">    If all the conditions fail, and there is no else block, Puppet will do nothing and move on</li></ul>
+
+Example:
+<span style="font-family:monospace">
+<span style="font-size:small">if $is_virtual == 'true' {
+  # Our NTP <a style="color:#204A87" href="Module.html">module</a></span></span><span style="font-family:monospace"><span style="font-size:small"> is not supported on virtual machines:
+  warn( 'Tried to include <a style="color:#204A87" href="../python/Class.html">class</a></span></span><span style="font-family:monospace"><span style="font-size:small"> ntp on virtual machine.' )
+}
+elsif $operatingsystem == 'Darwin' {
+  # Our NTP <a style="color:#204A87" href="Module.html">module</a></span></span><span style="font-family:monospace"><span style="font-size:small"> is not supported on Darwin:
+  warn( 'This NTP <a style="color:#204A87" href="Module.html">module</a></span></span><span style="font-family:monospace"><span style="font-size:small"> does not yet work on Darwin.' )
+}
+else {
+  # Normal node, include the <a style="color:#204A87" href="../python/Class.html">class</a></span></span><span style="font-family:monospace"><span style="font-size:small">.
+  include ntp
+}</span></span><span style="font-family:monospace">
+</span></div></body></html>

@@ -1,0 +1,32 @@
+<html xmlns:tomboy="http://beatniksoftware.com/tomboy" xmlns:link="http://beatniksoftware.com/tomboy/link" xmlns:size="http://beatniksoftware.com/tomboy/size"><head><META http-equiv="Content-Type" content="text/html; charset=utf-8"><title>Import</title><style type="text/css">
+        
+	body {  }
+	h1 { font-size: xx-large;
+     	     font-weight: bold;
+     	     border-bottom: 1px solid black; }
+	div.note {
+		   position: relative;
+		   display: block;
+		   padding: 5pt;
+		   margin: 5pt; 
+		   white-space: -moz-pre-wrap; /* Mozilla */
+ 	      	   white-space: -pre-wrap;     /* Opera 4 - 6 */
+ 	      	   white-space: -o-pre-wrap;   /* Opera 7 */
+ 	      	   white-space: pre-wrap;      /* CSS3 */
+ 	      	   word-wrap: break-word;      /* IE 5.5+ */ }
+	</style></head><body><div class="note" id="Import"><a name="import"></a><h1>Import</h1>
+It's possible to import only certain <a style="color:#204A87" href="ruby/Variables.html">variables</a> or functions from a given <a style="color:#204A87" href="puppet/Module.html">module</a>. Pulling in just a single <a style="color:#204A87" href="python/Function.html">function</a> from a <a style="color:#204A87" href="puppet/Module.html">module</a> is called a <a style="color:#204A87" href="python/Function.html">function</a> import, and it's done with the from keyword:
+
+	<i>from <b><a style="color:#204A87" href="puppet/Module.html">module</a></b></i><i></i><i> import <b><a style="color:#204A87" href="python/Function.html">function</a></b></i>
+
+Example:
+	from <a style="color:#204A87" href="python/Math.html">math</a> import sqrt 
+
+<b>Universal Imports</b>
+What if we still want all of the <a style="color:#204A87" href="ruby/Variables.html">variables</a> and functions in a <a style="color:#204A87" href="puppet/Module.html">module</a> but don't want to have to constantly type <a style="color:#204A87" href="python/Math.html">math</a>.? Universal import can handle this for you:
+	from <a style="color:#204A87" href="puppet/Module.html">module</a> import *
+
+The next code will show you everything available in the <a style="color:#204A87" href="python/Math.html">math</a> <a style="color:#204A87" href="puppet/Module.html">module</a>:
+	import <a style="color:#204A87" href="python/Math.html">math</a>            	<i># Imports the <a style="color:#204A87" href="python/Math.html">math</a></i><i> <a style="color:#204A87" href="puppet/Module.html">module</a></i>
+	everything = dir(<a style="color:#204A87" href="python/Math.html">math</a>) 	<i># <a style="color:#204A87" href="python/Sets.html">Sets</a></i><i> everything to a <a style="color:#204A87" href="python/List.html">list</a></i><i> of things from <a style="color:#204A87" href="python/Math.html">math</a></i>
+	<a style="color:#204A87" href="python/Print.html">print</a> everything       	<i># Prints 'em all!</i></div></body></html>

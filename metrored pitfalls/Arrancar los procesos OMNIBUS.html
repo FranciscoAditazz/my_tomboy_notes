@@ -1,0 +1,30 @@
+<html xmlns:tomboy="http://beatniksoftware.com/tomboy" xmlns:link="http://beatniksoftware.com/tomboy/link" xmlns:size="http://beatniksoftware.com/tomboy/size"><head><META http-equiv="Content-Type" content="text/html; charset=utf-8"><title>Arrancar los procesos OMNIBUS</title><style type="text/css">
+        
+	body {  }
+	h1 { font-size: xx-large;
+     	     font-weight: bold;
+     	     border-bottom: 1px solid black; }
+	div.note {
+		   position: relative;
+		   display: block;
+		   padding: 5pt;
+		   margin: 5pt; 
+		   white-space: -moz-pre-wrap; /* Mozilla */
+ 	      	   white-space: -pre-wrap;     /* Opera 4 - 6 */
+ 	      	   white-space: -o-pre-wrap;   /* Opera 7 */
+ 	      	   white-space: pre-wrap;      /* CSS3 */
+ 	      	   word-wrap: break-word;      /* IE 5.5+ */ }
+	</style></head><body><div class="note" id="Arrancar los procesos OMNIBUS"><a name="arrancar los procesos omnibus"></a><h1>Arrancar los procesos OMNIBUS</h1>
+<b>Start and Stop Core Object Server process:</b>
+nco_objserv -name METRORED &amp;
+
+
+<b>Start WebGui</b>
+<span style="font-size:small"><span style="font-family:monospace">cd <a style="color:#3465A4" href="/opt/IBM/tivoli/tipv2/bin/">/opt/IBM/tivoli/tipv2/bin/</a></span></span><span style="font-size:small"><span style="font-family:monospace">
+#Levantar el webgui
+./startServer.sh server1 -username tipadmin -password tipadmin1 &amp;
+#Bajar el webgui
+./stopServer.sh server1 -username tipadmin -password tipadmin1 &amp;</span></span>
+
+
+</div></body></html>

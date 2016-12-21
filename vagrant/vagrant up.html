@@ -1,0 +1,38 @@
+<html xmlns:tomboy="http://beatniksoftware.com/tomboy" xmlns:link="http://beatniksoftware.com/tomboy/link" xmlns:size="http://beatniksoftware.com/tomboy/size"><head><META http-equiv="Content-Type" content="text/html; charset=utf-8"><title>vagrant up</title><style type="text/css">
+        
+	body {  }
+	h1 { font-size: xx-large;
+     	     font-weight: bold;
+     	     border-bottom: 1px solid black; }
+	div.note {
+		   position: relative;
+		   display: block;
+		   padding: 5pt;
+		   margin: 5pt; 
+		   white-space: -moz-pre-wrap; /* Mozilla */
+ 	      	   white-space: -pre-wrap;     /* Opera 4 - 6 */
+ 	      	   white-space: -o-pre-wrap;   /* Opera 7 */
+ 	      	   white-space: pre-wrap;      /* CSS3 */
+ 	      	   word-wrap: break-word;      /* IE 5.5+ */ }
+	</style></head><body><div class="note" id="vagrant up"><a name="vagrant up"></a><h1>vagrant up</h1>
+This command will finish and you'll have a virtual machine running
+
+When you're ready to come back to your project, whether it is tomorrow, a week from now, or a year from now, getting it up and running is easy:
+
+<span style="font-size:small"><span style="font-family:monospace">$ vagrant up</span></span>
+
+That's it! Since the Vagrant environment is already all configured via the <a style="color:#204A87" href="Vagrantfile.html">Vagrantfile</a>, you or any of your coworkers simply have to run a vagrant up at any time and Vagrant will recreate your work environment.
+
+<b>Providers</b>
+Vagrant can work with a wide variety of backend providers, such as VirtualBox, VMware, AWS, and more. Read the page of each provider for more information on how to set them up.
+
+Once you have a provider installed, you don't need to make any modifications to your <a style="color:#204A87" href="Vagrantfile.html">Vagrantfile</a>, just vagrant up with the proper provider and Vagrant will do the rest:
+
+<span style="font-size:small"><span style="font-family:monospace">$ vagrant up --provider=vmware_fusion</span></span>
+
+For more information on providers, read the full documentation on providers. (<a style="color:#3465A4" href="https://docs.vagrantup.com/v2/providers/">https://docs.vagrantup.com/v2/providers/</a>)
+
+
+
+
+</div></body></html>

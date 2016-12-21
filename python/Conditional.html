@@ -1,0 +1,47 @@
+<html xmlns:tomboy="http://beatniksoftware.com/tomboy" xmlns:link="http://beatniksoftware.com/tomboy/link" xmlns:size="http://beatniksoftware.com/tomboy/size"><head><META http-equiv="Content-Type" content="text/html; charset=utf-8"><title>Conditional</title><style type="text/css">
+        
+	body {  }
+	h1 { font-size: xx-large;
+     	     font-weight: bold;
+     	     border-bottom: 1px solid black; }
+	div.note {
+		   position: relative;
+		   display: block;
+		   padding: 5pt;
+		   margin: 5pt; 
+		   white-space: -moz-pre-wrap; /* Mozilla */
+ 	      	   white-space: -pre-wrap;     /* Opera 4 - 6 */
+ 	      	   white-space: -o-pre-wrap;   /* Opera 7 */
+ 	      	   white-space: pre-wrap;      /* CSS3 */
+ 	      	   word-wrap: break-word;      /* IE 5.5+ */ }
+	</style></head><body><div class="note" id="Conditional"><a name="conditional"></a><h1>Conditional</h1>
+<b>Syntax</b>
+<span style="font-size:small"><span style="font-family:monospace">if happy():
+    speak("I'm happy!")
+elif sad():
+    speak("I'm sad.")
+else:
+    speak("I don't know what I'm feeling.")</span></span>
+
+<b>Conditional Statement Example:</b>
+
+<span style="font-size:small"><span style="font-family:monospace">def cube(number):
+    return number ** 3
+
+def by_three (number):
+    if number % 3 == 0:
+        return cube(number)
+    else:
+        return False</span></span>
+
+<b>Example of a conditional with a <a style="color:#204A87" href="List.html">list</a></b>
+<span style="font-size:small"><span style="font-family:monospace">def anti_vowel(text):
+    novoweltext = ""
+    for c in text:
+        if c.upper() not in ['A', '<a style="color:#204A87" href="../metrored pitfalls/Installation of Web GUI 7_4 64-bit package for Linux fails.html">Installation of Web GUI 7.4 64-bit package for Linux fails</a></span></span><span style="font-size:small"><span style="font-family:monospace">', 'I', 'O', 'U']:
+            novoweltext = novoweltext + c
+    return novoweltext
+    
+<a style="color:#204A87" href="Print.html">print</a></span></span><span style="font-size:small"><span style="font-family:monospace"> anti_vowel("Hey look Words!")</span></span>
+
+</div></body></html>

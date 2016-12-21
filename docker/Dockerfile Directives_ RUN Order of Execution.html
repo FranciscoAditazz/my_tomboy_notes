@@ -1,0 +1,102 @@
+<html xmlns:tomboy="http://beatniksoftware.com/tomboy" xmlns:link="http://beatniksoftware.com/tomboy/link" xmlns:size="http://beatniksoftware.com/tomboy/size"><head><META http-equiv="Content-Type" content="text/html; charset=utf-8"><title>Dockerfile Directives: RUN Order of Execution</title><style type="text/css">
+        
+	body {  }
+	h1 { font-size: xx-large;
+     	     font-weight: bold;
+     	     border-bottom: 1px solid black; }
+	div.note {
+		   position: relative;
+		   display: block;
+		   padding: 5pt;
+		   margin: 5pt; 
+		   white-space: -moz-pre-wrap; /* Mozilla */
+ 	      	   white-space: -pre-wrap;     /* Opera 4 - 6 */
+ 	      	   white-space: -o-pre-wrap;   /* Opera 7 */
+ 	      	   white-space: pre-wrap;      /* CSS3 */
+ 	      	   word-wrap: break-word;      /* IE 5.5+ */ }
+	</style></head><body><div class="note" id="Dockerfile Directives: RUN Order of Execution"><a name="dockerfile directives: run order of execution"></a><h1>Dockerfile Directives: RUN Order of Execution</h1>
+En un Dockerfile el orden de ejecución es muy importante, por ejemplo, si defines un usuario distinto a root, todos los comandos que siguen van a ser corridos con ese usuario, ejemplo:
+
+<b>1) Crea un dockerfile con el siguiente texto
+</b>
+<span style="font-size:small"><span style="font-family:monospace"># Docker file based on the latest CentOS 7 image - non-privileged 
+user entry
+FROM centos:latest
+MAINTAINER <a style="color:#3465A4" href="franciscoj.rodriguez@outlook.com">franciscoj.rodriguez@outlook.com</a></span></span><span style="font-size:small"><span style="font-family:monospace">
+
+RUN useradd -ms <a style="color:#3465A4" href="/bin/bash">/bin/bash</a></span></span><span style="font-size:small"><span style="font-family:monospace"> user
+USER user
+
+RUN echo "EXPORT 192.68.0.0/24" &gt;&gt; <a style="color:#3465A4" href="/etc/exports.list">/etc/exports.list</a></span></span><span style="font-size:small"><span style="font-family:monospace">
+
+</span></span><b>2) Corre el build y checa el error que sale debido a que el usuario user no tiene privilegios para escribir en ese directorio:
+</b>
+<span style="font-size:small"><span style="font-family:monospace">$ docker build -t centos7/config:v1 .
+Sending build context to Docker daemon 6.656 kB
+Step 1 : FROM centos:latest
+ ---&gt; 980e0e4c79ec
+Step 2 : MAINTAINER <a style="color:#3465A4" href="franciscoj.rodriguez@outlook.com">franciscoj.rodriguez@outlook.com</a></span></span><span style="font-size:small"><span style="font-family:monospace">
+ ---&gt; Using cache
+ ---&gt; ce1b661fa565
+Step 3 : RUN useradd -ms <a style="color:#3465A4" href="/bin/bash">/bin/bash</a></span></span><span style="font-size:small"><span style="font-family:monospace"> user
+ ---&gt; Using cache
+ ---&gt; d5bfea6f1707
+Step 4 : USER user
+ ---&gt; Using cache
+ ---&gt; d4192be59345
+Step 5 : RUN echo "EXPORT 192.68.0.0/24" &gt;&gt; <a style="color:#3465A4" href="/etc/exports.list">/etc/exports.list</a></span></span><span style="font-size:small"><span style="font-family:monospace">
+<span style="background:yellow"> ---&gt; Running in f2afb7077c85
+<a style="color:#3465A4" href="/bin/sh:">/bin/sh:</a></span></span></span><span style="font-size:small"><span style="font-family:monospace"><span style="background:yellow"> <a style="color:#3465A4" href="/etc/exports.list:">/etc/exports.list:</a></span></span></span><span style="font-size:small"><span style="font-family:monospace"><span style="background:yellow"> Permission denied
+The command '/bin/sh -c echo "EXPORT 192.68.0.0/24" &gt;&gt; <a style="color:#3465A4" href="/etc/exports.list'">/etc/exports.list'</a></span></span></span><span style="font-size:small"><span style="font-family:monospace"><span style="background:yellow"> returned a non-zero code: 1
+</span></span></span>
+<b>3) Corrige el orden en el dockerfile, y todos los comandos que se ejecuten como ROOT, tienen que ir antes de la directiva USER
+</b>
+<span style="font-size:small"><span style="font-family:monospace"># Docker file based on the latest CentOS 7 image - non-privileged 
+user entry
+FROM centos:latest
+MAINTAINER <a style="color:#3465A4" href="franciscoj.rodriguez@outlook.com">franciscoj.rodriguez@outlook.com</a></span></span><span style="font-size:small"><span style="font-family:monospace">
+
+RUN useradd -ms <a style="color:#3465A4" href="/bin/bash">/bin/bash</a></span></span><span style="font-size:small"><span style="font-family:monospace"> user
+
+RUN echo "EXPORT 192.68.0.0/24" &gt;&gt; <a style="color:#3465A4" href="/etc/exports.list">/etc/exports.list</a></span></span><span style="font-size:small"><span style="font-family:monospace">
+
+USER user
+</span></span>
+<b>4) Checa que ya corre correctamente el build
+</b>
+<span style="font-size:small"><span style="font-family:monospace">$ docker build -t centos7/config:v1 .
+Sending build context to Docker daemon 18.94 kB
+Step 1 : FROM centos:latest
+ ---&gt; 980e0e4c79ec
+Step 2 : MAINTAINER <a style="color:#3465A4" href="franciscoj.rodriguez@outlook.com">franciscoj.rodriguez@outlook.com</a></span></span><span style="font-size:small"><span style="font-family:monospace">
+ ---&gt; Using cache
+ ---&gt; ce1b661fa565
+Step 3 : RUN echo "EXPORT 192.68.0.0/24" &gt;&gt; <a style="color:#3465A4" href="/etc/exports.list">/etc/exports.list</a></span></span><span style="font-size:small"><span style="font-family:monospace">
+ ---&gt; Running in f7a06e8cf04e
+ ---&gt; 08e3e42c87bb
+Removing intermediate container f7a06e8cf04e
+Step 4 : RUN useradd -ms <a style="color:#3465A4" href="/bin/bash">/bin/bash</a></span></span><span style="font-size:small"><span style="font-family:monospace"> user
+ ---&gt; Running in 337797039f94
+ ---&gt; 8474dd735cc0
+Removing intermediate container 337797039f94
+Step 5 : USER user
+ ---&gt; Running in 204a2aae8d58
+ ---&gt; 7e646d71f1a7
+Removing intermediate container 204a2aae8d58
+Successfully built 7e646d71f1a7
+
+$ <a style="color:#204A87" href="docker images.html">docker images</a></span></span><span style="font-size:small"><span style="font-family:monospace">
+REPOSITORY          TAG                 IMAGE ID            CREATED             SIZE
+centos7/config      v1                  7e646d71f1a7        27 seconds ago      196.8 MB
+centos7/nonroot     v1                  d4192be59345        33 minutes ago      196.8 MB
+&lt;none&gt;              &lt;none&gt;              7498cf067baa        39 minutes ago      196.8 MB
+nginx               latest              e43d811ce2f4        8 days ago          181.5 MB
+ubuntu              xenial              c73a085dc378        4 weeks ago         127.1 MB
+centos              latest              980e0e4c79ec        7 weeks ago         196.8 MB
+
+$ <a style="color:#204A87" href="docker run.html">docker run</a></span></span><span style="font-size:small"><span style="font-family:monospace"> -it centos7/config:v1 <a style="color:#3465A4" href="/bin/bash">/bin/bash</a></span></span><span style="font-size:small"><span style="font-family:monospace">
+[user@8f5239e238a7 /]$ cat <a style="color:#3465A4" href="/etc/exports.list">/etc/exports.list</a></span></span><span style="font-size:small"><span style="font-family:monospace"> 
+EXPORT 192.68.0.0/24
+[user@8f5239e238a7 /]$ exit
+exit</span></span>
+</div></body></html>

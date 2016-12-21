@@ -1,0 +1,42 @@
+<html xmlns:tomboy="http://beatniksoftware.com/tomboy" xmlns:link="http://beatniksoftware.com/tomboy/link" xmlns:size="http://beatniksoftware.com/tomboy/size"><head><META http-equiv="Content-Type" content="text/html; charset=utf-8"><title>Selenium Develop Search Scripts without using recording feature</title><style type="text/css">
+        
+	body {  }
+	h1 { font-size: xx-large;
+     	     font-weight: bold;
+     	     border-bottom: 1px solid black; }
+	div.note {
+		   position: relative;
+		   display: block;
+		   padding: 5pt;
+		   margin: 5pt; 
+		   white-space: -moz-pre-wrap; /* Mozilla */
+ 	      	   white-space: -pre-wrap;     /* Opera 4 - 6 */
+ 	      	   white-space: -o-pre-wrap;   /* Opera 7 */
+ 	      	   white-space: pre-wrap;      /* CSS3 */
+ 	      	   word-wrap: break-word;      /* IE 5.5+ */ }
+	</style></head><body><div class="note" id="Selenium Develop Search Scripts without using recording feature"><a name="selenium develop search scripts without using recording feature"></a><h1>Selenium Develop Search Scripts without using recording feature</h1>
+Using Selenium Reference,we have to define:
+Example of a test case:
+<span style="font-family:monospace">
+<span style="font-size:small">----------------------------------|---------------------|-----------------------------------------------|--------------------</span></span><span style="font-family:monospace">
+<span style="font-size:small">Steps				  |  Commands		|  Target					|  Value
+----------------------------------|---------------------|-----------------------------------------------|--------------------
+Open Firefox and go to URL	  |  Open		|						|  <a style="color:#3465A4" href="www.orbitz.com">www.orbitz.com</a></span></span><span style="font-family:monospace"><span style="font-size:small">
+Click on Flight Only Radio Button |  ClickAndWait	|  <a style="color:#204A87" href="../XPath.html">xpath</a></span></span><span style="font-family:monospace"><span style="font-size:small">=//span[@<a style="color:#204A87" href="../python/Class.html">class</a></span></span><span style="font-family:monospace"><span style="font-size:small">='primaryRadioMessage']	|
+Click on From City		  |  Click		|  name=ar.rt.leaveSlice.orig.key		|  
+Enter New From City		  |  Type		|  name=ar.rt.leaveSlice.orig.key		|  DFW
+Click on To City		  |  Click		|  name=ar.rt.leaveSlice.dest.key		|
+Enter To City			  |  Type		|  name=ar.rt.leaveSlice.dest.key		|  LAX
+Click on Leave Date		  |  Click		|  name=ar.rt.leaveSlice.date			|
+Enter Leave Date		  |  Type		|  name=ar.rt.leaveSlice.date			|  01-11-2016
+Click on Return Date		  |  Click		|  name=ar.rt.returnSlice.date			|
+Enter Return Date		  |  Type		|  name=ar.rt.returnSlice.date			|  01-20-2016
+Click on Search Flights		  |  Click		|  name=search					|
+Verify Text Present		  |  VerifyTextPresent	|  Matching Results				|
+Store Price			  |  StoreText		|  <a style="color:#204A87" href="../XPath.html">xpath</a></span></span><span style="font-family:monospace"><span style="font-size:small">=//span[@<a style="color:#204A87" href="../python/Class.html">class</a></span></span><span style="font-family:monospace"><span style="font-size:small">='money small-cents']	|  price
+<a style="color:#204A87" href="../python/Print.html">Print</a></span></span><span style="font-family:monospace"><span style="font-size:small"> the Price			  |  Echo		|  the lowest price is $(price)			|
+----------------------------------|---------------------|-----------------------------------------------|--------------------
+</span></span><span style="font-family:monospace">
+Reference:
+<a style="color:#3465A4" href="https://www.youtube.com/watch?v=jlaXJgn-e_I&amp;index=13&amp;list=PLi3B1HriJRbk3MBhn19ByZZXaXHQ81FVe">https://www.youtube.com/watch?v=jlaXJgn-e_I&amp;index=13&amp;list=PLi3B1HriJRbk3MBhn19ByZZXaXHQ81FVe</a></span><span style="font-family:monospace">
+</span></div></body></html>

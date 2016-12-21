@@ -1,0 +1,34 @@
+<html xmlns:tomboy="http://beatniksoftware.com/tomboy" xmlns:link="http://beatniksoftware.com/tomboy/link" xmlns:size="http://beatniksoftware.com/tomboy/size"><head><META http-equiv="Content-Type" content="text/html; charset=utf-8"><title>XPath</title><style type="text/css">
+        
+	body {  }
+	h1 { font-size: xx-large;
+     	     font-weight: bold;
+     	     border-bottom: 1px solid black; }
+	div.note {
+		   position: relative;
+		   display: block;
+		   padding: 5pt;
+		   margin: 5pt; 
+		   white-space: -moz-pre-wrap; /* Mozilla */
+ 	      	   white-space: -pre-wrap;     /* Opera 4 - 6 */
+ 	      	   white-space: -o-pre-wrap;   /* Opera 7 */
+ 	      	   white-space: pre-wrap;      /* CSS3 */
+ 	      	   word-wrap: break-word;      /* IE 5.5+ */ }
+	</style></head><body><div class="note" id="XPath"><a name="xpath"></a><h1>XPath</h1>
+Expressions for XPath example:
+
+1) Locate the element in bold using Xpath
+
+<span style="font-size:small"><span style="font-family:monospace">&lt;body&gt;
+  &lt;form id="login form"&gt;
+    &lt;input id ="u1" name="username" value="xyz" type="text" /&gt;
+    <b>&lt;input name="username" value="abc" type="password" /&gt;</b></span></span><span style="font-size:small"><span style="font-family:monospace">
+    &lt;input name="continue" value="Login" type="submit" /&gt;
+  &lt;/form&gt;
+&lt;/body&gt;</span></span>
+
+<i><span style="font-family:monospace">xpath1 = //input[@type='password']
+xpath2 = //*[@type='password']</span></i>
+
+Reference:
+<a style="color:#3465A4" href="https://www.youtube.com/watch?v=KfUR8-YVHyE&amp;index=11&amp;list=PLi3B1HriJRbk3MBhn19ByZZXaXHQ81FVe">https://www.youtube.com/watch?v=KfUR8-YVHyE&amp;index=11&amp;list=PLi3B1HriJRbk3MBhn19ByZZXaXHQ81FVe</a></div></body></html>

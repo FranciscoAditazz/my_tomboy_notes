@@ -1,0 +1,83 @@
+<html xmlns:tomboy="http://beatniksoftware.com/tomboy" xmlns:link="http://beatniksoftware.com/tomboy/link" xmlns:size="http://beatniksoftware.com/tomboy/size"><head><META http-equiv="Content-Type" content="text/html; charset=utf-8"><title>Docker Network: List and Inspect</title><style type="text/css">
+        
+	body {  }
+	h1 { font-size: xx-large;
+     	     font-weight: bold;
+     	     border-bottom: 1px solid black; }
+	div.note {
+		   position: relative;
+		   display: block;
+		   padding: 5pt;
+		   margin: 5pt; 
+		   white-space: -moz-pre-wrap; /* Mozilla */
+ 	      	   white-space: -pre-wrap;     /* Opera 4 - 6 */
+ 	      	   white-space: -o-pre-wrap;   /* Opera 7 */
+ 	      	   white-space: pre-wrap;      /* CSS3 */
+ 	      	   word-wrap: break-word;      /* IE 5.5+ */ }
+	</style></head><body><div class="note" id="Docker Network: List and Inspect"><a name="docker network: list and inspect"></a><h1>Docker Network: List and Inspect</h1>
+Ejemplo para ver la definición de los drivers:
+
+
+<span style="font-size:small"><span style="font-family:monospace">xfrarod@Satellite-L955 <a style="color:#3465A4" href="~/Documents/2013_Cursos/Docker/Builds">~/Documents/2013_Cursos/Docker/Builds</a></span></span><span style="font-size:small"><span style="font-family:monospace"> $ <span style="background:yellow">docker network ls</span></span></span><span style="font-size:small"><span style="font-family:monospace">
+NETWORK ID          NAME                DRIVER              SCOPE
+7b7c4ba5a398        bridge              bridge              local               
+fc2f258355f6        host                host                local               
+2ce4506784a5        none                null                local               
+xfrarod@Satellite-L955 <a style="color:#3465A4" href="~/Documents/2013_Cursos/Docker/Builds">~/Documents/2013_Cursos/Docker/Builds</a></span></span><span style="font-size:small"><span style="font-family:monospace"> $ 
+xfrarod@Satellite-L955 <a style="color:#3465A4" href="~/Documents/2013_Cursos/Docker/Builds">~/Documents/2013_Cursos/Docker/Builds</a></span></span><span style="font-size:small"><span style="font-family:monospace"> $ <span style="background:yellow">docker network ls --no-trunc</span></span></span><span style="font-size:small"><span style="font-family:monospace">
+NETWORK ID                                                         NAME                DRIVER              SCOPE
+7b7c4ba5a39805007cfae2d0680adaa9d7d413ff06caeca747fe07d209f5f107   bridge              bridge              local               
+fc2f258355f680cf6e6948fb86d49cb646c25e18533593c01d1feff9d85da166   host                host                local               
+2ce4506784a55e122184759c186d9631c743e79ef0c456bc7aeea065125d2bd7   none                null                local               
+xfrarod@Satellite-L955 <a style="color:#3465A4" href="~/Documents/2013_Cursos/Docker/Builds">~/Documents/2013_Cursos/Docker/Builds</a></span></span><span style="font-size:small"><span style="font-family:monospace"> $ <span style="background:yellow">docker network inspect 7b7c4ba5a398</span></span></span><span style="font-size:small"><span style="font-family:monospace">
+[
+    {
+        "Name": "bridge",
+        "Id": "7b7c4ba5a39805007cfae2d0680adaa9d7d413ff06caeca747fe07d209f5f107",
+        "Scope": "local",
+        "Driver": "bridge",
+        "EnableIPv6": false,
+        "IPAM": {
+            "Driver": "default",
+            "Options": null,
+            "Config": [
+                {
+                    "Subnet": "172.17.0.0/16",
+                    "Gateway": "172.17.0.1"
+                }
+            ]
+        },
+        "Internal": false,
+        "Containers": {},
+        "Options": {
+            "com.docker.network.bridge.default_bridge": "true",
+            "com.docker.network.bridge.enable_icc": "true",
+            "com.docker.network.bridge.enable_ip_masquerade": "true",
+            "com.docker.network.bridge.host_binding_ipv4": "0.0.0.0",
+            "com.docker.network.bridge.name": "docker0",
+            "com.docker.network.driver.mtu": "1500"
+        },
+        "Labels": {}
+    }
+]
+xfrarod@Satellite-L955 <a style="color:#3465A4" href="~/Documents/2013_Cursos/Docker/Builds">~/Documents/2013_Cursos/Docker/Builds</a></span></span><span style="font-size:small"><span style="font-family:monospace"> $ <span style="background:yellow">docker network inspect host</span></span></span><span style="font-size:small"><span style="font-family:monospace">
+[
+    {
+        "Name": "host",
+        "Id": "fc2f258355f680cf6e6948fb86d49cb646c25e18533593c01d1feff9d85da166",
+        "Scope": "local",
+        "Driver": "host",
+        "EnableIPv6": false,
+        "IPAM": {
+            "Driver": "default",
+            "Options": null,
+            "Config": []
+        },
+        "Internal": false,
+        "Containers": {},
+        "Options": {},
+        "Labels": {}
+    }
+]
+xfrarod@Satellite-L955 <a style="color:#3465A4" href="~/Documents/2013_Cursos/Docker/Builds">~/Documents/2013_Cursos/Docker/Builds</a></span></span><span style="font-size:small"><span style="font-family:monospace"> $ 
+</span></span></div></body></html>

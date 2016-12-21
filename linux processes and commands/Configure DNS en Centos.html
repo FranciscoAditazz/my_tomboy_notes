@@ -1,0 +1,35 @@
+<html xmlns:tomboy="http://beatniksoftware.com/tomboy" xmlns:link="http://beatniksoftware.com/tomboy/link" xmlns:size="http://beatniksoftware.com/tomboy/size"><head><META http-equiv="Content-Type" content="text/html; charset=utf-8"><title>Configure DNS en Centos</title><style type="text/css">
+        
+	body {  }
+	h1 { font-size: xx-large;
+     	     font-weight: bold;
+     	     border-bottom: 1px solid black; }
+	div.note {
+		   position: relative;
+		   display: block;
+		   padding: 5pt;
+		   margin: 5pt; 
+		   white-space: -moz-pre-wrap; /* Mozilla */
+ 	      	   white-space: -pre-wrap;     /* Opera 4 - 6 */
+ 	      	   white-space: -o-pre-wrap;   /* Opera 7 */
+ 	      	   white-space: pre-wrap;      /* CSS3 */
+ 	      	   word-wrap: break-word;      /* IE 5.5+ */ }
+	</style></head><body><div class="note" id="Configure DNS en Centos"><a name="configure dns en centos"></a><h1>Configure DNS en Centos</h1>
+Existen dos opciones:
+
+a) Editar el archivo <b>resolv.conf</b>
+
+<span style="font-size:small"><span style="font-family:monospace">$ <a style="color:#204A87" href="Sudo.html">sudo</a></span></span><span style="font-size:small"><span style="font-family:monospace"> vi <a style="color:#3465A4" href="/etc/resolv.conf">/etc/resolv.conf</a></span></span><span style="font-size:small"><span style="font-family:monospace">
+
+nameserver 8.8.8.8
+nameserver 8.8.4.4</span></span>
+
+b) Editar el archivo <b>ifcfg-eth0</b>
+
+<span style="font-size:small"><span style="font-family:monospace">$ <a style="color:#204A87" href="Sudo.html">sudo</a></span></span><span style="font-size:small"><span style="font-family:monospace"> vi <a style="color:#3465A4" href="/etc/sysconfig/network-scripts/ifcfg-eth0">/etc/sysconfig/network-scripts/ifcfg-eth0</a></span></span><span style="font-size:small"><span style="font-family:monospace">
+
+DEVICE=eth0
+BOOTPROTO=dhcp
+ONBOOT=yes
+<b>DNS1=8.8.8.8
+DNS2=8.8.4.4</b></span></span></div></body></html>

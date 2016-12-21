@@ -1,0 +1,32 @@
+<html xmlns:tomboy="http://beatniksoftware.com/tomboy" xmlns:link="http://beatniksoftware.com/tomboy/link" xmlns:size="http://beatniksoftware.com/tomboy/size"><head><META http-equiv="Content-Type" content="text/html; charset=utf-8"><title>Syncronize Directories (RSYNC)</title><style type="text/css">
+        
+	body {  }
+	h1 { font-size: xx-large;
+     	     font-weight: bold;
+     	     border-bottom: 1px solid black; }
+	div.note {
+		   position: relative;
+		   display: block;
+		   padding: 5pt;
+		   margin: 5pt; 
+		   white-space: -moz-pre-wrap; /* Mozilla */
+ 	      	   white-space: -pre-wrap;     /* Opera 4 - 6 */
+ 	      	   white-space: -o-pre-wrap;   /* Opera 7 */
+ 	      	   white-space: pre-wrap;      /* CSS3 */
+ 	      	   word-wrap: break-word;      /* IE 5.5+ */ }
+	</style></head><body><div class="note" id="Syncronize Directories (RSYNC)"><a name="syncronize directories (rsync)"></a><h1>Syncronize Directories (RSYNC)</h1>
+Basic syntax of rsync command
+
+<b><span style="font-family:monospace"># rsync &lt;options&gt; &lt;source&gt; &lt;destination</span></b>&gt;
+
+<b>-v : </b>verbose
+<b>-r : </b>copies data recursively (but don’t preserve timestamps and permission <a style="color:#204A87" href="../python/While.html">while</a> transferring data
+<b>-a :</b> archive mode, archive mode allows copying files recursively and it also preserves symbolic links, file permissions, user &amp; group ownerships and timestamps
+<b>-z :</b> compress file data
+<b>-h :</b> human-readable, output numbers in a human-readable format
+
+<b>Example:</b>
+<span style="font-size:small"><span style="font-family:monospace">rsync -avzh <a style="color:#3465A4" href="/media/xfrarod/TOSHIBA_EXT/">/media/xfrarod/TOSHIBA_EXT/</a></span></span><span style="font-size:small"><span style="font-family:monospace"> <a style="color:#3465A4" href="/media/xfrarod/Transcend/">/media/xfrarod/Transcend/</a></span></span>
+
+<span style="font-size:small"><span style="font-family:monospace">rsync -avz -essh <a style="color:#3465A4" href="rrindels@deliver.accuoss.com:/opt/accuoss/deliver/ibm">rrindels@deliver.accuoss.com:/opt/accuoss/deliver/ibm</a></span></span><span style="font-size:small"><span style="font-family:monospace"> .</span></span>
+</div></body></html>

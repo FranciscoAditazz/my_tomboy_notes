@@ -1,0 +1,46 @@
+<html xmlns:tomboy="http://beatniksoftware.com/tomboy" xmlns:link="http://beatniksoftware.com/tomboy/link" xmlns:size="http://beatniksoftware.com/tomboy/size"><head><META http-equiv="Content-Type" content="text/html; charset=utf-8"><title>Naming Our Containers</title><style type="text/css">
+        
+	body {  }
+	h1 { font-size: xx-large;
+     	     font-weight: bold;
+     	     border-bottom: 1px solid black; }
+	div.note {
+		   position: relative;
+		   display: block;
+		   padding: 5pt;
+		   margin: 5pt; 
+		   white-space: -moz-pre-wrap; /* Mozilla */
+ 	      	   white-space: -pre-wrap;     /* Opera 4 - 6 */
+ 	      	   white-space: -o-pre-wrap;   /* Opera 7 */
+ 	      	   white-space: pre-wrap;      /* CSS3 */
+ 	      	   word-wrap: break-word;      /* IE 5.5+ */ }
+	</style></head><body><div class="note" id="Naming Our Containers"><a name="naming our containers"></a><h1>Naming Our Containers</h1>
+Container names deben ir siempre en minusculas completamente, no deben contener espacios ni caracteres especiales.
+Además se pueden renombrar tanto los container que estan corriendo, como los que estan detenidos.
+
+
+Ejemplo:
+
+<span style="font-size:small"><span style="font-family:monospace">xfrarod@Satellite-L955 <a style="color:#3465A4" href="~/Documents/2013_Cursos/Docker/Builds">~/Documents/2013_Cursos/Docker/Builds</a></span></span><span style="font-size:small"><span style="font-family:monospace"> $ <a style="color:#204A87" href="docker run.html">docker run</a></span></span><span style="font-size:small"><span style="font-family:monospace"> -itd -p 127.0.0.1:8082:80/udp nginx:latest
+e6d8f6816958fc3d0d60aee35745f465b86d4e9d3708aa1d84db3c49be52f74a
+xfrarod@Satellite-L955 <a style="color:#3465A4" href="~/Documents/2013_Cursos/Docker/Builds">~/Documents/2013_Cursos/Docker/Builds</a></span></span><span style="font-size:small"><span style="font-family:monospace"> $ <a style="color:#204A87" href="docker ps.html">docker ps</a></span></span><span style="font-size:small"><span style="font-family:monospace">
+CONTAINER ID        IMAGE               COMMAND                  CREATED             STATUS              PORTS                                     NAMES
+e6d8f6816958        nginx:latest        "nginx -g 'daemon off"   6 seconds ago       Up 5 seconds        80/tcp, 443/tcp, 127.0.0.1:8082-&gt;80/udp   <span style="background:yellow">tiny_darwin</span></span></span><span style="font-size:small"><span style="font-family:monospace">
+xfrarod@Satellite-L955 <a style="color:#3465A4" href="~/Documents/2013_Cursos/Docker/Builds">~/Documents/2013_Cursos/Docker/Builds</a></span></span><span style="font-size:small"><span style="font-family:monospace"> $ <span style="background:yellow"><a style="color:#204A87" href="docker run.html">docker run</a></span></span></span><span style="font-size:small"><span style="font-family:monospace"><span style="background:yellow"> -itd -P --name <b>mycontainername</b></span></span></span><span style="font-size:small"><span style="font-family:monospace"><span style="background:yellow"> ubuntu:xenial <a style="color:#3465A4" href="/bin/bash">/bin/bash</a></span></span></span><span style="font-size:small"><span style="font-family:monospace"></span></span><span style="font-size:small"><span style="font-family:monospace">
+a3a8287b9886c94793f41cc61f37c572416a7c87361a2062912ae30513fc5f44
+xfrarod@Satellite-L955 <a style="color:#3465A4" href="~/Documents/2013_Cursos/Docker/Builds">~/Documents/2013_Cursos/Docker/Builds</a></span></span><span style="font-size:small"><span style="font-family:monospace"> $ <a style="color:#204A87" href="docker ps.html">docker ps</a></span></span><span style="font-size:small"><span style="font-family:monospace">
+CONTAINER ID        IMAGE               COMMAND                  CREATED              STATUS              PORTS                                     NAMES
+a3a8287b9886        ubuntu:xenial       "/bin/bash"              5 seconds ago        Up 4 seconds                                                  <span style="background:yellow">mycontainername</span></span></span><span style="font-size:small"><span style="font-family:monospace">
+e6d8f6816958        nginx:latest        "nginx -g 'daemon off"   About a minute ago   Up About a minute   80/tcp, 443/tcp, 127.0.0.1:8082-&gt;80/udp   tiny_darwin
+xfrarod@Satellite-L955 <a style="color:#3465A4" href="~/Documents/2013_Cursos/Docker/Builds">~/Documents/2013_Cursos/Docker/Builds</a></span></span><span style="font-size:small"><span style="font-family:monospace"> $ <span style="background:yellow">docker rename tiny_darwin myrenamedcontainer</span></span></span><span style="font-size:small"><span style="font-family:monospace">
+xfrarod@Satellite-L955 <a style="color:#3465A4" href="~/Documents/2013_Cursos/Docker/Builds">~/Documents/2013_Cursos/Docker/Builds</a></span></span><span style="font-size:small"><span style="font-family:monospace"> $ <a style="color:#204A87" href="docker ps.html">docker ps</a></span></span><span style="font-size:small"><span style="font-family:monospace">
+CONTAINER ID        IMAGE               COMMAND                  CREATED             STATUS              PORTS                                     NAMES
+a3a8287b9886        ubuntu:xenial       "/bin/bash"              53 seconds ago      Up 52 seconds                                                 mycontainername
+e6d8f6816958        nginx:latest        "nginx -g 'daemon off"   2 minutes ago       Up 2 minutes        80/tcp, 443/tcp, 127.0.0.1:8082-&gt;80/udp   <span style="background:yellow">myrenamedcontainer</span></span></span><span style="font-size:small"><span style="font-family:monospace">
+xfrarod@Satellite-L955 <a style="color:#3465A4" href="~/Documents/2013_Cursos/Docker/Builds">~/Documents/2013_Cursos/Docker/Builds</a></span></span><span style="font-size:small"><span style="font-family:monospace"> $ <span style="background:yellow">docker rename a3a8287b9886 mycontainerrenamedbyid</span></span></span><span style="font-size:small"><span style="font-family:monospace">
+xfrarod@Satellite-L955 <a style="color:#3465A4" href="~/Documents/2013_Cursos/Docker/Builds">~/Documents/2013_Cursos/Docker/Builds</a></span></span><span style="font-size:small"><span style="font-family:monospace"> $ <a style="color:#204A87" href="docker ps.html">docker ps</a></span></span><span style="font-size:small"><span style="font-family:monospace">
+CONTAINER ID        IMAGE               COMMAND                  CREATED             STATUS              PORTS                                     NAMES
+a3a8287b9886        ubuntu:xenial       "/bin/bash"              2 minutes ago       Up 2 minutes                                                  <span style="background:yellow">mycontainerrenamedbyid</span></span></span><span style="font-size:small"><span style="font-family:monospace">
+e6d8f6816958        nginx:latest        "nginx -g 'daemon off"   4 minutes ago       Up 4 minutes        80/tcp, 443/tcp, 127.0.0.1:8082-&gt;80/udp   myrenamedcontainer
+xfrarod@Satellite-L955 <a style="color:#3465A4" href="~/Documents/2013_Cursos/Docker/Builds">~/Documents/2013_Cursos/Docker/Builds</a></span></span><span style="font-size:small"><span style="font-family:monospace"> $</span></span>
+</div></body></html>

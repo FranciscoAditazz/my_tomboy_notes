@@ -1,0 +1,27 @@
+<html xmlns:tomboy="http://beatniksoftware.com/tomboy" xmlns:link="http://beatniksoftware.com/tomboy/link" xmlns:size="http://beatniksoftware.com/tomboy/size"><head><META http-equiv="Content-Type" content="text/html; charset=utf-8"><title>Facter</title><style type="text/css">
+        
+	body {  }
+	h1 { font-size: xx-large;
+     	     font-weight: bold;
+     	     border-bottom: 1px solid black; }
+	div.note {
+		   position: relative;
+		   display: block;
+		   padding: 5pt;
+		   margin: 5pt; 
+		   white-space: -moz-pre-wrap; /* Mozilla */
+ 	      	   white-space: -pre-wrap;     /* Opera 4 - 6 */
+ 	      	   white-space: -o-pre-wrap;   /* Opera 7 */
+ 	      	   white-space: pre-wrap;      /* CSS3 */
+ 	      	   word-wrap: break-word;      /* IE 5.5+ */ }
+	</style></head><body><div class="note" id="Facter"><a name="facter"></a><h1>Facter</h1>
+Facter is one of the many prepackaged tools that Puppet Enterprise ships with. Facter is Puppet's system inventory tool. Facter reads facts about a node (such
+as its hostname, IP address, operating system, etc.) and makes them available to Puppet.<b>
+</b>
+The Facter tool discovers information about your system and makes it available to Puppet as <a style="color:#204A87" href="Puppet Variables.html">Puppet Variables</a>. Puppet’s compiler accesses those facts when it’s reading a <a style="color:#204A87" href="Manifest.html">manifest</a>. You can see all the facts by running `<span style="font-family:monospace">facter -p</span>`.Examples:
+
+<span style="font-size:small"><span style="font-family:monospace">facter ipaddress<b>
+</b></span></span><span style="font-size:small"><span style="font-family:monospace">facter uptime_hours</span></span>
+
+<b>Reference:</b>
+	<a style="color:#3465A4" href="http://manpages.ubuntu.com/manpages/precise/man8/facter.8.html">http://manpages.ubuntu.com/manpages/precise/man8/facter.8.html</a></div></body></html>

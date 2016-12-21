@@ -1,0 +1,57 @@
+<html xmlns:tomboy="http://beatniksoftware.com/tomboy" xmlns:link="http://beatniksoftware.com/tomboy/link" xmlns:size="http://beatniksoftware.com/tomboy/size"><head><META http-equiv="Content-Type" content="text/html; charset=utf-8"><title>Package/File/Service</title><style type="text/css">
+        
+	body {  }
+	h1 { font-size: xx-large;
+     	     font-weight: bold;
+     	     border-bottom: 1px solid black; }
+	div.note {
+		   position: relative;
+		   display: block;
+		   padding: 5pt;
+		   margin: 5pt; 
+		   white-space: -moz-pre-wrap; /* Mozilla */
+ 	      	   white-space: -pre-wrap;     /* Opera 4 - 6 */
+ 	      	   white-space: -o-pre-wrap;   /* Opera 7 */
+ 	      	   white-space: pre-wrap;      /* CSS3 */
+ 	      	   word-wrap: break-word;      /* IE 5.5+ */ }
+	</style></head><body><div class="note" id="Package/File/Service"><a name="package/file/service"></a><h1>Package/File/Service</h1>
+We are managing the service sshd, we are managing it's configuration file, but all that would mean nothing if the package that install the SSH server is not installed. So, to round it up, and make our <a style="color:#204A87" href="Manifest.html">manifest</a> complete with regards to managing the SSH server on the VM, we have to ensure that the appropriate package <a style="color:#204A87" href="Resource.html">resource</a> is managed as well.
+
+The <b>package/file/service</b> pattern is one of the most useful idioms in Puppet. It’s hard to overstate the importance of this pattern! If you only stopped here and learned this, you could still get a lot of work done using Puppet. The <b>Package-File-Service</b> pattern, emulates the natural sequence of managing a service on a system. If you were to manually install and configure a service - you would first install the package, then edit the configuration file to set things up appropriately, and finally start or restart the service
+
+On CentOS machines, such as the VM we are using, the openssh-server package installs the SSH server.
+
+<ul><li dir="ltr">The package <a style="color:#204A87" href="Resource.html">resource</a> makes sure the software and its config file are installed.
+</li><li dir="ltr">The file <a style="color:#204A87" href="Resource.html">resource</a> config file depends on the package <a style="color:#204A87" href="Resource.html">resource</a>.
+</li><li dir="ltr">The service resources subscribes to changes in the config file.</li></ul>
+
+Example:
+
+<span style="font-size:small"><span style="font-family:monospace">	file { '/etc/ssh/sshd_config':
+		ensure =&gt; file,
+		mode   =&gt; 600,
+		source =&gt; '/root/examples/sshd_config',
+	}
+	
+	service { 'sshd':
+		ensure    =&gt; running,
+		enable    =&gt; true,
+		subscribe =&gt; File['/etc/ssh/sshd_config'],
+	}
+	
+	package { 'openssh-server':
+		ensure =&gt; present,
+		before =&gt; File['/etc/ssh/sshd_config'],
+	}</span></span>
+
+<b>Relationship Metaparameters</b>
+A metaparamter is a <a style="color:#204A87" href="Resource.html">resource</a> attribute that can be specified for _any_ type of <a style="color:#204A87" href="Resource.html">resource</a>, rather than a specific type
+
+Metaparameters follow the familiar attribute =&gt; value syntax. There are four metaparameter attributes that you can include in your <a style="color:#204A87" href="Resource.html">resource</a> declaration to order relationships among resources.
+
+<ul><li dir="ltr"><span style="font-family:monospace">before</span> causes a <a style="color:#204A87" href="Resource.html">resource</a> to be applied <b>before</b> a specified <a style="color:#204A87" href="Resource.html">resource</a>
+</li><li dir="ltr"><span style="font-family:monospace">require</span> causes a <a style="color:#204A87" href="Resource.html">resource</a> to be applied <b>after</b> a specified <a style="color:#204A87" href="Resource.html">resource</a>
+</li><li dir="ltr"><span style="font-family:monospace">notify</span> causes a <a style="color:#204A87" href="Resource.html">resource</a> to be applied <b>before</b> the specified <a style="color:#204A87" href="Resource.html">resource</a>. Notify will generate a refresh even whenever the <a style="color:#204A87" href="Resource.html">resource</a> changes.
+</li><li dir="ltr"><span style="font-family:monospace">subscribe</span> causes a <a style="color:#204A87" href="Resource.html">resource</a> to be applied <b>after</b> the specified <a style="color:#204A87" href="Resource.html">resource</a>. The subscribing <a style="color:#204A87" href="Resource.html">resource</a> will be refreshed if the target <a style="color:#204A87" href="Resource.html">resource</a> changes.</li></ul>
+
+The <b>value</b> of the relationship metaparameter is the title or titles (in an array) of one or more target resources.</div></body></html>

@@ -1,0 +1,108 @@
+<html xmlns:tomboy="http://beatniksoftware.com/tomboy" xmlns:link="http://beatniksoftware.com/tomboy/link" xmlns:size="http://beatniksoftware.com/tomboy/size"><head><META http-equiv="Content-Type" content="text/html; charset=utf-8"><title>Controlling Port Exposure on Containers</title><style type="text/css">
+        
+	body {  }
+	h1 { font-size: xx-large;
+     	     font-weight: bold;
+     	     border-bottom: 1px solid black; }
+	div.note {
+		   position: relative;
+		   display: block;
+		   padding: 5pt;
+		   margin: 5pt; 
+		   white-space: -moz-pre-wrap; /* Mozilla */
+ 	      	   white-space: -pre-wrap;     /* Opera 4 - 6 */
+ 	      	   white-space: -o-pre-wrap;   /* Opera 7 */
+ 	      	   white-space: pre-wrap;      /* CSS3 */
+ 	      	   word-wrap: break-word;      /* IE 5.5+ */ }
+	</style></head><body><div class="note" id="Controlling Port Exposure on Containers"><a name="controlling port exposure on containers"></a><h1>Controlling Port Exposure on Containers</h1>
+En el docker file se especifica con el comando EXPOSE, eg:
+	<span style="font-size:small"><span style="font-family:monospace">EXPOSE 80 443
+</span></span>
+Eso permite que los puertos esten visibles y puedan ser redireccionados dinamicamente o estáticamente:
+
+<span style="font-size:small"><span style="font-family:monospace">xfrarod@Satellite-L955 <a style="color:#3465A4" href="~/Documents/2013_Cursos/Docker/Builds">~/Documents/2013_Cursos/Docker/Builds</a></span></span><span style="font-size:small"><span style="font-family:monospace"> $ <span style="background:yellow"><a style="color:#204A87" href="docker run.html">docker run</a></span></span></span><span style="font-size:small"><span style="font-family:monospace"><span style="background:yellow"> -itd nginx:latest</span></span></span><span style="font-size:small"><span style="font-family:monospace">
+2c5fa3f92225d270b91c61928e2b83329363120b21c578159dc681faeaea8416
+xfrarod@Satellite-L955 <a style="color:#3465A4" href="~/Documents/2013_Cursos/Docker/Builds">~/Documents/2013_Cursos/Docker/Builds</a></span></span><span style="font-size:small"><span style="font-family:monospace"> $ <a style="color:#204A87" href="docker ps.html">docker ps</a></span></span><span style="font-size:small"><span style="font-family:monospace">
+CONTAINER ID        IMAGE               COMMAND                  CREATED             STATUS              PORTS               NAMES
+2c5fa3f92225        nginx:latest        "nginx -g 'daemon off"   34 seconds ago      Up 32 seconds       <span style="background:yellow">80/tcp, 443/tcp</span></span></span><span style="font-size:small"><span style="font-family:monospace">     gloomy_minsky
+xfrarod@Satellite-L955 <a style="color:#3465A4" href="~/Documents/2013_Cursos/Docker/Builds">~/Documents/2013_Cursos/Docker/Builds</a></span></span><span style="font-size:small"><span style="font-family:monospace"> $ <a style="color:#204A87" href="docker inspect.html">docker inspect</a></span></span><span style="font-size:small"><span style="font-family:monospace"> gloomy_minsky
+[
+    {
+        "Id": "2c5fa3f92225d270b91c61928e2b83329363120b21c578159dc681faeaea8416",
+        "Created": "2016-12-04T05:07:54.064645143Z",
+        "Path": "nginx",
+        "Args": [
+            "-g",
+            "daemon off;"
+ 	:
+	:
+        "NetworkSettings": {
+            "Bridge": "",
+            "SandboxID": "069c6215ddb5a7bee5c0a73465dab576f750751cc10cb8cd1f6ffdb8713833ca",
+            "HairpinMode": false,
+            "LinkLocalIPv6Address": "",
+            "LinkLocalIPv6PrefixLen": 0,
+            "Ports": {
+                <span style="background:yellow">"443/tcp": null,</span></span></span><span style="font-size:small"><span style="font-family:monospace">
+                <span style="background:yellow">"80/tcp": null</span></span></span><span style="font-size:small"><span style="font-family:monospace">
+            },
+            "SandboxKey": "/var/run/docker/netns/069c6215ddb5",
+            "SecondaryIPAddresses": null,
+            "SecondaryIPv6Addresses": null,
+            "EndpointID": "001bbb2cf0ff48f455ec2cfba023d97345eea3221f5bc614a9f1592a6cc94f3a",
+            "Gateway": "172.17.0.1",
+            "GlobalIPv6Address": "",
+            "GlobalIPv6PrefixLen": 0,
+            "IPAddress": "172.17.0.2",
+            "IPPrefixLen": 16,
+            "IPv6Gateway": "",
+            "MacAddress": "02:42:ac:11:00:02",
+            "Networks": {
+                "bridge": {
+                    "IPAMConfig": null,
+                    "Links": null,
+                    "Aliases": null,
+                    "NetworkID": "7b7c4ba5a39805007cfae2d0680adaa9d7d413ff06caeca747fe07d209f5f107",
+                    "EndpointID": "001bbb2cf0ff48f455ec2cfba023d97345eea3221f5bc614a9f1592a6cc94f3a",
+                    "Gateway": "172.17.0.1",
+                    "IPAddress": "172.17.0.2",
+                    "IPPrefixLen": 16,
+                    "IPv6Gateway": "",
+                    "GlobalIPv6Address": "",
+                    "GlobalIPv6PrefixLen": 0,
+                    "MacAddress": "02:42:ac:11:00:02"
+                }
+            }
+        }
+    }
+]
+xfrarod@Satellite-L955 <a style="color:#3465A4" href="~/Documents/2013_Cursos/Docker/Builds">~/Documents/2013_Cursos/Docker/Builds</a></span></span><span style="font-size:small"><span style="font-family:monospace"> $ docker stop gloomy_minsky
+gloomy_minsky
+xfrarod@Satellite-L955 <a style="color:#3465A4" href="~/Documents/2013_Cursos/Docker/Builds">~/Documents/2013_Cursos/Docker/Builds</a></span></span><span style="font-size:small"><span style="font-family:monospace"> $ <span style="background:yellow"><a style="color:#204A87" href="docker run.html">docker run</a></span></span></span><span style="font-size:small"><span style="font-family:monospace"><span style="background:yellow"> -itd -p 80 nginx:latest</span></span></span><span style="font-size:small"><span style="font-family:monospace">  <b>#Automáticamente le asigna un puerto a donde se va a redirecionar el puerto 80</b></span></span><span style="font-size:small"><span style="font-family:monospace">
+b904b33f5ed95f34241c8138a39c917107829ebd9096a437fdb4ee0e62d4a26f
+xfrarod@Satellite-L955 <a style="color:#3465A4" href="~/Documents/2013_Cursos/Docker/Builds">~/Documents/2013_Cursos/Docker/Builds</a></span></span><span style="font-size:small"><span style="font-family:monospace"> $ <a style="color:#204A87" href="docker ps.html">docker ps</a></span></span><span style="font-size:small"><span style="font-family:monospace">
+CONTAINER ID        IMAGE               COMMAND                  CREATED             STATUS              PORTS                            NAMES
+b904b33f5ed9        nginx:latest        "nginx -g 'daemon off"   9 seconds ago       Up 7 seconds        443/tcp, <span style="background:yellow">0.0.0.0:32768-&gt;80/tcp</span></span></span><span style="font-size:small"><span style="font-family:monospace">   serene_kirch
+xfrarod@Satellite-L955 <a style="color:#3465A4" href="~/Documents/2013_Cursos/Docker/Builds">~/Documents/2013_Cursos/Docker/Builds</a></span></span><span style="font-size:small"><span style="font-family:monospace"> $ docker stop serene_kirch
+serene_kirch
+xfrarod@Satellite-L955 <a style="color:#3465A4" href="~/Documents/2013_Cursos/Docker/Builds">~/Documents/2013_Cursos/Docker/Builds</a></span></span><span style="font-size:small"><span style="font-family:monospace"> $ <span style="background:yellow"><a style="color:#204A87" href="docker run.html">docker run</a></span></span></span><span style="font-size:small"><span style="font-family:monospace"><span style="background:yellow"> -itd -p 8081:80 nginx:latest</span></span></span><span style="font-size:small"><span style="font-family:monospace">	<b>#Le dices a que puerto quieres que se redirecciones el puerto 80</b></span></span><span style="font-size:small"><span style="font-family:monospace">
+d0debb5e6a3f2a76dfb15519060d9e717c843fe091b3f554e86ae2beaf5b3911
+xfrarod@Satellite-L955 <a style="color:#3465A4" href="~/Documents/2013_Cursos/Docker/Builds">~/Documents/2013_Cursos/Docker/Builds</a></span></span><span style="font-size:small"><span style="font-family:monospace"> $ <a style="color:#204A87" href="docker ps.html">docker ps</a></span></span><span style="font-size:small"><span style="font-family:monospace">
+CONTAINER ID        IMAGE               COMMAND                  CREATED              STATUS              PORTS                           NAMES
+d0debb5e6a3f        nginx:latest        "nginx -g 'daemon off"   About a minute ago   Up About a minute   443/tcp, <span style="background:yellow">0.0.0.0:8081-&gt;80/tcp</span></span></span><span style="font-size:small"><span style="font-family:monospace">   elated_curie
+xfrarod@Satellite-L955 <a style="color:#3465A4" href="~/Documents/2013_Cursos/Docker/Builds">~/Documents/2013_Cursos/Docker/Builds</a></span></span><span style="font-size:small"><span style="font-family:monospace"> $ docker stop elated_curie
+elated_curie
+xfrarod@Satellite-L955 <a style="color:#3465A4" href="~/Documents/2013_Cursos/Docker/Builds">~/Documents/2013_Cursos/Docker/Builds</a></span></span><span style="font-size:small"><span style="font-family:monospace"> $ <span style="background:yellow"><a style="color:#204A87" href="docker run.html">docker run</a></span></span></span><span style="font-size:small"><span style="font-family:monospace"><span style="background:yellow"> -itd -P nginx:latest</span></span></span><span style="font-size:small"><span style="font-family:monospace">	<b>#Automáticamente redirecciona todos los puertos declarados en EXPOSE</b></span></span><span style="font-size:small"><span style="font-family:monospace">
+bca9e0b20e721a046a094941c284a42992632187cae9c77c70b2550da9a45a44
+xfrarod@Satellite-L955 <a style="color:#3465A4" href="~/Documents/2013_Cursos/Docker/Builds">~/Documents/2013_Cursos/Docker/Builds</a></span></span><span style="font-size:small"><span style="font-family:monospace"> $ <a style="color:#204A87" href="docker ps.html">docker ps</a></span></span><span style="font-size:small"><span style="font-family:monospace">
+CONTAINER ID        IMAGE               COMMAND                  CREATED             STATUS              PORTS                                           NAMES
+bca9e0b20e72        nginx:latest        "nginx -g 'daemon off"   4 seconds ago       Up 2 seconds        <b>0.0.0.0:32770-&gt;80/tcp, 0.0.0.0:32769-&gt;443/tcp</b></span></span><span style="font-size:small"><span style="font-family:monospace">   awesome_leakey
+xfrarod@Satellite-L955 <a style="color:#3465A4" href="~/Documents/2013_Cursos/Docker/Builds">~/Documents/2013_Cursos/Docker/Builds</a></span></span><span style="font-size:small"><span style="font-family:monospace"> $ <span style="background:yellow"><a style="color:#204A87" href="docker run.html">docker run</a></span></span></span><span style="font-size:small"><span style="font-family:monospace"><span style="background:yellow"> -itd -p 127.0.0.1:8082:80/udp nginx:latest</span></span></span><span style="font-size:small"><span style="font-family:monospace"> <b>#Le indicas en que puerto y especificas que IP y protocolo (UDP)</b></span></span><span style="font-size:small"><span style="font-family:monospace">
+26d0a4126ee11e0a1c44f5a945992c6d8e07b2c5d50b5b4341e6a6bcf3a10d34
+xfrarod@Satellite-L955 <a style="color:#3465A4" href="~/Documents/2013_Cursos/Docker/Builds">~/Documents/2013_Cursos/Docker/Builds</a></span></span><span style="font-size:small"><span style="font-family:monospace"> $ <a style="color:#204A87" href="docker ps.html">docker ps</a></span></span><span style="font-size:small"><span style="font-family:monospace">
+CONTAINER ID        IMAGE               COMMAND                  CREATED             STATUS              PORTS                                           NAMES
+26d0a4126ee1        nginx:latest        "nginx -g 'daemon off"   4 seconds ago       Up 3 seconds        80/tcp, 443/tcp, <span style="background:yellow">127.0.0.1:8082-&gt;80/udp</span></span></span><span style="font-size:small"><span style="font-family:monospace">         hopeful_colden
+bca9e0b20e72        nginx:latest        "nginx -g 'daemon off"   8 minutes ago       Up 8 minutes        0.0.0.0:32770-&gt;80/tcp, 0.0.0.0:32769-&gt;443/tcp   awesome_leakey
+
+
+xfrarod@Satellite-L955 <a style="color:#3465A4" href="~/Documents/2013_Cursos/Docker/Builds">~/Documents/2013_Cursos/Docker/Builds</a></span></span><span style="font-size:small"><span style="font-family:monospace"> $ </span></span></div></body></html>

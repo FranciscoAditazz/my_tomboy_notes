@@ -1,0 +1,147 @@
+<html xmlns:tomboy="http://beatniksoftware.com/tomboy" xmlns:link="http://beatniksoftware.com/tomboy/link" xmlns:size="http://beatniksoftware.com/tomboy/size"><head><META http-equiv="Content-Type" content="text/html; charset=utf-8"><title>Exercise: Adding External Content to Containers</title><style type="text/css">
+        
+	body {  }
+	h1 { font-size: xx-large;
+     	     font-weight: bold;
+     	     border-bottom: 1px solid black; }
+	div.note {
+		   position: relative;
+		   display: block;
+		   padding: 5pt;
+		   margin: 5pt; 
+		   white-space: -moz-pre-wrap; /* Mozilla */
+ 	      	   white-space: -pre-wrap;     /* Opera 4 - 6 */
+ 	      	   white-space: -o-pre-wrap;   /* Opera 7 */
+ 	      	   white-space: pre-wrap;      /* CSS3 */
+ 	      	   word-wrap: break-word;      /* IE 5.5+ */ }
+	</style></head><body><div class="note" id="Exercise: Adding External Content to Containers"><a name="exercise: adding external content to containers"></a><h1>Exercise: Adding External Content to Containers</h1>
+<b>NOTE</b>: Although you should be able to run these commands on any Docker version on any Linux Distribution, for the purposes of these exercises, be sure you are running Docker v1.10+ as well as the latest CentOS or Ubuntu distribution. Be sure to have pulled the 'centos:6' and 'ubuntu:latest' images from the Docker Hub (docker pull) before starting this exercise.
+
+<b>1. Create a directory in your 'user' home directory called 'docker'. Within that directory, create another directory called 'mydata'. Within that directory, create a file called 'mydata.txt' containing any text message you want.
+</b>
+<span style="font-size:small"><span style="font-family:monospace">[user@linuxacademy ~]$ mkdir docker
+
+[user@linuxacademy ~]$ cd docker
+
+[user@linuxacademy ~]$ mkdir mydata
+
+[user@linuxacademy ~]$ cd mydata
+
+[user@linuxacademy mydata]$ ll
+
+total 0
+
+[user@linuxacademy mydata]$ echo "this is host data" &gt;&gt; mydata.txt
+
+[user@linuxacademy mydata]$ ll
+
+total 4
+
+-rw-rw-r-- 1 user user 18 Aug 25 15:21 mydata.txt
+
+[user@linuxacademy mydata]$ cd ..
+
+[user@linuxacademy docker]$ ll
+
+total 0
+
+drwxrwxr-x 2 user user 23 Aug 25 15:21 mydata
+</span></span> 
+<b>2. Create a docker container name 'local_vol' from the 'centos:6' image. The container should be created in interactive mode, attached to the current terminal and running the bash shell. Finally create the container with a volume (or directory) called 'containerdata' so that the system will automatically create the directory/mount when the container starts.
+</b>
+<span style="font-size:small"><span style="font-family:monospace">[user@linuxacademy docker]$ <a style="color:#204A87" href="docker run.html">docker run</a></span></span><span style="font-size:small"><span style="font-family:monospace"> -it --name="local_vol" -v /containerdata centos:6 <a style="color:#3465A4" href="/bin/bash">/bin/bash</a></span></span><span style="font-size:small"><span style="font-family:monospace">
+
+[root@191131068f8c /]#
+</span></span>  
+<b>3. <a style="color:#204A87" href="../python/List.html">List</a></b><b> the filesystems within the container, specifically looking for the volume/directory that was added to the container during creation.
+</b>
+<span style="font-size:small"><span style="font-family:monospace">[root@191131068f8c /]# df -h
+
+Filesystem            Size  Used Avail Use% Mounted on
+
+rootfs                9.8G  254M  9.0G   3% /
+
+<a style="color:#3465A4" href="/dev/mapper/docker-8:2-203558447-191131068f8ceffe6fb38198a61b9806f27e4d22de3c8b0d2aec4c0c4fe7f88d">/dev/mapper/docker-8:2-203558447-191131068f8ceffe6fb38198a61b9806f27e4d22de3c8b0d2aec4c0c4fe7f88d</a></span></span><span style="font-size:small"><span style="font-family:monospace">
+
+                      9.8G  254M  9.0G   3% /
+
+tmpfs                 2.0G     0  2.0G   0% /dev
+
+shm                    64M     0   64M   0% <a style="color:#3465A4" href="/dev/shm">/dev/shm</a></span></span><span style="font-size:small"><span style="font-family:monospace">
+
+<a style="color:#3465A4" href="/dev/sda2">/dev/sda2</a></span></span><span style="font-size:small"><span style="font-family:monospace">              36G  4.3G   32G  12% /containerdata
+
+tmpfs                 2.0G     0  2.0G   0% <a style="color:#3465A4" href="/run/secrets">/run/secrets</a></span></span><span style="font-size:small"><span style="font-family:monospace">
+
+<a style="color:#3465A4" href="/dev/sda2">/dev/sda2</a></span></span><span style="font-size:small"><span style="font-family:monospace">              36G  4.3G   32G  12% <a style="color:#3465A4" href="/etc/resolv.conf">/etc/resolv.conf</a></span></span><span style="font-size:small"><span style="font-family:monospace">
+
+<a style="color:#3465A4" href="/dev/sda2">/dev/sda2</a></span></span><span style="font-size:small"><span style="font-family:monospace">              36G  4.3G   32G  12% <a style="color:#3465A4" href="/etc/hostname">/etc/hostname</a></span></span><span style="font-size:small"><span style="font-family:monospace">
+
+<a style="color:#3465A4" href="/dev/sda2">/dev/sda2</a></span></span><span style="font-size:small"><span style="font-family:monospace">              36G  4.3G   32G  12% <a style="color:#3465A4" href="/etc/hosts">/etc/hosts</a></span></span><span style="font-size:small"><span style="font-family:monospace">
+
+tmpfs                 2.0G     0  2.0G   0% <a style="color:#3465A4" href="/proc/kcore">/proc/kcore</a></span></span><span style="font-size:small"><span style="font-family:monospace">
+
+tmpfs                 2.0G     0  2.0G   0% <a style="color:#3465A4" href="/proc/timer_stats">/proc/timer_stats</a></span></span><span style="font-size:small"><span style="font-family:monospace">
+
+[root@191131068f8c /]# ls -al <a style="color:#3465A4" href="/containerdata/">/containerdata/</a></span></span><span style="font-size:small"><span style="font-family:monospace">
+
+total 4
+
+drwxr-xr-x  2 root root    6 Aug 25 20:46 .
+
+drwxr-xr-x 23 root root 4096 Aug 25 20:46 ..
+
+[root@191131068f8c /]#
+</span></span> 
+<b>4. Exit the container. This time, create another container called 'remote_vol' with the same container configuration except when creating the volume in the container, link the volume name 'mydata' to the underlying host directory structure created in Step #1.
+</b>
+<span style="font-size:small"><span style="font-family:monospace">[user@linuxacademy docker]$ <a style="color:#204A87" href="docker run.html">docker run</a></span></span><span style="font-size:small"><span style="font-family:monospace"> -it --name="remote_vol" -v <a style="color:#3465A4" href="/home/user/docker/mydata:/mydata">/home/user/docker/mydata:/mydata</a></span></span><span style="font-size:small"><span style="font-family:monospace"> centos:6 <a style="color:#3465A4" href="/bin/bash">/bin/bash</a></span></span><span style="font-size:small"><span style="font-family:monospace">
+
+[root@0476d5af242f /]#</span></span>
+ 
+<b>5. Once the container is started, <a style="color:#204A87" href="../python/List.html">list</a></b><b> the disk mounts and verify the remote (host) volume is mounted. Change to that directory and verify that the text file created in Step #1 appears with the content created.</b>
+
+<span style="font-size:small"><span style="font-family:monospace">[root@0476d5af242f /]# df -h
+
+Filesystem            Size  Used Avail Use% Mounted on
+
+rootfs                9.8G  254M  9.0G   3% /
+
+<a style="color:#3465A4" href="/dev/mapper/docker-8:2-203558447-0476d5af242fa74f4e0e65efd02191685570ef89995d57716a2ff09c3078d7f8">/dev/mapper/docker-8:2-203558447-0476d5af242fa74f4e0e65efd02191685570ef89995d57716a2ff09c3078d7f8</a></span></span><span style="font-size:small"><span style="font-family:monospace">
+
+                      9.8G  254M  9.0G   3% /
+
+tmpfs                 2.0G     0  2.0G   0% /dev
+
+shm                    64M     0   64M   0% <a style="color:#3465A4" href="/dev/shm">/dev/shm</a></span></span><span style="font-size:small"><span style="font-family:monospace">
+
+<a style="color:#3465A4" href="/dev/sda2">/dev/sda2</a></span></span><span style="font-size:small"><span style="font-family:monospace">              36G  4.3G   32G  12% /mydata
+
+tmpfs                 2.0G     0  2.0G   0% <a style="color:#3465A4" href="/run/secrets">/run/secrets</a></span></span><span style="font-size:small"><span style="font-family:monospace">
+
+<a style="color:#3465A4" href="/dev/sda2">/dev/sda2</a></span></span><span style="font-size:small"><span style="font-family:monospace">              36G  4.3G   32G  12% <a style="color:#3465A4" href="/etc/resolv.conf">/etc/resolv.conf</a></span></span><span style="font-size:small"><span style="font-family:monospace">
+
+<a style="color:#3465A4" href="/dev/sda2">/dev/sda2</a></span></span><span style="font-size:small"><span style="font-family:monospace">              36G  4.3G   32G  12% <a style="color:#3465A4" href="/etc/hostname">/etc/hostname</a></span></span><span style="font-size:small"><span style="font-family:monospace">
+
+<a style="color:#3465A4" href="/dev/sda2">/dev/sda2</a></span></span><span style="font-size:small"><span style="font-family:monospace">              36G  4.3G   32G  12% <a style="color:#3465A4" href="/etc/hosts">/etc/hosts</a></span></span><span style="font-size:small"><span style="font-family:monospace">
+
+tmpfs                 2.0G     0  2.0G   0% <a style="color:#3465A4" href="/proc/kcore">/proc/kcore</a></span></span><span style="font-size:small"><span style="font-family:monospace">
+
+tmpfs                 2.0G     0  2.0G   0% <a style="color:#3465A4" href="/proc/timer_stats">/proc/timer_stats</a></span></span><span style="font-size:small"><span style="font-family:monospace">
+
+[root@0476d5af242f /]# ls -al <a style="color:#3465A4" href="/mydata/">/mydata/</a></span></span><span style="font-size:small"><span style="font-family:monospace">
+
+total 8
+
+drwxrwxr-x  2 1000 1000   23 Aug 25 20:21 .
+
+drwxr-xr-x 23 root root 4096 Aug 25 20:51 ..
+
+-rw-rw-r--  1 1000 1000   18 Aug 25 20:21 mydata.txt
+
+[root@0476d5af242f /]# cat <a style="color:#3465A4" href="/mydata/mydata.txt">/mydata/mydata.txt</a></span></span><span style="font-size:small"><span style="font-family:monospace"> 
+
+this is host data
+
+[root@0476d5af242f /]#</span></span>
+</div></body></html>

@@ -1,0 +1,45 @@
+<html xmlns:tomboy="http://beatniksoftware.com/tomboy" xmlns:link="http://beatniksoftware.com/tomboy/link" xmlns:size="http://beatniksoftware.com/tomboy/size"><head><META http-equiv="Content-Type" content="text/html; charset=utf-8"><title>XPath Vs. CCS Path Location</title><style type="text/css">
+        
+	body {  }
+	h1 { font-size: xx-large;
+     	     font-weight: bold;
+     	     border-bottom: 1px solid black; }
+	div.note {
+		   position: relative;
+		   display: block;
+		   padding: 5pt;
+		   margin: 5pt; 
+		   white-space: -moz-pre-wrap; /* Mozilla */
+ 	      	   white-space: -pre-wrap;     /* Opera 4 - 6 */
+ 	      	   white-space: -o-pre-wrap;   /* Opera 7 */
+ 	      	   white-space: pre-wrap;      /* CSS3 */
+ 	      	   word-wrap: break-word;      /* IE 5.5+ */ }
+	</style></head><body><div class="note" id="XPath Vs. CCS Path Location"><a name="xpath vs. ccs path location"></a><h1>XPath Vs. CCS Path Location</h1>CCS location is more elegant way than <a style="color:#204A87" href="XPath.html">XPath</a>
+
+<span style="font-size:small"><span style="font-family:monospace">&lt;html&gt;
+  &lt;head&gt;&lt;/head&gt;
+  &lt;body&gt;
+  	&lt;form id="loginForm" style="background-color:transparent;"&gt;
+  		&lt;input id="u1" type="text" name="username" style="background-color: rgb(255, 255, 255);"&gt;
+  		&lt;input type="password" name="password"&gt;
+  		&lt;input type="submit" value="Login" name="continue"&gt;
+  	&lt;/form&gt;
+  &lt;/body&gt;
+&lt;/html&gt;</span></span>
+
+Example 1: Locate complete html in
+	<a style="color:#204A87" href="XPath.html">XPath</a>     :  <span style="font-family:monospace">/html</span>
+ 	CSS Path:  <span style="font-family:monospace">html</span>
+Example 2: Locate form
+	<a style="color:#204A87" href="XPath.html">XPath</a>     :  <a style="color:#3465A4" href="/html/body/form">/html/body/form</a>
+ 	CSS Path:  <span style="font-family:monospace">html&gt;body&gt;form</span>
+Example 3: Locate id=u1 in
+	<a style="color:#204A87" href="XPath.html">XPath</a>     :  <span style="font-family:monospace">//input[@id='u1']</span>
+ 	CSS Path:  <span style="font-family:monospace">input[id=u1] or input#u1</span>  or  #u1
+Example 4: Locate submit button in dynamic id
+	<a style="color:#204A87" href="XPath.html">XPath</a>     :  <span style="font-family:monospace">//input[starts-with(@id,'submit')]</span>
+ 	CSS Path:  input[id ^=submit]
+Example 5: Locate qty field in dynamic id
+	<a style="color:#204A87" href="XPath.html">XPath</a>     :  <span style="font-family:monospace">//input[contains(@id,'count')]</span>
+ 	CSS Path:  input[id *=count]
+</div></body></html>

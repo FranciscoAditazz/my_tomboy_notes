@@ -1,0 +1,34 @@
+<html xmlns:tomboy="http://beatniksoftware.com/tomboy" xmlns:link="http://beatniksoftware.com/tomboy/link" xmlns:size="http://beatniksoftware.com/tomboy/size"><head><META http-equiv="Content-Type" content="text/html; charset=utf-8"><title>RSA Key for SSH Authentication</title><style type="text/css">
+        
+	body {  }
+	h1 { font-size: xx-large;
+     	     font-weight: bold;
+     	     border-bottom: 1px solid black; }
+	div.note {
+		   position: relative;
+		   display: block;
+		   padding: 5pt;
+		   margin: 5pt; 
+		   white-space: -moz-pre-wrap; /* Mozilla */
+ 	      	   white-space: -pre-wrap;     /* Opera 4 - 6 */
+ 	      	   white-space: -o-pre-wrap;   /* Opera 7 */
+ 	      	   white-space: pre-wrap;      /* CSS3 */
+ 	      	   word-wrap: break-word;      /* IE 5.5+ */ }
+	</style></head><body><div class="note" id="RSA Key for SSH Authentication"><a name="rsa key for ssh authentication"></a><h1>RSA Key for SSH Authentication</h1>
+1)   First, you will need to generate the local RSA key:
+
+<b><span style="font-size:small"><span style="font-family:monospace"># ssh-keygen -t rsa</span></span></b>
+
+our public key has been saved in <a style="color:#3465A4" href="/root/.ssh/id_rsa.pub.">/root/.ssh/id_rsa.pub.</a>
+
+2)   Once the public key has been generated, it's time to upload it on any Linux systems you usually log into.
+
+<b><span style="font-size:small"><span style="font-family:monospace"># scp .ssh/id_rsa.pub <a style="color:#3465A4" href="username@hostname.com:~">username@hostname.com:~</a></span></span></b><span style="font-size:small"><span style="font-family:monospace"></span></span><span style="font-size:small"><span style="font-family:monospace">
+</span></span>
+3) Next, connect to the remote host through SSH, with the username you used in the step above. RSA authentication won't be available just yet, so you'll have to use the old method to login. Once you are connected, add the new hostkey to the file <a style="color:#3465A4" href="/root/.ssh/authorized_keys">/root/.ssh/authorized_keys</a> or <a style="color:#3465A4" href="/home/user/.ssh/authorized_keys.">/home/user/.ssh/authorized_keys.</a> If the .ssh directory doesn't exist, create it.
+
+<b><span style="font-size:small"><span style="font-family:monospace"># cd $HOME
+# cat id_rsa.pub &gt;&gt; .ssh/authorized_keys
+</span></span></b>
+
+</div></body></html>

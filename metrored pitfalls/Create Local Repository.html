@@ -1,0 +1,34 @@
+<html xmlns:tomboy="http://beatniksoftware.com/tomboy" xmlns:link="http://beatniksoftware.com/tomboy/link" xmlns:size="http://beatniksoftware.com/tomboy/size"><head><META http-equiv="Content-Type" content="text/html; charset=utf-8"><title>Create Local Repository</title><style type="text/css">
+        
+	body {  }
+	h1 { font-size: xx-large;
+     	     font-weight: bold;
+     	     border-bottom: 1px solid black; }
+	div.note {
+		   position: relative;
+		   display: block;
+		   padding: 5pt;
+		   margin: 5pt; 
+		   white-space: -moz-pre-wrap; /* Mozilla */
+ 	      	   white-space: -pre-wrap;     /* Opera 4 - 6 */
+ 	      	   white-space: -o-pre-wrap;   /* Opera 7 */
+ 	      	   white-space: pre-wrap;      /* CSS3 */
+ 	      	   word-wrap: break-word;      /* IE 5.5+ */ }
+	</style></head><body><div class="note" id="Create Local Repository"><a name="create local repository"></a><h1>Create Local Repository</h1>
+1) Copy the <b>rpm</b> files to a directory where the local repository will be located
+
+2) Create <b><span style="font-size:small"><span style="font-family:monospace">rhel.repo</span></span></b> file in the <span style="font-size:small"><a style="color:#3465A4" href="/etc/yum.repos.d">/etc/yum.repos.d</a></span> directory with the following contents:
+
+<span style="font-size:small"><span style="font-family:monospace">	[rhel-local]
+	name=Red Hat Enterprise Linux
+
+	baseurl=<a style="color:#3465A4" href="file:///mnt/local_repo">file:///mnt/local_repo</a></span></span><span style="font-size:small"><span style="font-family:monospace">
+	enabled=1
+	gpgcheck=0
+</span></span>
+3) Give the create repo command and clear cache
+<span style="font-size:small"><span style="font-family:monospace">	createrepo --database <a style="color:#3465A4" href="/mnt/local_repo">/mnt/local_repo</a></span></span><span style="font-size:small"><span style="font-family:monospace">
+	yum clean all
+</span></span>
+Note: if createrepo is not installed, install it manually with the following command:
+<span style="font-size:small"><span style="font-family:monospace">	rpm -Uvh python-deltarpm-3.5-0.5.20090913git.el6.x86_64.rpm deltarpm-3.5-0.5.20090913git.el6.x86_64.rpm createrepo-0.9.8-4.el6.noarch.rpm</span></span></div></body></html>

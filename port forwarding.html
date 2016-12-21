@@ -1,0 +1,30 @@
+<html xmlns:tomboy="http://beatniksoftware.com/tomboy" xmlns:link="http://beatniksoftware.com/tomboy/link" xmlns:size="http://beatniksoftware.com/tomboy/size"><head><META http-equiv="Content-Type" content="text/html; charset=utf-8"><title>port forwarding</title><style type="text/css">
+        
+	body {  }
+	h1 { font-size: xx-large;
+     	     font-weight: bold;
+     	     border-bottom: 1px solid black; }
+	div.note {
+		   position: relative;
+		   display: block;
+		   padding: 5pt;
+		   margin: 5pt; 
+		   white-space: -moz-pre-wrap; /* Mozilla */
+ 	      	   white-space: -pre-wrap;     /* Opera 4 - 6 */
+ 	      	   white-space: -o-pre-wrap;   /* Opera 7 */
+ 	      	   white-space: pre-wrap;      /* CSS3 */
+ 	      	   word-wrap: break-word;      /* IE 5.5+ */ }
+	</style></head><body><div class="note" id="port forwarding"><a name="port forwarding"></a><h1>port forwarding</h1>
+Describe your new note here.
+
+Port forwarding allows you to specify ports on the guest machine to share via a port on the host machine. This allows you to access a port on your own machine, but actually have all the network traffic forwarded to a specific port on the guest machine.
+
+Let's setup a forwarded port so we can access Apache in our guest. Doing so is a simple edit to the <a style="color:#204A87" href="vagrant/Vagrantfile.html">Vagrantfile</a>, which now looks like this:
+
+<span style="font-size:small"><span style="font-family:monospace">Vagrant.configure("2") do |config|
+  config.vm.box = "hashicorp/precise32"
+  config.vm.provision :shell, path: "bootstrap.sh"
+  <b>config.vm.network :forwarded_port, host: 4567, guest: 80</b></span></span><span style="font-size:small"><span style="font-family:monospace">
+end</span></span>
+
+</div></body></html>

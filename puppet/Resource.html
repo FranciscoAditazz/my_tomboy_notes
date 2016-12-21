@@ -1,0 +1,62 @@
+<html xmlns:tomboy="http://beatniksoftware.com/tomboy" xmlns:link="http://beatniksoftware.com/tomboy/link" xmlns:size="http://beatniksoftware.com/tomboy/size"><head><META http-equiv="Content-Type" content="text/html; charset=utf-8"><title>Resource</title><style type="text/css">
+        
+	body {  }
+	h1 { font-size: xx-large;
+     	     font-weight: bold;
+     	     border-bottom: 1px solid black; }
+	div.note {
+		   position: relative;
+		   display: block;
+		   padding: 5pt;
+		   margin: 5pt; 
+		   white-space: -moz-pre-wrap; /* Mozilla */
+ 	      	   white-space: -pre-wrap;     /* Opera 4 - 6 */
+ 	      	   white-space: -o-pre-wrap;   /* Opera 7 */
+ 	      	   white-space: pre-wrap;      /* CSS3 */
+ 	      	   word-wrap: break-word;      /* IE 5.5+ */ }
+	</style></head><body><div class="note" id="Resource"><a name="resource"></a><h1>Resource</h1>
+DML.   Declarative Model Language
+RAL.    <a style="color:#204A87" href="Resource Abstraction Layer.html">Resource Abstraction Layer</a>
+
+
+Resources are the fundamental units for modeling system configurations. Each resource describes some aspect of a system, like a service that must be running or a package that must be installed. The block of Puppet code that describes a resource is called a resource declaration. Resource declarations are written in Puppet's own Domain Specific Language.
+
+<span style="font-family:monospace">type {'title':
+	attribute =&gt; 'value',
+}</span>
+
+<b>Puppet Resource
+</b>The puppet resource command shows a resource declaration of the given resource.
+
+	<i><span style="font-family:monospace">puppet resource user gigabyte</span></i>
+
+<b>Amatomy of a resource</b>
+Resources can be large or small, simple or complex. In the world of Puppet, you and everything around you (on the Learning VM) are resources. But let's say you wanted to learn more about a particular resource. How would one do that? Well, you have two options: puppet describe and puppet resource .
+
+The block of code below that describes you as the root user is called a resource declaration.
+
+<span style="font-family:monospace">user { 'root':
+	ensure =&gt; 'present',
+	<a style="color:#204A87" href="../Comment.html">comment</a></span><span style="font-family:monospace"> =&gt; 'root',
+	gid =&gt; '0',
+	ome =&gt; '/root',
+	password =&gt; '$1$jrm5tnjw$h8JJ9mCZLmJvIxvDLjw1M/',
+	password_max_age =&gt; '99999',
+	password_min_age =&gt; '0',
+	shell =&gt; '/bin/bash',
+	uid =&gt; '0',
+}</span>
+
+<b>Resource Type</b>
+Puppet allows you to describe and manipulate a variety of resource types. Below are some core resource types you will encounter most often:
+<ul><li dir="ltr"><b>user</b> A user
+</li><li dir="ltr"><b>group</b> A user group
+</li><li dir="ltr"><b>file</b> A specific file
+</li><li dir="ltr"><b>package</b> A software package
+</li><li dir="ltr"><b>service</b> A running service
+</li><li dir="ltr"><b>cron</b> A scheduled cron job
+</li><li dir="ltr"><b>exec</b> An external command
+</li><li dir="ltr"><b>host</b> A host entry</li></ul>
+
+
+</div></body></html>
